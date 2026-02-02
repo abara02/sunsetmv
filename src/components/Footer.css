@@ -1,0 +1,119 @@
+.footer {
+    background-color: #1a1a1a;
+    color: #ccc;
+    padding: var(--spacing-lg) 0 var(--spacing-md);
+    margin-top: auto;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.footer-logo-link {
+    display: block;
+    margin-bottom: 1.5rem;
+    max-width: 250px;
+}
+
+.footer-logo {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.footer h4 {
+    color: var(--color-white);
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-links li,
+.contact-info li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: #aaa;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--color-white);
+}
+
+.contact-info li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-icons a {
+    display: block;
+    transition: transform 0.2s ease;
+    text-decoration: none;
+    line-height: 0;
+}
+
+.social-icons a:hover {
+    transform: translateY(-3px);
+}
+
+.social-icons a img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    display: block;
+}
+
+/* Make Facebook icon larger to visually match the others */
+.social-icons a[aria-label="Facebook"] img {
+    width: 42px;
+    height: 42px;
+}
+
+.newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.newsletter-form input {
+    padding: 10px;
+    background: #333;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.newsletter-form button {
+    width: 100%;
+}
+
+.footer-bottom {
+    border-top: 1px solid #333;
+    padding-top: var(--spacing-md);
+    text-align: center;
+    font-size: 0.85rem;
+    color: #666;
+}

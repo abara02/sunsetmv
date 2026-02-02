@@ -1,0 +1,391 @@
+/* Events Page Styles */
+
+/* Hero Section */
+.events-hero {
+    height: 60vh;
+    min-height: 400px;
+    background-image: url('/events-hero.jpg');
+    /* Need to ensure this exists or use a fallback */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+
+/* Fallback if image missing, or use one of existing ones */
+.events-hero {
+    background-color: var(--color-green);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/visit-bg-2.jpg');
+    /* Reuse existing asset */
+}
+
+.events-hero .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 300;
+}
+
+/* Common Section Styles */
+.events-section {
+    padding: 2rem 0 6rem;
+    scroll-margin-top: 100px;
+    /* For sticky header */
+}
+
+.section-header {
+    margin-bottom: 4rem;
+    position: relative;
+}
+
+.pre-heading {
+    display: block;
+    font-family: var(--font-heading);
+    color: var(--color-accent, #c5a059);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.section-header h2 {
+    font-size: 3rem;
+    color: var(--color-primary, #53161D);
+    margin-bottom: 1.5rem;
+}
+
+.view-toggle-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.view-toggle {
+    display: inline-flex;
+    background: #f0f0f0;
+    padding: 0.3rem;
+    border-radius: 8px;
+    gap: 0.5rem;
+}
+
+.toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.toggle-btn.active {
+    background: white;
+    color: var(--color-primary);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    font-weight: 600;
+}
+
+.toggle-btn:hover:not(.active) {
+    color: var(--color-text-main);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.section-intro {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.divider {
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-accent, #c5a059);
+    margin: 0 auto 1.5rem;
+}
+
+.section-divider {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+    margin: 0 auto 4rem;
+    width: 80%;
+}
+
+/* Events List (Winery Events) */
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.event-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 5px solid transparent;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-left-color: var(--color-accent, #c5a059);
+}
+
+.event-date-column {
+    padding: 2rem;
+    background-color: #fcfcfc;
+    border-right: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+}
+
+.date-box {
+    text-align: center;
+}
+
+.date-box .month {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-accent, #c5a059);
+    margin-bottom: 0.2rem;
+}
+
+.date-box .day {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-primary, #53161D);
+    line-height: 1;
+}
+
+.event-details-column {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.event-category {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.8rem;
+}
+
+.event-details-column h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-heading);
+    color: var(--color-primary, #53161D);
+}
+
+.event-time {
+    font-weight: 600;
+    color: var(--color-text-main);
+    margin-bottom: 1rem;
+}
+
+.event-desc {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+.event-action-column {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #f0f0f0;
+}
+
+/* Private Events Grid */
+.private-events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+    margin-bottom: 5rem;
+}
+
+.private-event-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.private-event-card:hover {
+    transform: translateY(-8px);
+}
+
+.card-image {
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fallback colors if images miss */
+.card-image {
+    background-color: #ddd;
+}
+
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease;
+}
+
+.private-event-card:hover .card-overlay {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.card-image h3 {
+    position: relative;
+    color: white;
+    font-size: 2rem;
+    z-index: 2;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+    margin: 0;
+}
+
+.card-content {
+    padding: 2.5rem;
+    text-align: center;
+}
+
+.card-content p {
+    margin-bottom: 2rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+}
+
+/* Inquiry Banner */
+.inquiry-banner {
+    background-color: var(--color-primary, #53161D);
+    border-radius: 12px;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: white;
+    box-shadow: 0 10px 30px rgba(74, 4, 4, 0.2);
+}
+
+.inquiry-content h3 {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.inquiry-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.page-container.events-page {
+    padding-top: 0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .event-card {
+        grid-template-columns: 1fr;
+        border-left: none;
+        border-top: 5px solid transparent;
+    }
+
+    .event-card:hover {
+        border-top-color: var(--color-accent, #c5a059);
+    }
+
+    .event-date-column {
+        border-right: none;
+        border-bottom: 1px solid #f0f0f0;
+        justify-content: flex-start;
+        padding: 1.5rem 2rem;
+    }
+
+    .date-box {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+    }
+
+    .date-box .day {
+        font-size: 1.5rem;
+    }
+
+    .event-action-column {
+        border-left: none;
+        border-top: 1px solid #f0f0f0;
+        padding: 1.5rem 2rem;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .section-header h2 {
+        font-size: 2.2rem;
+    }
+
+    .private-events-grid {
+        grid-template-columns: 1fr;
+    }
+}

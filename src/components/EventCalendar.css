@@ -1,0 +1,173 @@
+/* Event Calendar Styles */
+.event-calendar-container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 3rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.calendar-header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.month-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: var(--color-text-main);
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-btn:hover {
+    color: var(--color-burgundy);
+}
+
+.btn-today {
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: var(--font-body);
+}
+
+.btn-today:hover {
+    background: #eee;
+}
+
+.calendar-header-controls h2 {
+    font-size: 2rem;
+    margin: 0;
+    color: var(--color-primary);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-top: 1px solid #eee;
+    border-left: 1px solid #eee;
+}
+
+.calendar-weekday {
+    padding: 1rem;
+    text-align: center;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    background: #fafafa;
+}
+
+.calendar-day {
+    min-height: 150px;
+    padding: 0.5rem;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    background: white;
+}
+
+.calendar-day.empty {
+    background: #fcfcfc;
+}
+
+.day-number {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--color-text-main);
+    margin-bottom: 0.5rem;
+}
+
+.day-events {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.calendar-event-pill {
+    background: #fdf6f6;
+    border-left: 3px solid var(--color-burgundy);
+    padding: 0.4rem;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.calendar-event-pill:hover {
+    transform: translateX(2px);
+    background: #f5eaea;
+}
+
+.event-time-pill {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.1rem;
+}
+
+.event-title-pill {
+    display: block;
+    font-weight: 600;
+    color: var(--color-text-main);
+    line-height: 1.2;
+}
+
+/* Response */
+@media (max-width: 900px) {
+    .calendar-header-controls h2 {
+        position: static;
+        transform: none;
+        font-size: 1.5rem;
+    }
+
+    .calendar-day {
+        min-height: 100px;
+    }
+
+    .event-title-pill {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 600px) {
+
+    /* Mobile Calendar simplified? or just small */
+    .calendar-day {
+        min-height: 80px;
+        padding: 0.2rem;
+    }
+
+    .event-time-pill {
+        display: none;
+        /* Hide time on very small screens */
+    }
+
+    .day-number {
+        font-size: 1rem;
+    }
+}

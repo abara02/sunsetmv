@@ -1,0 +1,226 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 0;
+    z-index: 1000;
+    transition: all var(--transition-smooth);
+    color: var(--color-white);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+}
+
+.navbar.scrolled {
+    background: var(--color-burgundy);
+    padding: 0.5rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure text is readable on light backgrounds if not scrolled? 
+   Actually homepage will have dark hero. 
+   We might need a 'dark-text' class for other pages if they have light headers. 
+   For now assuming transparent/dark header. */
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links>a,
+.dropdown-trigger {
+    margin-left: 2rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    opacity: 0.9;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-item-dropdown {
+    position: relative;
+    padding-bottom: 10px;
+    /* Bridge to menu */
+    margin-bottom: -10px;
+}
+
+.nav-item-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: all 0.2s ease;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 1rem;
+    /* Align somewhat with parent */
+    background-color: white;
+    min-width: 220px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 0.5rem 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0s;
+    z-index: 1001;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: var(--color-text-main);
+    font-size: 0.9rem;
+    text-transform: none;
+    /* Keep specific items normal case or consistent */
+    letter-spacing: 0.5px;
+    margin-left: 0;
+    /* Reset margin from generic nav links */
+    border-bottom: 1px solid #f5f5f5;
+    opacity: 1;
+}
+
+.dropdown-menu a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f9f9f9;
+    color: var(--color-burgundy);
+}
+
+.nav-links a:hover {
+    opacity: 1;
+    color: var(--color-gold);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.icon-link {
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    background: none;
+    /* For button elements */
+    padding: 0;
+    /* Remove padding if any */
+}
+
+.icon-link:hover {
+    color: var(--color-gold);
+}
+
+.icon-link {
+    position: relative;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--color-burgundy);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+}
+
+.navbar.scrolled .cart-badge {
+    border: 2px solid var(--color-burgundy);
+    background-color: white;
+    color: var(--color-burgundy);
+}
+
+.mobile-only {
+    display: none;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none;
+    }
+
+    .mobile-only {
+        display: block;
+        background: none;
+        color: inherit;
+    }
+
+    .mobile-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--color-burgundy);
+        flex-direction: column;
+        padding: 0;
+        /* Remove padding to handle item borders better */
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        transition: clip-path 0.4s ease-in-out;
+        max-height: calc(100vh - 80px);
+        /* Prevent scrolling issues if too long */
+        overflow-y: auto;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .mobile-menu.open {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        display: flex;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-menu a {
+        color: var(--color-white);
+        font-size: 1.1rem;
+        padding: 1.25rem 2rem;
+        /* bigger touch targets */
+        margin-bottom: 0;
+        display: block;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        text-decoration: none;
+    }
+
+    .mobile-menu a:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: var(--color-gold);
+    }
+}

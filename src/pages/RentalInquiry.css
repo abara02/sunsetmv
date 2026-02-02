@@ -1,0 +1,232 @@
+/* Rental Inquiry Page Styles */
+.inquiry-page-container {
+    padding: 120px 0 60px;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    color: var(--color-primary);
+}
+
+.inquiry-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+}
+
+.rental-details-column {
+    background: white;
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.rental-details-column h1 {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.price-tag {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+}
+
+.rental-image-large {
+    width: 100%;
+    height: 300px;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rental-image-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder-box {
+    color: #999;
+}
+
+.details-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+}
+
+.rental-description-main {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-main);
+    white-space: pre-line;
+    /* Handle newlines from data */
+}
+
+.info-list {
+    list-style: disc inside;
+    margin-left: 1rem;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.info-list li {
+    margin-bottom: 0.5rem;
+}
+
+.availability-note {
+    background-color: #fff9e6;
+    /* Light yellow/gold */
+    padding: 1rem;
+    border-radius: 6px;
+    color: #8a6d3b;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--color-accent);
+}
+
+.contact-info-box {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.contact-info-box h4 {
+    color: var(--color-primary);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.contact-info-box p {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-main);
+    font-size: 1.05rem;
+}
+
+.contact-info-box p svg {
+    color: var(--color-primary);
+}
+
+
+/* Form Column */
+.form-card {
+    background: white;
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 100px;
+}
+
+.form-card h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--color-text-main);
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon svg {
+    position: absolute;
+    left: 1rem;
+    color: #999;
+    pointer-events: none;
+}
+
+.textarea-icon svg {
+    top: 1rem;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 12px 1rem 12px 3rem;
+    /* Space for icon */
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    background: #fdfdfd;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--color-burgundy);
+    background: white;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+    .inquiry-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-card {
+        position: static;
+    }
+}

@@ -1,0 +1,238 @@
+/* Wrapper */
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+    overflow: hidden;
+    /* Prevent horizontal scrollbar on small screens if motion goes out of bounds */
+}
+
+/* Navigation Arrows */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    z-index: 20;
+    transform: translateY(-50%);
+}
+
+.carousel-nav.prev {
+    left: 1rem;
+}
+
+.carousel-nav.next {
+    right: 1rem;
+}
+
+.carousel-nav button {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    color: #333;
+}
+
+.carousel-nav button:hover {
+    background: var(--color-burgundy);
+    color: #fff;
+    transform: scale(1.1);
+    border-color: var(--color-burgundy);
+}
+
+@media (min-width: 1280px) {
+    .carousel-nav.prev {
+        left: -3rem;
+    }
+
+    .carousel-nav.next {
+        right: -3rem;
+    }
+
+    .carousel-wrapper {
+        overflow: visible;
+    }
+}
+
+@media (max-width: 768px) {
+    .hidden-mobile {
+        display: none;
+    }
+}
+
+/* Content Area */
+.carousel-content-area {
+    position: relative;
+    height: 550px;
+    /* Adjust height based on card content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Card Styles */
+.carousel-card {
+    position: absolute;
+    width: 85vw;
+    max-width: 350px;
+    height: 480px;
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    cursor: grab;
+}
+
+.carousel-card:active {
+    cursor: grabbing;
+}
+
+.carousel-card.active {
+    border-color: var(--color-burgundy);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Area */
+.card-image-area {
+    height: 220px;
+    background: #f5f5f5;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.card-image-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.carousel-card:hover .card-image-area img {
+    transform: scale(1.05);
+}
+
+.cycling-image-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.placeholder-icon {
+    color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+.card-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: var(--color-burgundy);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Details */
+.card-details {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.card-details h3 {
+    margin: 0 0 0.5rem 0;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: #2c2c2c;
+}
+
+.card-details .price {
+    font-weight: bold;
+    color: var(--color-burgundy);
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.card-details .description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #555;
+    margin: 0;
+    /* Limit lines if needed */
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-footer {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.info-tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+/* Pagination Dots */
+.carousel-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.carousel-pagination .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-pagination .dot.active {
+    width: 32px;
+    border-radius: 4px;
+    background: var(--color-burgundy);
+}
+
+.carousel-pagination .dot:hover:not(.active) {
+    background: #ccc;
+}

@@ -1,0 +1,61 @@
+.page-container {
+    padding-top: 120px;
+    /* Navbar height + extra separation */
+    min-height: 80vh;
+}
+
+.shop-header {
+    background-color: var(--color-burgundy);
+    color: var(--color-white);
+    padding: var(--spacing-md) 0;
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.shop-header h1 {
+    color: var(--color-white);
+    font-family: var(--font-serif);
+    margin-bottom: 0.5rem;
+}
+
+.shop-subtitle {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-top: 5px;
+}
+
+.shop-content {
+    padding-bottom: var(--spacing-xl);
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: all 0.2s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--color-burgundy);
+    border-color: var(--color-burgundy);
+    color: var(--color-white);
+}
+
+.wine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}

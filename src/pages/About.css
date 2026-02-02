@@ -1,0 +1,205 @@
+/* About Page Styles */
+.about-page {
+    padding: 120px 0 60px;
+    min-height: 100vh;
+    background-color: var(--color-bg-light, #f9f9f9);
+    /* Fallback to light gray if var not defined */
+    overflow-x: hidden;
+}
+
+.section-title {
+    font-family: var(--font-heading, "Playfair Display", serif);
+    font-size: 2.5rem;
+    color: var(--color-primary, #53161D);
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    display: block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-gold, #D4AF37);
+}
+
+/* History Section */
+.history-section {
+    margin-bottom: 4rem;
+    position: relative;
+    overflow: visible;
+    /* Back to visible to allow background to breathe */
+}
+
+.history-section::before {
+    content: '';
+    position: absolute;
+    top: 60%;
+    /* Moved slightly lower */
+    right: -10%;
+    width: 55%;
+    height: 110%;
+    transform: translateY(-50%);
+    background-image: url('../assets/barrel-cart-sketch.png');
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-size: contain;
+    opacity: 0.3;
+    z-index: 0;
+    pointer-events: none;
+    mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%);
+}
+
+.history-content {
+    max-width: 800px;
+    margin: 0;
+    text-align: left;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text, #333);
+    position: relative;
+    z-index: 1;
+}
+
+.history-content p {
+    margin-bottom: 1.5rem;
+}
+
+/* Quote Section */
+.quote-section {
+    margin-bottom: 4rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.quote-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.quote-image-wrapper {
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.quote-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.quote-image:hover {
+    transform: scale(1.02);
+}
+
+.quote-content.text-left {
+    text-align: left;
+}
+
+.quote-content blockquote {
+    font-family: var(--font-heading, "Playfair Display", serif);
+    font-size: 1.25rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--color-primary, #53161D);
+    margin-bottom: 1.5rem;
+    border-left: 3px solid var(--color-accent, #c5a059);
+    padding-left: 1.5rem;
+}
+
+.quote-content cite {
+    display: block;
+    font-weight: 600;
+    font-style: normal;
+    color: var(--color-text, #333);
+    font-size: 1.1rem;
+    padding-left: 1.5rem;
+    /* Match blockquote padding */
+}
+
+/* Winemaker Section */
+.winemaker-section {
+    margin-bottom: 2rem;
+}
+
+.winemaker-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.winemaker-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text, #333);
+}
+
+.winemaker-image-wrapper {
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.winemaker-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.delay-1 {
+    animation-delay: 0.2s;
+}
+
+.delay-2 {
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+    .quote-grid,
+    .winemaker-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .quote-content.text-left {
+        text-align: center;
+        /* Center on mobile usually looks better, but keeping requested left alignment is fine too. Let's stick to request but make it look good */
+        text-align: left;
+    }
+
+    .winemaker-grid {
+        display: flex;
+        flex-direction: column-reverse;
+        /* Image on top usually better on mobile? Or verify order. Current: Content Left, Image Right. Mobile: Content Top, Image Bottom (column). If we want Image Top, use column-reverse or reorder HTML. */
+        /* Let's keep typical flow: Heading -> Text -> Image on desktop. Heading is separate. Text -> Image. Mobile: Text -> Image. */
+        flex-direction: column;
+    }
+}

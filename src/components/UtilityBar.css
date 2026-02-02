@@ -1,0 +1,61 @@
+.utility-bar {
+    background-color: #1a1a1a;
+    color: var(--color-white);
+    height: 40px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1002;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.utility-bar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.utility-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: auto;
+    /* Push to right if container is flex */
+}
+
+.utility-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #cccccc;
+    text-decoration: none;
+    transition: color 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+}
+
+.utility-link:hover {
+    color: var(--color-gold);
+}
+
+.icon-small {
+    margin-bottom: 1px;
+}
+
+.divider {
+    color: #444;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .utility-bar {
+        display: none;
+        /* Often utility bars are hidden or merged on mobile, user didn't specify but this is safer for space */
+    }
+}

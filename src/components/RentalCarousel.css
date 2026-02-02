@@ -1,0 +1,238 @@
+/* Rental Carousel Styles */
+.rental-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+    overflow: hidden;
+}
+
+/* Allow overflow on larger screens for shadow/cut-off issues */
+@media (min-width: 1024px) {
+    .rental-carousel-wrapper {
+        overflow: visible;
+    }
+}
+
+.rental-carousel-content-area {
+    position: relative;
+    height: 550px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.rental-carousel-card {
+    position: absolute;
+    width: 320px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    margin-top: -250px;
+    margin-left: -160px;
+    overflow: hidden;
+    border: 1px solid transparent;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    will-change: transform, opacity;
+}
+
+.rental-carousel-card.active {
+    border: 2px solid var(--color-burgundy);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+}
+
+.rental-carousel-card.inactive {
+    z-index: 1;
+}
+
+/* Image Section */
+.rental-card-image-area {
+    height: 200px;
+    background-color: #f4f4f4;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+}
+
+.cycling-image-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.rental-card-image-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder-icon {
+    opacity: 0.5;
+    color: var(--color-burgundy);
+}
+
+/* Content Section */
+.rental-card-details {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.rental-card-details h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+    line-height: 1.3;
+}
+
+.rental-card-details .price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+}
+
+.rental-card-details .description {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    white-space: pre-line;
+}
+
+.inquire-btn {
+    width: 100%;
+    margin-top: auto;
+    background-color: #8c5e5e;
+}
+
+/* Navigation Arrows */
+.rental-carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    pointer-events: none;
+    width: 100%;
+}
+
+.rental-carousel-nav button {
+    pointer-events: auto;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: #333;
+    transition: all 0.2s;
+    position: absolute;
+}
+
+.rental-carousel-nav button:hover {
+    background: var(--color-burgundy);
+    color: white;
+    border-color: var(--color-burgundy);
+}
+
+.rental-carousel-nav.prev {
+    left: 0;
+}
+
+.rental-carousel-nav.next {
+    right: 0;
+}
+
+.rental-carousel-nav.prev button {
+    left: 2rem;
+}
+
+.rental-carousel-nav.next button {
+    right: 2rem;
+}
+
+@media (min-width: 1280px) {
+    .rental-carousel-nav.prev button {
+        left: -3rem;
+    }
+
+    .rental-carousel-nav.next button {
+        right: -3rem;
+    }
+}
+
+/* Focus States */
+.rental-carousel-nav button:focus,
+.rental-carousel-pagination .dot:focus {
+    outline: none;
+}
+
+.rental-carousel-nav button:focus-visible,
+.rental-carousel-pagination .dot:focus-visible {
+    outline: 2px solid var(--color-burgundy);
+    outline-offset: 2px;
+}
+
+/* Pagination */
+.rental-carousel-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.rental-carousel-pagination .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.rental-carousel-pagination .dot.active {
+    width: 32px;
+    border-radius: 4px;
+    background: var(--color-burgundy);
+}
+
+.rental-carousel-pagination .dot:hover:not(.active) {
+    background: #ccc;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .hidden-mobile {
+        display: none;
+    }
+
+    .rental-carousel-content-area {
+        height: 520px;
+    }
+
+    .rental-carousel-card {
+        width: 280px;
+        margin-left: -140px;
+    }
+}

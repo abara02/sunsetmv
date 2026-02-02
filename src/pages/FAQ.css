@@ -1,0 +1,173 @@
+.faq-page {
+    position: relative;
+    padding: 120px 20px 80px;
+    background-color: var(--color-cream);
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.faq-decor {
+    position: absolute;
+    width: 20%;
+    max-width: 300px;
+    height: 30%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.25;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.decor-top-left {
+    top: -10px;
+    left: -10px;
+    background-image: url('/grapes.png');
+    background-position: left top;
+}
+
+.decor-bottom-right {
+    bottom: -10px;
+    right: -10px;
+    background-image: url('/wine faq.png');
+    background-position: right bottom;
+    width: 30%;
+    max-width: 450px;
+    height: 40%;
+}
+
+@media (max-width: 1024px) {
+    .faq-decor {
+        width: 250px;
+        opacity: 0.15;
+    }
+}
+
+@media (max-width: 768px) {
+    .faq-decor {
+        display: none;
+    }
+}
+
+.faq-container {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+
+.faq-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.faq-header h1 {
+    font-family: var(--font-heading);
+    color: #000;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.faq-header p {
+    color: var(--color-text-main);
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.faq-item {
+    border-bottom: 1px solid #000;
+    background: transparent;
+    padding: 0;
+    margin-bottom: 0;
+    border-radius: 0;
+    box-shadow: none;
+    transition: none;
+}
+
+.faq-item:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.faq-question-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    color: var(--color-text-main);
+}
+
+.faq-question-text {
+    font-family: var(--font-body);
+    /* Or Heading depending on preference, image looks clean sans-serif */
+    font-size: 1.1rem;
+    font-weight: 400;
+    padding-right: 2rem;
+}
+
+.faq-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gold);
+    /* Or matches text, image has gold/brown tint */
+    transition: transform 0.3s ease;
+}
+
+.faq-answer-container {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease-out;
+}
+
+.faq-answer-container.open {
+    grid-template-rows: 1fr;
+}
+
+.faq-answer-content {
+    overflow: hidden;
+    color: var(--color-text-main);
+    line-height: 1.6;
+    font-size: 1rem;
+    background-color: #F5EFED;
+    /* Matches the slight background in the image snippet */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.faq-answer-container.open .faq-answer-content {
+    opacity: 1;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    /* Add some space if needed, or keeping inside block */
+}
+
+/* Adjust layout so answer looks like the image */
+.faq-item.open .faq-question-btn {
+    padding-bottom: 1rem;
+    /* Less padding when open if desired */
+}
+
+.faq-link {
+    color: var(--color-burgundy);
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .faq-header h1 {
+        font-size: 2rem;
+    }
+
+    .faq-question-text {
+        font-size: 1rem;
+    }
+}
