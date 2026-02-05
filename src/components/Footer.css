@@ -62,7 +62,7 @@
 
 .social-icons {
     display: flex;
-    gap: 1.5rem;
+    /* gap: 1.5rem; Removed for optical spacing control */
     margin-top: 1rem;
     justify-content: center;
     align-items: center;
@@ -101,6 +101,14 @@
     height: 42px;
     transform: translateY(-1px);
     /* Optical center alignment */
+    margin-right: 14px;
+    /* Optical spacing to Facebook (compensating for FB padding) */
+}
+
+/* Specific margins for optical spacing */
+.social-icons a[aria-label="Instagram"] {
+    margin-right: 25px;
+    /* Optical spacing to Google (compensating for Google padding) */
 }
 
 .newsletter-form {
