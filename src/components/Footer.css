@@ -92,14 +92,15 @@
     width: 54px;
     /* Significantly larger to compensate for transparent padding */
     height: 54px;
-    margin-top: -11px;
-    /* Center alignment adjustment */
+    transform: translateY(-2px);
+    /* Optical center alignment */
 }
 
 .social-icons a[aria-label="Google Reviews"] img {
     width: 42px;
     height: 42px;
-    margin-top: -5px;
+    transform: translateY(-1px);
+    /* Optical center alignment */
 }
 
 .newsletter-form {
