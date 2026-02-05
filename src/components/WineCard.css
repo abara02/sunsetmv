@@ -1,7 +1,7 @@
 .wine-card {
     background: white;
     border-radius: 8px;
-    overflow: hidden;
+    overflow: visible;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
     position: relative;
@@ -21,10 +21,10 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
-.wine-image img {
+.wine-image>img:not(.sale-badge-img) {
     height: 100%;
     width: auto;
     object-fit: contain;
@@ -115,4 +115,35 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     z-index: 10;
     letter-spacing: 0.5px;
+}
+
+.sale-badge-img {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 85px !important;
+    height: auto !important;
+    z-index: 20;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    pointer-events: none;
+    transform: rotate(12deg);
+}
+
+.price-display {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.regular-price {
+    text-decoration: line-through;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+}
+
+.sale-price {
+    font-weight: 700;
+    color: var(--color-burgundy);
+    font-size: 1.1rem;
 }

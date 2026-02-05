@@ -58,7 +58,16 @@ const CartDrawer = () => {
                                             <Link to={`/shop/${item.slug}`} onClick={closeCart} className="drawer-item-name">
                                                 {item.name}
                                             </Link>
-                                            <span className="drawer-item-price">${item.price.toFixed(2)}</span>
+                                            <div className="drawer-item-price-group">
+                                                {item.onSale && item.regularPrice ? (
+                                                    <div className="drawer-price-stack">
+                                                        <span className="drawer-regular-price">${item.regularPrice.toFixed(2)}</span>
+                                                        <span className="drawer-sale-price">${item.price.toFixed(2)}</span>
+                                                    </div>
+                                                ) : (
+                                                    <span className="drawer-item-price">${item.price.toFixed(2)}</span>
+                                                )}
+                                            </div>
                                         </div>
                                         <div className="drawer-item-controls">
                                             <div className="qty-controls">

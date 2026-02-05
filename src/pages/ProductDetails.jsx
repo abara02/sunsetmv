@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useParams, Link } from 'react-router-dom';
-import { wines } from '../data/wines';
+import { useShop } from '../context/ShopContext';
 import { ArrowLeft, Wine } from 'lucide-react';
 import './ProductDetails.css';
 
 const ProductDetails = () => {
     const { slug } = useParams();
+    const { wines, loading } = useShop();
     const [quantity, setQuantity] = useState(1);
     const { addToCart } = useCart();
     const [adding, setAdding] = useState(false);
     const [added, setAdded] = useState(false);
+
+    if (loading) {
+        return (
+            <div className="container" style={{ padding: '100px 0', textAlign: 'center' }}>
+                <div className="loading-spinner"></div>
+            </div>
+        );
+    }
 
     const wine = wines.find(w => w.slug === slug);
 
@@ -45,10 +54,19 @@ const ProductDetails = () => {
                 <div className="product-layout">
                     {/* Left Column: Info & Actions */}
                     <div className="product-info-col">
-                        <span className="product-type-label">{wine.type} Collection</span>
+                        {wine.type !== 'More' && <span className="product-type-label">{wine.type} Collection</span>}
                         <h1 className="product-title">{wine.name}</h1>
 
-                        <div className="product-price">${wine.price.toFixed(2)}</div>
+                        <div className="product-price">
+                            {wine.onSale && wine.regularPrice ? (
+                                <div className="price-stack">
+                                    <span className="details-regular-price">${wine.regularPrice.toFixed(2)}</span>
+                                    <span className="details-sale-price">${wine.price.toFixed(2)}</span>
+                                </div>
+                            ) : (
+                                <span>${wine.price.toFixed(2)}</span>
+                            )}
+                        </div>
 
                         <div className="stock-status">
                             <span className="indicator"></span> In Stock
@@ -87,6 +105,7 @@ const ProductDetails = () => {
                                 <Wine size={120} strokeWidth={0.5} color="#ccc" />
                             </div>
                         )}
+                        {wine.isFanFavorite && <div className="fan-favorite-badge">Fan Favorite</div>}
                     </div>
                 </div>
 
@@ -109,10 +128,12 @@ const ProductDetails = () => {
                     <div className="specs-section">
                         <h3>Specifications</h3>
                         <div className="specs-grid">
-                            <div className="spec-item">
-                                <span className="label">Alcohol</span>
-                                <span className="value">{wine.specs.alc}</span>
-                            </div>
+                            {wine?.specs?.alc && wine.specs.alc.trim() !== "" && (
+                                <div className="spec-item">
+                                    <span className="label">Alcohol</span>
+                                    <span className="value">{wine.specs.alc}</span>
+                                </div>
+                            )}
                             {wine.specs.weight && (
                                 <div className="spec-item">
                                     <span className="label">Weight</span>

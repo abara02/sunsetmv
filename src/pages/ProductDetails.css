@@ -178,6 +178,7 @@
     font-size: 1.05rem;
     line-height: 1.7;
     color: var(--color-text-main);
+    white-space: pre-wrap;
 }
 
 /* Right Column: Image */
@@ -188,6 +189,7 @@
     align-items: center;
     padding: 3rem;
     min-height: 600px;
+    position: relative;
 }
 
 .main-product-image {
@@ -212,6 +214,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.fan-favorite-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #C19A6B;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    letter-spacing: 0.5px;
 }
 
 /* Accolades Section */
@@ -265,13 +283,9 @@
 }
 
 .specs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    /* border: 1px solid #eee; Removed per user request */
+    display: flex;
+    gap: 6rem;
     padding: 2rem 0;
-    /* Adjusted padding since border is gone */
-    /* border-radius: 8px; Removed per user request */
 }
 
 .spec-item {
@@ -313,4 +327,23 @@
     .product-title {
         font-size: 2.5rem;
     }
+}
+
+
+.price-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.details-regular-price {
+    text-decoration: line-through;
+    color: var(--color-text-muted);
+    font-size: 1.2rem;
+    font-family: var(--font-serif);
+}
+
+.details-sale-price {
+    color: var(--color-burgundy);
+    font-weight: 700;
 }

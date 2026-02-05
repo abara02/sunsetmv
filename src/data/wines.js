@@ -396,5 +396,18 @@ export const wines = [
             dimensions: "3x3x12 in"
         },
         image: "/wines/shades.png"
+    },
+    {
+        id: 25,
+        slug: 'mulling-spices',
+        name: "Mulling Spices",
+        type: "More",
+        price: 15.00,
+        description: "Create a cozy, festive mulled wine at home with our signature spice blend. Each bag includes spice mix and easy-to-follow recipes for both white and red versions of our mulled wine.\n\n One bag makes approximately 10–12 servings.",
+        specs: {
+            weight: "2.5 lbs",
+            dimensions: "4 × 3 × 1 in"
+        },
+        image: "/wines/MullingSpice.png"
     }
 ];

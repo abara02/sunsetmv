@@ -4,6 +4,19 @@ import Navbar from '../components/Navbar';
 import TastingCarousel from '../components/TastingCarousel';
 import './Visit.css';
 
+const GET_VISIT_PAGE = `
+  query GetVisitPage($id: ID!) {
+    page(id: $id, idType: URI) {
+      id
+      title
+      storeHoursEdit {
+        hoursTitle
+        hoursList
+      }
+    }
+  }
+`;
+
 const Visit = () => {
     const { hash } = useLocation();
     const images = [
@@ -13,6 +26,92 @@ const Visit = () => {
     ];
 
     const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+    const [hours, setHours] = React.useState([]);
+    const [hoursTitle, setHoursTitle] = React.useState('Winter Hours');
+    const [loading, setLoading] = React.useState(true);
+
+    // Fetch Hours from WordPress
+    React.useEffect(() => {
+        const fetchVisitData = async () => {
+            const graphqlUrl = '/graphql';
+
+            const attemptFetch = async (uri, queryToUse) => {
+                try {
+                    console.log(`Visit Page: Trying fetch for URI "${uri}"`);
+                    const response = await fetch(graphqlUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            query: queryToUse,
+                            variables: { id: uri }
+                        })
+                    });
+                    const result = await response.json();
+
+                    // If the whole query fails (e.g. storeHoursDetails doesn't exist yet)
+                    if (result.errors) {
+                        const firstError = result.errors[0]?.message || 'Unknown error';
+                        console.warn('GraphQL error:', firstError);
+                        return null;
+                    }
+
+                    const page = result.data?.page;
+                    if (!page) return null;
+
+                    const details = page.storeHoursEdit || page.storeHoursDetails;
+                    if (details) {
+                        console.log('--- HOURS DATA FOUND ---', details);
+                        return details;
+                    }
+                    return null;
+                } catch (e) {
+                    console.error('Fetch error:', e);
+                    return null;
+                }
+            };
+
+            try {
+                // Try multiple URI patterns
+                let details = await attemptFetch('/store-hours/', GET_VISIT_PAGE);
+                if (!details) details = await attemptFetch('store-hours', GET_VISIT_PAGE);
+                if (!details) details = await attemptFetch('/store-hours', GET_VISIT_PAGE);
+
+                if (details) {
+                    console.log('--- HOURS DATA FOUND ---', details);
+                    setHoursTitle(details.hoursTitle || 'Winter Hours');
+
+                    const rawContent = details.hoursList;
+                    if (rawContent) {
+                        // Split by newlines and clean up each line
+                        const lines = rawContent.split(/\r?\n/).filter(line => line.trim() !== '');
+
+                        const mapped = lines.map(line => {
+                            // Split only at the FIRST colon to separate Day from Time
+                            const firstColonIndex = line.indexOf(':');
+                            if (firstColonIndex !== -1) {
+                                return {
+                                    label: line.substring(0, firstColonIndex).trim(),
+                                    value: line.substring(firstColonIndex + 1).trim()
+                                };
+                            }
+                            // Fallback if no colon is found
+                            return { label: '', value: line.trim() };
+                        });
+
+                        setHours(mapped);
+                    } else {
+                        setHours([]);
+                    }
+                }
+            } catch (err) {
+                console.error('Final hours fetch error:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchVisitData();
+    }, []);
 
     // Tasting Menu Data
     const tastingItems = [
@@ -103,30 +202,35 @@ const Visit = () => {
                                 <li>Please review our FAQ for current rules and guidelines.</li>
                             </ul>
 
-                            <h2>Winter Hours</h2>
+                            <h2>{hoursTitle}</h2>
                             <div className="hours-grid-container">
                                 <div className="hours-grid">
-
-                                    <div className="day">Thursday</div>
-                                    <div className="time">12:00 PM – 5:00 PM</div>
-
-                                    <div className="day">Friday</div>
-                                    <div className="time">12:00 PM – 5:00 PM</div>
-
-                                    <div className="day">Saturday</div>
-                                    <div className="time">12:00 PM – 5:00 PM</div>
-
-                                    <div className="day">Sunday</div>
-                                    <div className="time">12:00 PM – 5:00 PM</div>
-
-                                    <div className="day">Monday</div>
-                                    <div className="time">Closed</div>
-
-                                    <div className="day">Tuesday</div>
-                                    <div className="time">Closed</div>
-
-                                    <div className="day">Wednesday</div>
-                                    <div className="time">Closed</div>
+                                    {hours.length > 0 ? (
+                                        hours.map((item, idx) => (
+                                            <React.Fragment key={idx}>
+                                                <div className="day">{item.label} :</div>
+                                                <div className="time">{item.value || 'Closed'}</div>
+                                            </React.Fragment>
+                                        ))
+                                    ) : (
+                                        /* Semi-static Fallback if WordPress isn't ready */
+                                        <>
+                                            <div className="day">Monday</div>
+                                            <div className="time">Closed</div>
+                                            <div className="day">Tuesday</div>
+                                            <div className="time">Closed</div>
+                                            <div className="day">Wednesday</div>
+                                            <div className="time">Closed</div>
+                                            <div className="day">Thursday</div>
+                                            <div className="time">12:00 PM – 5:00 PM</div>
+                                            <div className="day">Friday</div>
+                                            <div className="time">12:00 PM – 5:00 PM</div>
+                                            <div className="day">Saturday</div>
+                                            <div className="time">12:00 PM – 5:00 PM</div>
+                                            <div className="day">Sunday</div>
+                                            <div className="time">12:00 PM – 5:00 PM</div>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </section>

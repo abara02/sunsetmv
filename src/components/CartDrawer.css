@@ -142,6 +142,28 @@
     white-space: nowrap;
 }
 
+.drawer-item-price-group {
+    text-align: right;
+}
+
+.drawer-price-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.drawer-regular-price {
+    text-decoration: line-through;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+}
+
+.drawer-sale-price {
+    font-weight: 600;
+    color: var(--color-burgundy);
+    font-size: 1rem;
+}
+
 .drawer-item-controls {
     display: flex;
     justify-content: space-between;

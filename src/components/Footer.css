@@ -79,17 +79,23 @@
     transform: translateY(-3px);
 }
 
+/* Standardize social icons */
 .social-icons a img {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     object-fit: contain;
     display: block;
 }
 
-/* Make Facebook icon larger to visually match the others */
+/* Specific scaling for visual balance */
 .social-icons a[aria-label="Facebook"] img {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
+}
+
+.social-icons a[aria-label="Google Reviews"] img {
+    width: 38px;
+    height: 38px;
 }
 
 .newsletter-form {

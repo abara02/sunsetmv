@@ -183,26 +183,37 @@
 
 .hours-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem 2rem;
+    grid-template-columns: auto 1fr;
+    gap: 0.8rem 3rem;
     /* Row gap, Column gap */
     text-align: left;
     background: #fdfdfd;
-    padding: 1.5rem 3rem;
-    border-radius: 8px;
+    padding: 2.5rem 3.5rem;
+    border-radius: 12px;
     border: 1px solid #eee;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    max-width: 500px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    min-width: 450px;
 }
 
 .hours-grid .day {
     font-weight: 600;
     color: var(--color-burgundy);
-    text-align: right;
+    text-align: left;
+    white-space: nowrap;
+    font-size: 1.1rem;
 }
 
 .hours-grid .time {
-    color: #555;
+    color: #666;
+    text-align: left;
+    font-size: 1.1rem;
+}
+
+.hours-grid .full-width-text {
+    font-size: 1.1rem;
+    line-height: 2;
+    color: #333;
+    padding: 0.5rem 0;
 }
 
 /* Visit Tips List */

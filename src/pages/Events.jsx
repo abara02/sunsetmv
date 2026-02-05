@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import './Events.css';
 import { Users, Music, Wine, List as ListIcon, Calendar as CalendarIcon } from 'lucide-react';
 import EventCalendar from '../components/EventCalendar';
 import RentalCarousel from '../components/RentalCarousel';
 
-// Enhanced events data with date objects for calendar
-const events = [
-    { id: 1, month: 'JUN', day: '12', date: new Date(2025, 5, 12), title: 'Jazz in the Vines', desc: 'Live music featuring the exuberant sounds of local jazz trio.', time: '2:00 PM - 5:00 PM', category: 'Music' },
-    { id: 2, month: 'JUN', day: '18', date: new Date(2025, 5, 18), title: 'Summer Solstice Tasting', desc: 'Special extended hours and flight specials to celebrate the longest day.', time: '11:00 AM - 8:00 PM', category: 'Tasting' },
-    { id: 3, month: 'JUL', day: '04', date: new Date(2025, 6, 4), title: 'Red, White & Rosé', desc: 'BBQ food truck and patriotic wine slushies.', time: '12:00 PM - 6:00 PM', category: 'Festival' },
-    { id: 4, month: 'AUG', day: '15', date: new Date(2025, 7, 15), title: 'Sunset Yoga', desc: 'Relax and unwind with a guided yoga session overlooking the vineyard.', time: '6:00 PM - 7:30 PM', category: 'Wellness' },
-];
+const QUERY_EVENTS = `
+  query GetEvents {
+    events {
+      nodes {
+        id
+        eventDetails {
+          eventTitle
+          eventDescription
+          eventDate
+          eventTime
+        }
+      }
+    }
+  }
+`;
 
 const rentals = [
     {
@@ -66,6 +74,86 @@ Non-refundable payment due up front upon booking`,
 const Events = () => {
     const { hash } = useLocation();
     const [viewMode, setViewMode] = useState('list'); // 'list' or 'calendar'
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Fetch events from CMS
+    useEffect(() => {
+        const fetchEvents = async () => {
+            const graphqlUrl = '/graphql';
+            console.log('Attempting to fetch events from:', graphqlUrl);
+
+            try {
+
+                const response = await fetch(graphqlUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: QUERY_EVENTS })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const json = await response.json();
+                console.log('WPGraphQL Response:', json);
+
+                const { data, errors } = json;
+
+                if (errors) {
+                    console.error('GraphQL Errors:', errors);
+                    throw new Error(errors[0].message);
+                }
+
+                if (!data || !data.events || !data.events.nodes) {
+                    console.warn('No events data found in response');
+                    setEvents([]);
+                    return;
+                }
+
+                // Map data to the format expected by the component
+                const mappedEvents = data.events.nodes.map(node => {
+                    const fields = node.eventDetails;
+                    const dateObj = new Date(fields.eventDate);
+                    return {
+                        id: node.id,
+                        title: fields.eventTitle,
+                        desc: fields.eventDescription,
+                        time: fields.eventTime,
+                        category: 'General', // Fallback as it's not in the screenshot
+                        date: dateObj,
+                        month: dateObj.toLocaleString('default', { month: 'short' }).toUpperCase(),
+                        day: dateObj.getDate().toString().padStart(2, '0')
+                    };
+                });
+
+                console.log('Mapped Events:', mappedEvents);
+                setEvents(mappedEvents);
+            } catch (err) {
+                console.error('Error fetching events:', err);
+                // Fallback to mock data silently without notifying the user in the UI
+                const mockEvents = [
+                    {
+                        id: 'galentines-workshop',
+                        title: 'Galentine’s Charcuterie Workshop',
+                        desc: 'Hey ladies! Join Mommy Salami Charcuterie for a fun in-person Galentines Day Charcuterie Workshop at Sunset Meadow Vineyards! 💕🫒 Whether you’re a charcuterie pro or new to the game, we’ll guide you through creating beautiful, delicious boards perfect for sharing with your besties.',
+                        time: '6:00 PM - 8:00 PM',
+                        category: 'Workshop',
+                        image: '/galentines-workshop.jpg',
+                        date: new Date('2026-02-13T18:00:00'),
+                        month: 'FEB',
+                        day: '13'
+                    }
+                ];
+                setEvents(mockEvents);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchEvents();
+    }, []);
 
     // Scroll to hash on load/change
     useEffect(() => {
@@ -74,7 +162,7 @@ const Events = () => {
             if (element) {
                 setTimeout(() => {
                     element.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
+                }, 1000);
             }
         }
     }, [hash]);
@@ -117,34 +205,46 @@ const Events = () => {
                         </div>
                     </div>
 
-                    {viewMode === 'list' ? (
-                        <div className="events-list fade-in">
-                            {events.map(event => (
-                                <div key={event.id} className="event-card">
-                                    <div className="event-date-column">
-                                        <div className="date-box">
-                                            <span className="month">{event.month}</span>
-                                            <span className="day">{event.day}</span>
-                                        </div>
-                                    </div>
-                                    <div className="event-details-column">
-                                        <div className="event-category">
-                                            {event.category === 'Music' && <Music size={16} />}
-                                            {event.category === 'Tasting' && <Wine size={16} />}
-                                            <span>{event.category || 'General'}</span>
-                                        </div>
-                                        <h3>{event.title}</h3>
-                                        <p className="event-time">{event.time}</p>
-                                        <p className="event-desc">{event.desc}</p>
-                                    </div>
-                                    <div className="event-action-column">
-                                        <button className="btn btn-primary">Event Details</button>
-                                    </div>
-                                </div>
-                            ))}
+                    {loading ? (
+                        <div className="text-center py-5">
+                            <div className="loading-spinner"></div>
+                        </div>
+
+                    ) : events.length === 0 ? (
+                        <div className="text-center py-5">
+                            <p>No upcoming events at this time. Check back soon!</p>
                         </div>
                     ) : (
-                        <EventCalendar events={events} />
+                        <>
+                            {viewMode === 'list' ? (
+                                <div className="events-list fade-in">
+                                    {events.map(event => (
+                                        <div key={event.id} className="event-card">
+                                            {event.image && (
+                                                <div className="event-image-column">
+                                                    <img src={event.image} alt={event.title} />
+                                                </div>
+                                            )}
+                                            <div className="event-date-column">
+                                                <div className="date-box">
+                                                    <span className="month">{event.month}</span>
+                                                    <span className="day">{event.day}</span>
+                                                </div>
+                                            </div>
+                                            <div className="event-details-column">
+                                                <h3>{event.title}</h3>
+                                                <p className="event-time">{event.time}</p>
+                                            </div>
+                                            <div className="event-action-column">
+                                                <Link to={`/events/${event.id}`} className="btn btn-primary">Event Details</Link>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <EventCalendar events={events} />
+                            )}
+                        </>
                     )}
                 </section>
 
@@ -168,9 +268,16 @@ const Events = () => {
 
                     <div className="inquiry-banner mt-5">
                         <div className="inquiry-content">
-                            <h3>Have a custom request?</h3>
-                            <p>Contact our events coordinator to schedule a tour and discuss packages.</p>
-                            <a href="mailto:events@sunsetmeadowvineyards.com" className="btn btn-primary-inverted">Contact Us</a>
+                            <h3>Stay Up to Date on Upcoming Events</h3>
+                            <p>Follow us on social media for the latest events, announcements, promotions, and updates.</p>
+                            <div className="banner-socials">
+                                <a href="https://www.facebook.com/SunsetMeadowVineyards" target="_blank" rel="noopener noreferrer" className="social-icon-link fb-icon">
+                                    <img src="/icon-facebook.png" alt="Facebook" />
+                                </a>
+                                <a href="https://www.instagram.com/sunsetmeadowvineyards/" target="_blank" rel="noopener noreferrer" className="social-icon-link ig-icon">
+                                    <img src="/icon-instagram.png" alt="Instagram" />
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </section>

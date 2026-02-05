@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import WineCard from '../components/WineCard';
-import { wines } from '../data/wines';
+import { useShop } from '../context/ShopContext';
 import './Shop.css';
 
 const Shop = () => {
+    const { wines, loading } = useShop();
     const [filter, setFilter] = useState('All');
     const location = useLocation();
 
@@ -33,6 +34,9 @@ const Shop = () => {
                 case 'sparkling':
                     setFilter('Sparkling');
                     break;
+                case 'more':
+                    setFilter('More');
+                    break;
                 default:
                     setFilter('All');
             }
@@ -51,7 +55,7 @@ const Shop = () => {
         : wines.filter(wine => wine.type === filter);
 
     // Get unique types for filter buttons (ensure ordered as requested)
-    const filterTypes = ['All', 'White', 'Fruit', 'Rosé', 'Red', 'Reserve', 'Sparkling'];
+    const filterTypes = ['All', 'White', 'Fruit', 'Rosé', 'Red', 'Reserve', 'Sparkling', 'More'];
 
     return (
         <div className="page-container">
@@ -64,31 +68,42 @@ const Shop = () => {
             </div>
 
             <div className="container shop-content">
-                <div className="filters">
-                    {filterTypes.map(type => (
-                        <button
-                            key={type}
-                            className={`filter-btn ${filter === type ? 'active' : ''}`}
-                            onClick={() => setFilter(type)} // Keeps manual clicking working
-                        >
-                            {type}
-                        </button>
-                    ))}
-                </div>
+                {loading ? (
+                    <div className="text-center py-5">
+                        <div className="loading-spinner"></div>
+                    </div>
+                ) : (
+                    <>
+                        <div className="filters">
+                            {filterTypes.map(type => (
+                                <button
+                                    key={type}
+                                    className={`filter-btn ${filter === type ? 'active' : ''}`}
+                                    onClick={() => setFilter(type)} // Keeps manual clicking working
+                                >
+                                    {type}
+                                </button>
+                            ))}
+                        </div>
 
-                <div className="wine-grid">
-                    {filteredWines.map(wine => (
-                        <Link to={`/shop/${wine.slug}`} key={wine.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-                            <WineCard
-                                name={wine.name}
-                                type={wine.type}
-                                price={wine.price}
-                                image={wine.image}
-                                isFanFavorite={wine.isFanFavorite}
-                            />
-                        </Link>
-                    ))}
-                </div>
+                        <div className="wine-grid">
+                            {filteredWines.map(wine => (
+                                <Link to={`/shop/${wine.slug}`} key={wine.id} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <WineCard
+                                        name={wine.name}
+                                        type={wine.type}
+                                        price={wine.price}
+                                        regularPrice={wine.regularPrice}
+                                        salePrice={wine.salePrice}
+                                        onSale={wine.onSale}
+                                        image={wine.image}
+                                        isFanFavorite={wine.isFanFavorite}
+                                    />
+                                </Link>
+                            ))}
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );

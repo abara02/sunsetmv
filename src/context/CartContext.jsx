@@ -52,7 +52,9 @@ export const CartProvider = ({ children }) => {
                 return [...prevItems, {
                     id: product.id,
                     name: product.name,
-                    price: product.price,
+                    price: product.price, // This will be the dynamic price (sale or regular)
+                    regularPrice: product.regularPrice,
+                    onSale: product.onSale,
                     image: product.image,
                     slug: product.slug,
                     quantity

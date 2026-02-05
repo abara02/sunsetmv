@@ -144,6 +144,23 @@
     width: 80%;
 }
 
+/* Loading States */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(83, 22, 29, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--color-primary, #53161D);
+    margin: 0 auto 1.5rem;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 /* Events List (Winery Events) */
 .events-list {
     display: flex;
@@ -155,7 +172,7 @@
 
 .event-card {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 200px auto 1fr auto;
     background: white;
     border-radius: 8px;
     overflow: hidden;
@@ -168,6 +185,24 @@
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border-left-color: var(--color-accent, #c5a059);
+}
+
+.event-image-column {
+    width: 200px;
+    height: 100%;
+    overflow: hidden;
+    border-right: 1px solid #f0f0f0;
+}
+
+.event-image-column img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.event-card:hover .event-image-column img {
+    transform: scale(1.05);
 }
 
 .event-date-column {
@@ -229,7 +264,7 @@
 .event-time {
     font-weight: 600;
     color: var(--color-text-main);
-    margin-bottom: 1rem;
+    margin-bottom: 0;
 }
 
 .event-desc {
@@ -333,6 +368,42 @@
     font-size: 1.2rem;
     margin-bottom: 2rem;
     opacity: 0.9;
+}
+
+.banner-socials {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.social-icon-link {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.social-icon-link.fb-icon img {
+    width: 80%;
+    height: 80%;
+}
+
+.social-icon-link.ig-icon img {
+    width: 100%;
+    height: 100%;
+}
+
+.social-icon-link:hover {
+    transform: scale(1.1);
+}
+
+.social-icon-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .page-container.events-page {

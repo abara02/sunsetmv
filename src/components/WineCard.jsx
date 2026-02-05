@@ -2,7 +2,7 @@ import React from 'react';
 import { Wine, ShoppingBag } from 'lucide-react';
 import './WineCard.css';
 
-const WineCard = ({ name, type, price, image, isFanFavorite }) => {
+const WineCard = ({ name, type, price, regularPrice, salePrice, onSale, image, isFanFavorite }) => {
     return (
         <div className="wine-card">
             <div className="wine-image">
@@ -17,11 +17,21 @@ const WineCard = ({ name, type, price, image, isFanFavorite }) => {
                     <ShoppingBag size={20} />
                 </button>
                 {isFanFavorite && <div className="fan-favorite-badge">Fan Favorite</div>}
+                {onSale && <img src="/images/sale-badge.png" alt="SALE" className="sale-badge-img" />}
             </div>
             <div className="wine-info">
                 <h3>{name}</h3>
-                <p className="wine-type">{type}</p>
-                <span className="wine-price">${price.toFixed(2)}</span>
+                {type !== 'More' && <p className="wine-type">{type}</p>}
+                <div className="price-display">
+                    {onSale && regularPrice ? (
+                        <>
+                            <span className="regular-price">${regularPrice.toFixed(2)}</span>
+                            <span className="sale-price">${price.toFixed(2)}</span>
+                        </>
+                    ) : (
+                        <span className="wine-price">${price.toFixed(2)}</span>
+                    )}
+                </div>
             </div>
         </div>
     );

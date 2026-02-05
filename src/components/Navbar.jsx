@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingBag, MapPin, User } from 'lucide-react';
+import { Menu, X, ShoppingBag, MapPin } from 'lucide-react';
 import './Navbar.css';
 
 const Navbar = React.memo(() => {
@@ -68,6 +68,7 @@ const Navbar = React.memo(() => {
                             <Link to="/shop?category=red">Red Wines</Link>
                             <Link to="/shop?category=reserve">Reserve Wines</Link>
                             <Link to="/shop?category=sparkling">Sparkling Wines</Link>
+                            <Link to="/shop?category=more">More</Link>
                         </div>
                     </div>
                     <div className="nav-item-dropdown">
@@ -85,9 +86,7 @@ const Navbar = React.memo(() => {
                     <Link to="/where-to-buy" className="icon-link" title="Where to Buy">
                         <MapPin size={22} />
                     </Link>
-                    <Link to="/account" className="icon-link" title="My Account">
-                        <User size={22} />
-                    </Link>
+
                     <button className="icon-link cart-trigger" title="Cart" onClick={openCart}>
                         <ShoppingBag size={22} />
                         {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
@@ -101,6 +100,7 @@ const Navbar = React.memo(() => {
                 <div className={`mobile-menu ${isOpen ? 'open' : ''}`}>
                     <Link to="/visit" onClick={closeMenu}>Visit</Link>
                     <Link to="/shop" onClick={closeMenu}>Shop</Link>
+                    <Link to="/shop?category=more" onClick={closeMenu}>More</Link>
                     <Link to="/events#scheduled-events" onClick={closeMenu}>Scheduled Events</Link>
                     <Link to="/events#private-events" onClick={closeMenu}>Private Events</Link>
                     <Link to="/about" onClick={closeMenu}>Our Story</Link>
