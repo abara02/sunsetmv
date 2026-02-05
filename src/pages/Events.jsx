@@ -116,12 +116,14 @@ const Events = () => {
                 const mappedEvents = data.events.nodes.map(node => {
                     const fields = node.eventDetails;
                     const dateObj = new Date(fields.eventDate);
+                    const isWorkshop = fields.eventTitle.toLowerCase().includes('galentine');
                     return {
                         id: node.id,
                         title: fields.eventTitle,
                         desc: fields.eventDescription,
                         time: fields.eventTime,
                         category: 'General', // Fallback as it's not in the screenshot
+                        image: isWorkshop ? '/galentines-workshop.png' : (node.featuredImage?.node?.sourceUrl || null),
                         date: dateObj,
                         month: dateObj.toLocaleString('default', { month: 'short' }).toUpperCase(),
                         day: dateObj.getDate().toString().padStart(2, '0')
@@ -140,7 +142,7 @@ const Events = () => {
                         desc: 'Hey ladies! Join Mommy Salami Charcuterie for a fun in-person Galentines Day Charcuterie Workshop at Sunset Meadow Vineyards! 💕🫒 Whether you’re a charcuterie pro or new to the game, we’ll guide you through creating beautiful, delicious boards perfect for sharing with your besties.',
                         time: '6:00 PM - 8:00 PM',
                         category: 'Workshop',
-                        image: '/galentines-workshop.jpg',
+                        image: '/galentines-workshop.png',
                         date: new Date('2026-02-13T18:00:00'),
                         month: 'FEB',
                         day: '13'
@@ -220,11 +222,6 @@ const Events = () => {
                                 <div className="events-list fade-in">
                                     {events.map(event => (
                                         <div key={event.id} className="event-card">
-                                            {event.image && (
-                                                <div className="event-image-column">
-                                                    <img src={event.image} alt={event.title} />
-                                                </div>
-                                            )}
                                             <div className="event-date-column">
                                                 <div className="date-box">
                                                     <span className="month">{event.month}</span>

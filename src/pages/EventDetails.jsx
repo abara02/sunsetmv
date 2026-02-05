@@ -132,9 +132,12 @@ const EventDetails = () => {
                 const finalLink = getLink(fields.eventLink || fields.event_link);
                 console.log('Mapped Link:', finalLink);
 
+                const eventTitle = fields.eventTitle || fields.event_title || 'Untitled Event';
+                const isWorkshop = eventTitle.toLowerCase().includes('galentine');
+
                 setEvent({
                     id: result.data.event.id,
-                    title: fields.eventTitle || fields.event_title || 'Untitled Event',
+                    title: eventTitle,
                     description: fields.eventDescription || fields.event_description || '',
                     date: dateObj.toLocaleDateString('default', {
                         weekday: 'long',
@@ -143,8 +146,8 @@ const EventDetails = () => {
                         day: 'numeric'
                     }),
                     cost: fields.eventCost || fields.event_cost || null,
-                    imageUrl: fields.eventImage?.node?.sourceUrl || fields.event_image?.node?.sourceUrl || fields.eventImage?.sourceUrl || fields.event_image?.sourceUrl || null,
-                    imageAlt: fields.eventImage?.node?.altText || fields.event_image?.node?.altText || fields.eventTitle || 'Event Image',
+                    imageUrl: isWorkshop ? '/galentines-workshop.png' : (fields.eventImage?.node?.sourceUrl || fields.event_image?.node?.sourceUrl || fields.eventImage?.sourceUrl || fields.event_image?.sourceUrl || null),
+                    imageAlt: fields.eventImage?.node?.altText || fields.event_image?.node?.altText || eventTitle || 'Event Image',
                     link: finalLink
                 });
             } catch (err) {
@@ -159,7 +162,7 @@ const EventDetails = () => {
                         date: 'Friday, February 13, 2026',
                         time: '6:00 PM - 8:00 PM (Ends Feb 14 @ 1:00 AM)',
                         cost: '$75.00', // Assumed cost or filler
-                        imageUrl: '/galentines-workshop.jpg',
+                        imageUrl: '/dummydata.png',
                         imageAlt: 'Galentines Charcuterie Workshop',
                         link: { url: 'https://www.eventbrite.com', title: 'Register on Eventbrite' }
                     });

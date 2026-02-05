@@ -62,11 +62,6 @@ const EventCalendar = ({ events }) => {
                                 onClick={() => navigate(`/events/${event.id}`)}
                                 title={`Click to view details for ${event.title}`}
                             >
-                                {event.image && (
-                                    <div className="event-mini-thumb">
-                                        <img src={event.image} alt="" />
-                                    </div>
-                                )}
                                 <div className="event-pill-info">
                                     <span className="event-time-pill">{event.time.split(' - ')[0]}</span>
                                     <span className="event-title-pill">{event.title}</span>

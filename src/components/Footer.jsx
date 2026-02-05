@@ -17,7 +17,7 @@ const Footer = () => {
                             <img src="/icon-instagram.png" alt="Instagram" />
                         </a>
                         <a href="https://www.google.com/search?q=sunset+meadow+vineyards+reviews" target="_blank" rel="noopener noreferrer" aria-label="Google Reviews">
-                            <img src="/icon-google.png" alt="Google Reviews" />
+                            <img src="gooog.png" alt="Google Reviews" />
                         </a>
                         <a href="https://www.facebook.com/sunsetmeadowvineyards" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                             <img src="/icon-facebook.png" alt="Facebook" />
