@@ -87,15 +87,19 @@
     display: block;
 }
 
-/* Specific scaling for visual balance */
+/* Specific scaling for visual balance - optimizing for white glyph size */
 .social-icons a[aria-label="Facebook"] img {
-    width: 44px;
-    height: 44px;
+    width: 54px;
+    /* Significantly larger to compensate for transparent padding */
+    height: 54px;
+    margin-top: -11px;
+    /* Center alignment adjustment */
 }
 
 .social-icons a[aria-label="Google Reviews"] img {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
+    margin-top: -5px;
 }
 
 .newsletter-form {
