@@ -92,14 +92,16 @@
     width: 54px;
     /* Significantly larger to compensate for transparent padding */
     height: 54px;
-    transform: translateY(-2px);
+    transform: translateY(-5px);
+    /* Adjusted for precise optical vertical alignment */
     /* Optical center alignment */
 }
 
 .social-icons a[aria-label="Google Reviews"] img {
     width: 42px;
     height: 42px;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    /* Adjusted for precise optical vertical alignment */
     /* Optical center alignment */
     margin-right: 14px;
     /* Optical spacing to Facebook (compensating for FB padding) */
