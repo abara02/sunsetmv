@@ -13,14 +13,14 @@ const Footer = () => {
                         <img src="/smv-logo-footer.png" alt="Sunset Meadow Vineyards" className="footer-logo" />
                     </Link>
                     <div className="social-icons">
-                        <a href="https://www.facebook.com/sunsetmeadowvineyards" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                            <img src="/icon-instagram.png" alt="Instagram" />
+                        <a href="https://www.instagram.com/sunsetmeadowvineyards/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="icon-wrap ig">
+                            <img src="icons8-instagram-50.png" alt="Instagram" />
                         </a>
-                        <a href="https://www.google.com/search?q=sunset+meadow+vineyards+reviews" target="_blank" rel="noopener noreferrer" aria-label="Google Reviews">
-                            <img src="gooog.png" alt="Google Reviews" />
+                        <a href="https://www.google.com/search?q=sunset+meadow+vineyards+reviews" target="_blank" rel="noopener noreferrer" aria-label="Google Reviews" className="icon-wrap g">
+                            <img src="icons8-google-50.png" alt="Google Reviews" />
                         </a>
-                        <a href="https://www.facebook.com/sunsetmeadowvineyards" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                            <img src="/icon-facebook.png" alt="Facebook" />
+                        <a href="https://www.facebook.com/sunsetmeadowvineyards" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="icon-wrap fb">
+                            <img src="icons8-facebook-50.png" alt="Facebook" />
                         </a>
                     </div>
                 </div>

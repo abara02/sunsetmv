@@ -60,58 +60,50 @@
     text-align: center;
 }
 
+/* "No-BS" 50x50 Frame Strategy */
 .social-icons {
     display: flex;
-    /* gap: 1.5rem; Removed for optical spacing control */
-    margin-top: 1rem;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 1rem;
 }
 
-.social-icons a {
-    display: block;
-    transition: transform 0.2s ease;
+.icon-wrap {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-    line-height: 0;
 }
 
-.social-icons a:hover {
-    transform: translateY(-3px);
-}
-
-/* Standardize social icons */
-.social-icons a img {
-    width: 32px;
-    height: 32px;
-    object-fit: contain;
+.icon-wrap img {
+    width: 50px;
+    height: 50px;
     display: block;
+    object-fit: contain;
+    /* CRITICAL */
 }
 
-/* Specific scaling for visual balance - optimizing for white glyph size */
-.social-icons a[aria-label="Facebook"] img {
-    width: 54px;
-    /* Significantly larger to compensate for transparent padding */
-    height: 54px;
-    transform: translateY(-5px);
-    /* Adjusted for precise optical vertical alignment */
-    /* Optical center alignment */
+/* Micro nudges (only if needed) */
+.icon-wrap:hover {
+    transform: translateY(-3px);
+    transition: transform 0.2s ease;
 }
 
-.social-icons a[aria-label="Google Reviews"] img {
-    width: 42px;
-    height: 42px;
-    transform: translateY(-2px);
-    /* Adjusted for precise optical vertical alignment */
-    /* Optical center alignment */
-    margin-right: 14px;
-    /* Optical spacing to Facebook (compensating for FB padding) */
+.icon-wrap.fb img {
+    transform: translateY(1px);
 }
 
-/* Specific margins for optical spacing */
-.social-icons a[aria-label="Instagram"] {
-    margin-right: 25px;
-    /* Optical spacing to Google (compensating for Google padding) */
+.icon-wrap.g img {
+    transform: translateY(-1px);
 }
+
+.icon-wrap.ig img {
+    transform: translateY(0);
+}
+
 
 .newsletter-form {
     display: flex;
