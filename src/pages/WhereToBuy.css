@@ -1,13 +1,28 @@
 .where-to-buy-page {
-    padding-top: 120px;
+    padding-top: 100px;
+    /* Reduced since we have header padding now */
     min-height: 100vh;
     background-color: #f9f9f9;
 }
 
+.wtb-header-section {
+    padding: 3rem 0 1rem;
+    text-align: center;
+    background-color: white;
+}
+
+.wtb-main-title {
+    font-size: 3.5rem;
+    color: var(--color-burgundy);
+    margin: 0;
+    font-family: var(--font-serif);
+}
+
 .wtb-search-container {
     background-color: white;
-    padding: 2rem 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem 0 2.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid #eee;
     margin-bottom: 2rem;
 }
 
@@ -366,6 +381,32 @@
 }
 
 @media (max-width: 600px) {
+    .wtb-header-section {
+        padding: 2rem 0 0.5rem;
+    }
+
+    .wtb-main-title {
+        font-size: 2.25rem;
+    }
+
+    .wtb-search-container {
+        padding: 1.25rem 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .search-form {
+        gap: 1rem;
+    }
+
+    .search-group {
+        gap: 0.25rem;
+        width: 100%;
+    }
+
+    .search-group label {
+        font-size: 0.8rem;
+    }
+
     .store-grid {
         grid-template-columns: 1fr;
     }
@@ -373,5 +414,12 @@
     .search-input,
     .search-select {
         min-width: 100%;
+        padding: 0.6rem 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    .search-btn {
+        width: 100%;
+        margin-top: 0.5rem;
     }
 }

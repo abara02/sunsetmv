@@ -83,6 +83,12 @@ const WhereToBuy = () => {
 
     return (
         <div className="where-to-buy-page">
+            <div className="wtb-header-section">
+                <div className="container">
+                    <h1 className="wtb-main-title">Where to Buy</h1>
+                </div>
+            </div>
+
             <div className="wtb-search-container">
                 <div className="container">
                     <form className="search-form" onSubmit={handleSearch}>
@@ -127,8 +133,6 @@ const WhereToBuy = () => {
 
             <div className="container wtb-simple-content">
                 <div className="wtb-list-header">
-                    <h2>Store Locations</h2>
-
                     {/* View Toggle */}
                     <div className="view-toggle-container">
                         <div className="view-toggle">
