@@ -79,7 +79,7 @@ const CartDrawer = () => {
                                                     <Plus size={14} />
                                                 </button>
                                             </div>
-                                            <button className="remove-btn" onClick={() => removeFromCart(item.id)}>
+                                            <button className="drawer-remove-btn" onClick={() => removeFromCart(item.id)}>
                                                 Remove
                                             </button>
                                         </div>
@@ -97,6 +97,9 @@ const CartDrawer = () => {
                             <Link to="/checkout" className="btn btn-primary btn-block checkout-btn" onClick={closeCart}>
                                 Proceed to Checkout
                             </Link>
+                            <button className="continue-shopping-btn" onClick={closeCart}>
+                                Continue Shopping
+                            </button>
                             <Link to="/cart" className="view-cart-link" onClick={closeCart}>
                                 View Cart
                             </Link>

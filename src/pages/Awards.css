@@ -1,30 +1,24 @@
 .awards-page {
-    padding-top: var(--nav-height, 80px);
-    /* Fallback if var not defined */
+    padding-top: 0;
+    /* Remove padding so Hero sits behind/under transparent nav */
     min-height: 100vh;
     background-color: var(--color-light-bg, #fdfbf7);
 }
 
-
-
 .awards-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 1rem 5rem;
-}
-
-/* General Awards Section */
-.general-awards-section {
-    margin-bottom: 5rem;
+    padding: 3rem 1.5rem 6rem;
 }
 
 .section-title {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 3.5rem;
     color: var(--color-burgundy);
-    font-size: 2rem;
+    font-size: 2.2rem;
     position: relative;
     padding-bottom: 1rem;
+    font-family: var(--font-heading);
 }
 
 .section-title::after {
@@ -38,193 +32,268 @@
     background-color: var(--color-gold, #c5a059);
 }
 
-.general-awards-list {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    max-width: 900px;
+/* -----------------------------
+   Winery Recognitions
+   ----------------------------- */
+.general-awards-section {
+    margin-bottom: 4rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.recognition-list {
+    border-top: 1px solid #e0e0e0;
+}
+
+/* 3-Column List Layout (Left Aligned) */
+.recognition-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.2s;
+}
+
+.recognition-row:hover {
+    background-color: #fdfbf7;
+}
+
+.rec-title {
+    font-size: 1.1rem;
+    font-family: var(--font-heading);
+    color: var(--color-text);
+    font-weight: 500;
+    text-align: left;
+}
+
+.rec-org {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #444;
+    text-align: left;
+}
+
+.rec-year {
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--color-burgundy);
+    text-align: left;
+}
+
+.recognition-icon {
+    width: 34px;
+    height: 34px;
+}
+
+.icon-gold {
+    color: #d4af37;
+}
+
+/* -----------------------------
+   Wine Awards (Accordion)
+   ----------------------------- */
+.wine-awards-section {
+    max-width: 1000px;
     margin: 0 auto;
 }
 
-.general-award-row {
+.wine-accordion-container {
+    border-top: 1px solid #e0e0e0;
+}
+
+.wine-accordion-item {
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.2s;
+}
+
+.wine-accordion-item:hover {
+    background-color: #fdfbf7;
+}
+
+/* Header Row (Desktop) */
+.accordion-header {
+    display: flex;
+    /* Flex row by default */
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.col-name {
+    flex: 1;
+    font-size: 1.1rem;
+    font-family: var(--font-heading);
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+.col-count {
+    flex: 1;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #444;
+}
+
+.col-toggle {
+    flex: 1;
+    text-align: right;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #444;
+    transition: color 0.2s;
+}
+
+.accordion-header:hover .col-toggle {
+    color: var(--color-burgundy);
+}
+
+/* Content Dropdown */
+.accordion-content {
+    background-color: #fafafa;
+    padding: 1rem 2rem;
+    border-top: 1px dashed #e0e0e0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.accordion-award-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 2rem;
+    padding: 0.75rem 0;
     border-bottom: 1px solid #eee;
-    transition: background-color 0.2s ease;
 }
 
-.general-award-row:last-child {
+.accordion-award-row:last-child {
     border-bottom: none;
 }
 
-.general-award-row:hover {
-    background-color: #fafafa;
-}
-
-.general-award-title-col {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--color-text);
-    flex: 2;
-    padding-right: 2rem;
-}
-
-.general-award-org-col {
-    font-family: var(--font-heading);
-    color: var(--color-burgundy);
-    font-size: 1.1rem;
-    font-weight: 500;
-    text-align: right;
-    flex: 1;
-}
-
-@media (max-width: 768px) {
-    .awards-hero h1 {
-        font-size: 2rem;
-    }
-
-    .general-award-row {
-        flex-direction: column;
-        text-align: center;
-        gap: 0.5rem;
-    }
-
-    .general-award-title-col {
-        padding-right: 0;
-    }
-
-    .general-award-org-col {
-        text-align: center;
-    }
-}
-
-/* Wine Awards Table - New Styles */
-.wine-awards-table-container {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    overflow-x: auto;
-    /* Handle horizontal scroll on small devices if needed */
-}
-
-.wine-awards-header-row {
-    display: grid;
-    grid-template-columns: 2fr 2fr 1.5fr;
-    /* 3 columns now */
-    padding: 1.5rem;
-    background-color: white;
-    border-bottom: 2px solid var(--color-burgundy);
-    font-family: var(--font-heading);
-    font-weight: 600;
-    color: var(--color-text);
-    font-size: 1.1rem;
-}
-
-.wine-awards-header-row>div {
+.award-detail-main {
     display: flex;
-    align-items: center;
+    flex-direction: column;
 }
 
-/* Column Alignments */
-/* .col-year Removed */
-.col-award {
-    text-align: left;
-}
-
-.col-comp {
-    text-align: left;
-    justify-content: flex-start;
-}
-
-.col-wine {
-    text-align: right;
-    justify-content: flex-end;
-}
-
-/* The Header Row Alignment Overrides */
-.wine-awards-header-row .col-award {
-    justify-content: flex-start;
-}
-
-.wine-awards-header-row .col-comp {
-    justify-content: flex-start;
-}
-
-
-.wine-award-row {
-    display: grid;
-    grid-template-columns: 2fr 2fr 1.5fr;
-    /* Match header */
-    padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid #eee;
-    align-items: center;
-    transition: background-color 0.2s ease;
-}
-
-.wine-award-row:last-child {
-    border-bottom: none;
-}
-
-.wine-award-row:hover {
-    background-color: #fafafa;
-}
-
-.wine-award-row .col-year {
-    font-family: var(--font-heading);
-    /* Maybe use body font for year number, usually looks better */
-    color: var(--color-text);
-    font-weight: 500;
-}
-
-.wine-award-row .col-award {
-    color: #555;
-}
-
-.wine-award-row .col-comp {
-    color: #555;
-    font-style: italic;
-}
-
-.wine-award-row .col-wine {
-    color: var(--color-text);
+.award-title {
     font-weight: 600;
+    color: var(--color-burgundy);
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
 }
 
-/* Responsive Table */
+.award-comp {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.award-year {
+    font-weight: 600;
+    color: #999;
+    font-size: 0.9rem;
+    min-width: 80px;
+    text-align: right;
+}
+
+/* -----------------------------
+   Responsive
+   ----------------------------- */
 @media (max-width: 768px) {
-    .wine-awards-header-row {
-        display: none;
-        /* Hide header on mobile */
+    .section-title {
+        font-size: 1.75rem;
     }
 
-    .wine-award-row {
+    /* Winery Recognitions Mobile */
+    .recognition-list {
+        border-top: none;
+    }
+
+    .recognition-row {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
-        padding: 1.5rem;
-        text-align: left;
-        border-bottom: 2px solid #f0f0f0;
+        align-items: flex-start;
+        gap: 0.2rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid #eee;
     }
 
-    .wine-award-row>div {
-        display: flex;
-        justify-content: space-between;
+    .rec-title {
+        width: 100%;
+        margin-bottom: 0.1rem;
+    }
+
+    .rec-org,
+    .rec-year {
         width: 100%;
         text-align: left;
+        /* Keep left alignment */
+        font-size: 0.85rem;
     }
 
-    .wine-award-row>div::before {
-        content: attr(data-label);
-        font-weight: 600;
+    .rec-year {
         color: var(--color-burgundy);
-        margin-right: 1rem;
-        min-width: 100px;
     }
 
-    .col-wine {
-        justify-content: space-between;
+    /* Wine Awards Accordion Mobile */
+    .accordion-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+        /* Tight gap */
+        padding: 1rem 0;
+    }
+
+    .col-name {
+        font-size: 1.1rem;
+        width: 100%;
+        margin-bottom: 0.1rem;
+        line-height: 1.2;
+    }
+
+    .col-count,
+    .col-toggle {
+        font-size: 0.75rem;
+        text-align: left;
+        width: 100%;
+        line-height: 1.4;
+    }
+
+    .col-toggle {
+        color: var(--color-burgundy);
+        margin-top: 0.1rem;
+    }
+
+    .accordion-content {
+        padding: 0.5rem 0;
+    }
+
+    .accordion-award-row {
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .award-year {
         text-align: left;
     }
 }

@@ -249,20 +249,21 @@ const EventDetails = () => {
                                             <span className="details-value">{event.cost}</span>
                                         </div>
                                     )}
-                                    {event.link && event.link.url && (
-                                        <div className="details-row link-row">
-                                            <a
-                                                href={event.link.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="btn btn-primary btn-sm"
-                                            >
-                                                {event.link.title || 'Register Now'} <ExternalLink size={14} />
-                                            </a>
-                                        </div>
-                                    )}
                                 </div>
                             </div>
+
+                            {event.link && event.link.url && (
+                                <div className="event-register-container">
+                                    <a
+                                        href={event.link.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="btn btn-primary"
+                                    >
+                                        {event.link.title || 'Register Now'} <ExternalLink size={14} />
+                                    </a>
+                                </div>
+                            )}
                         </div>
 
                         {/* Right Column: Description */}

@@ -7,16 +7,19 @@ import "./RentalCarousel.css";
 const RentalCarousel = ({ items }) => {
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(0);
+    const [hasInteracted, setHasInteracted] = useState(false);
     const navigate = useNavigate();
 
     const nextStep = useCallback(() => {
         setDirection(1);
         setIndex((prev) => prev + 1);
+        setHasInteracted(true);
     }, []);
 
     const prevStep = useCallback(() => {
         setDirection(-1);
         setIndex((prev) => prev - 1);
+        setHasInteracted(true);
     }, []);
 
     const getItem = (i) => {
@@ -32,6 +35,10 @@ const RentalCarousel = ({ items }) => {
         const threshold = 50;
         if (info.offset.x < -threshold) nextStep();
         else if (info.offset.x > threshold) prevStep();
+
+        if (Math.abs(info.offset.x) > 10) {
+            setHasInteracted(true);
+        }
     };
 
     const isMobile = window.innerWidth < 768;
@@ -40,14 +47,14 @@ const RentalCarousel = ({ items }) => {
     return (
         <div className="rental-carousel-wrapper">
 
-            {/* Desktop Navigation */}
-            <div className="rental-carousel-nav prev hidden-mobile">
+            {/* Navigation */}
+            <div className={`rental-carousel-nav prev ${hasInteracted ? 'has-interacted' : ''}`}>
                 <button onClick={prevStep} aria-label="Previous">
                     <ChevronLeft size={32} />
                 </button>
             </div>
 
-            <div className="rental-carousel-nav next hidden-mobile">
+            <div className={`rental-carousel-nav next ${hasInteracted ? 'has-interacted' : ''}`}>
                 <button onClick={nextStep} aria-label="Next">
                     <ChevronRight size={32} />
                 </button>

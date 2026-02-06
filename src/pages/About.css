@@ -183,23 +183,42 @@
 /* Responsive */
 @media (max-width: 768px) {
 
-    .quote-grid,
-    .winemaker-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+    /* Mobile Adjustments */
+    .history-section::before {
+        display: none;
+        /* Remove barrels on mobile */
     }
 
-    .quote-content.text-left {
-        text-align: center;
-        /* Center on mobile usually looks better, but keeping requested left alignment is fine too. Let's stick to request but make it look good */
-        text-align: left;
+    .quote-section {
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: 2rem;
+    }
+
+    .quote-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .quote-image-wrapper {
+        margin: 0 auto;
+        max-width: 100%;
+        /* Or fixed width if needed, but 100% of container is standard */
+    }
+
+    .quote-content {
+        display: none;
+        /* "Without text" - Hide text on mobile as requested */
     }
 
     .winemaker-grid {
         display: flex;
-        flex-direction: column-reverse;
-        /* Image on top usually better on mobile? Or verify order. Current: Content Left, Image Right. Mobile: Content Top, Image Bottom (column). If we want Image Top, use column-reverse or reorder HTML. */
-        /* Let's keep typical flow: Heading -> Text -> Image on desktop. Heading is separate. Text -> Image. Mobile: Text -> Image. */
         flex-direction: column;
+        gap: 2rem;
+    }
+
+    .winemaker-content {
+        text-align: center;
     }
 }

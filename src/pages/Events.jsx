@@ -146,6 +146,17 @@ const Events = () => {
                         date: new Date('2026-02-13T18:00:00'),
                         month: 'FEB',
                         day: '13'
+                    },
+                    {
+                        id: 'paint-and-sip',
+                        title: 'Paint and Sip',
+                        desc: 'Unleash your inner artist! Join us for a relaxing afternoon of painting and wine. No experience necessary – our instructor will guide you step-by-step through creating your own masterpiece while you enjoy our award-winning wines.',
+                        time: '4:40 PM - 6:00 PM',
+                        category: 'Art',
+                        image: null,
+                        date: new Date('2026-02-22T16:40:00'),
+                        month: 'FEB',
+                        day: '22'
                     }
                 ];
                 setEvents(mockEvents);
@@ -169,6 +180,20 @@ const Events = () => {
         }
     }, [hash]);
 
+    // Handle mobile detection for view restriction
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // Force list view on mobile regardless of toggle state
+    const effectiveViewMode = isMobile ? 'list' : viewMode;
+
     return (
         <div className="page-container events-page">
             {/* Hero Section */}
@@ -189,22 +214,24 @@ const Events = () => {
                         <div className="divider"></div>
 
                         {/* View Toggle */}
-                        <div className="view-toggle-container">
-                            <div className="view-toggle">
-                                <button
-                                    className={`toggle - btn ${viewMode === 'list' ? 'active' : ''} `}
-                                    onClick={() => setViewMode('list')}
-                                >
-                                    <ListIcon size={18} /> List
-                                </button>
-                                <button
-                                    className={`toggle - btn ${viewMode === 'calendar' ? 'active' : ''} `}
-                                    onClick={() => setViewMode('calendar')}
-                                >
-                                    <CalendarIcon size={18} /> Calendar
-                                </button>
+                        {!isMobile && (
+                            <div className="view-toggle-container">
+                                <div className="view-toggle">
+                                    <button
+                                        className={`toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
+                                        onClick={() => setViewMode('list')}
+                                    >
+                                        <ListIcon size={18} /> List
+                                    </button>
+                                    <button
+                                        className={`toggle-btn ${viewMode === 'calendar' ? 'active' : ''}`}
+                                        onClick={() => setViewMode('calendar')}
+                                    >
+                                        <CalendarIcon size={18} /> Calendar
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
 
                     {loading ? (
@@ -218,7 +245,7 @@ const Events = () => {
                         </div>
                     ) : (
                         <>
-                            {viewMode === 'list' ? (
+                            {effectiveViewMode === 'list' ? (
                                 <div className="events-list fade-in">
                                     {events.map(event => (
                                         <div key={event.id} className="event-card">

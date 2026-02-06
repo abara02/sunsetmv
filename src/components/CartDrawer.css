@@ -199,7 +199,7 @@
     text-align: center;
 }
 
-.remove-btn {
+.drawer-remove-btn {
     background: none;
     border: none;
     color: #999;
@@ -209,7 +209,7 @@
     transition: color 0.2s;
 }
 
-.remove-btn:hover {
+.drawer-remove-btn:hover {
     color: #d32f2f;
 }
 
@@ -251,12 +251,24 @@
     margin-bottom: 1rem;
 }
 
-.view-cart-link {
+.view-cart-link,
+.continue-shopping-btn {
     display: block;
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--color-burgundy);
     text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    font-family: inherit;
+    transition: color 0.2s;
+}
+
+.view-cart-link:hover,
+.continue-shopping-btn:hover {
+    color: black;
 }
 
 @media (max-width: 480px) {

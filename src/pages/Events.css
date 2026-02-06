@@ -402,11 +402,28 @@
 }
 
 /* Responsive */
-@media (max-width: 900px) {
+@media (max-width: 768px) {
+    .view-toggle-container {
+        display: none;
+    }
+
+    .section-header {
+        margin-bottom: 2rem;
+    }
+
     .event-card {
-        grid-template-columns: 1fr;
+        width: 280px;
+        height: 280px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        margin: 0 auto;
         border-left: none;
         border-top: 5px solid transparent;
+        padding-bottom: 0;
+        /* Remove padding handled by sections */
     }
 
     .event-card:hover {
@@ -416,25 +433,96 @@
     .event-date-column {
         border-right: none;
         border-bottom: 1px solid #f0f0f0;
-        justify-content: flex-start;
-        padding: 1.5rem 2rem;
+        padding: 0.75rem;
+        width: 100%;
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        flex-shrink: 0;
     }
 
     .date-box {
         display: flex;
-        align-items: baseline;
-        gap: 0.5rem;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+    }
+
+    .date-box .month {
+        font-size: 0.9rem;
     }
 
     .date-box .day {
         font-size: 1.5rem;
     }
 
+    .event-details-column {
+        padding: 0.5rem 1rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .event-details-column h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.25rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .event-time {
+        font-size: 0.85rem;
+    }
+
     .event-action-column {
         border-left: none;
-        border-top: 1px solid #f0f0f0;
-        padding: 1.5rem 2rem;
-        justify-content: flex-start;
+        border-top: none;
+        padding: 0.75rem 1.5rem 1.5rem;
+        width: 100%;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .event-action-column .btn {
+        width: 100%;
+        max-width: 160px;
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    /* Compact Inquiry Banner */
+    .inquiry-banner {
+        padding: 2.5rem 1.25rem;
+    }
+
+    .inquiry-content h3 {
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .inquiry-content p {
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+
+    .banner-socials {
+        margin-top: 0.5rem;
+        gap: 15px;
+    }
+
+    .social-icon-link {
+        width: 40px;
+        height: 40px;
+    }
+
+    .social-icon-link img {
+        width: 40px;
+        height: 40px;
     }
 }
 

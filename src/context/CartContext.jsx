@@ -35,7 +35,7 @@ export const CartProvider = ({ children }) => {
     const toggleCart = () => setIsCartOpen(prev => !prev);
 
     // Check if item is already in cart, if so update quantity, else add new
-    const addToCart = (product, quantity = 1) => {
+    const addToCart = (product, quantity = 1, openDrawer = true) => {
         setCartItems(prevItems => {
             const existingItemIndex = prevItems.findIndex(item => item.id === product.id);
 
@@ -61,7 +61,10 @@ export const CartProvider = ({ children }) => {
                 }];
             }
         });
-        openCart(); // Auto open drawer
+
+        if (openDrawer) {
+            openCart(); // Auto open drawer if requested
+        }
     };
 
     const removeFromCart = (productId) => {

@@ -65,6 +65,25 @@
     .hidden-mobile {
         display: none;
     }
+
+    .carousel-nav button {
+        width: 36px;
+        height: 36px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .carousel-nav button svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .carousel-nav.prev {
+        left: 0.5rem;
+    }
+
+    .carousel-nav.next {
+        right: 0.5rem;
+    }
 }
 
 /* Content Area */

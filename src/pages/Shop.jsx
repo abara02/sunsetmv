@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Search, Filter } from 'lucide-react';
 import WineCard from '../components/WineCard';
 import { useShop } from '../context/ShopContext';
 import './Shop.css';
@@ -7,6 +8,8 @@ import './Shop.css';
 const Shop = () => {
     const { wines, loading } = useShop();
     const [filter, setFilter] = useState('All');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [showFilters, setShowFilters] = useState(false);
     const location = useLocation();
 
     // Map URL category params to Filter names
@@ -50,9 +53,11 @@ const Shop = () => {
     }, [location.search]);
 
     // Filter logic
-    const filteredWines = filter === 'All'
-        ? wines
-        : wines.filter(wine => wine.type === filter);
+    const filteredWines = wines.filter(wine => {
+        const matchesCategory = filter === 'All' || wine.type === filter;
+        const matchesSearch = wine.name.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+    });
 
     // Get unique types for filter buttons (ensure ordered as requested)
     const filterTypes = ['All', 'White', 'Fruit', 'Rosé', 'Red', 'Reserve', 'Sparkling', 'More'];
@@ -74,33 +79,66 @@ const Shop = () => {
                     </div>
                 ) : (
                     <>
-                        <div className="filters">
-                            {filterTypes.map(type => (
-                                <button
-                                    key={type}
-                                    className={`filter-btn ${filter === type ? 'active' : ''}`}
-                                    onClick={() => setFilter(type)} // Keeps manual clicking working
-                                >
-                                    {type}
-                                </button>
-                            ))}
+                        {/* Shop Controls: Search & Filter Toggle */}
+                        <div className="shop-controls">
+                            <div className="search-wrapper">
+                                <Search className="search-icon" size={20} />
+                                <input
+                                    type="text"
+                                    placeholder="Search"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="search-input"
+                                />
+                            </div>
+                            <button
+                                className={`filter-toggle-btn ${showFilters ? 'active' : ''}`}
+                                onClick={() => setShowFilters(!showFilters)}
+                            >
+                                <Filter size={20} />
+                                <span>Filters</span>
+                            </button>
+                        </div>
+
+                        {/* Collapsible Filter Section */}
+                        <div className={`filters-container ${showFilters ? 'open' : ''}`}>
+                            <div className="filters">
+                                {filterTypes.map(type => (
+                                    <button
+                                        key={type}
+                                        className={`filter-btn ${filter === type ? 'active' : ''}`}
+                                        onClick={() => setFilter(type)}
+                                    >
+                                        {type}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
 
                         <div className="wine-grid">
-                            {filteredWines.map(wine => (
-                                <Link to={`/shop/${wine.slug}`} key={wine.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    <WineCard
-                                        name={wine.name}
-                                        type={wine.type}
-                                        price={wine.price}
-                                        regularPrice={wine.regularPrice}
-                                        salePrice={wine.salePrice}
-                                        onSale={wine.onSale}
-                                        image={wine.image}
-                                        isFanFavorite={wine.isFanFavorite}
-                                    />
-                                </Link>
-                            ))}
+                            {filteredWines.length > 0 ? (
+                                filteredWines.map(wine => (
+                                    <Link to={`/shop/${wine.slug}`} key={wine.id} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        <WineCard
+                                            id={wine.id}
+                                            slug={wine.slug}
+                                            name={wine.name}
+                                            type={wine.type}
+                                            price={wine.price}
+                                            regularPrice={wine.regularPrice}
+                                            salePrice={wine.salePrice}
+                                            onSale={wine.onSale}
+                                            image={wine.image}
+                                            isFanFavorite={wine.isFanFavorite}
+                                        />
+                                    </Link>
+                                ))
+                            ) : (
+                                <div className="no-results">
+                                    <p>No wines found matching your criteria.</p>
+                                    <button onClick={() => { setFilter('All'); setSearchQuery(''); }} className="btn-text">Clear Search</button>
+                                </div>
+                            )}
                         </div>
                     </>
                 )}

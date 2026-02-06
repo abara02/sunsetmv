@@ -7,15 +7,18 @@ import "./TastingCarousel.css";
 const TastingCarousel = ({ items }) => {
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(0);
+    const [hasInteracted, setHasInteracted] = useState(false);
 
     const nextStep = useCallback(() => {
         setDirection(1);
         setIndex((prev) => prev + 1);
+        setHasInteracted(true);
     }, []);
 
     const prevStep = useCallback(() => {
         setDirection(-1);
         setIndex((prev) => prev - 1);
+        setHasInteracted(true);
     }, []);
 
     const getItem = (i) => {
@@ -30,18 +33,22 @@ const TastingCarousel = ({ items }) => {
         } else if (info.offset.x > threshold) {
             prevStep();
         }
+
+        if (Math.abs(info.offset.x) > 10) {
+            setHasInteracted(true);
+        }
     };
 
     return (
         <div className="carousel-wrapper">
-            {/* Desktop Navigation Arrows */}
-            <div className="carousel-nav prev hidden-mobile">
+            {/* Navigation Arrows */}
+            <div className={`carousel-nav prev ${hasInteracted ? 'has-interacted' : ''}`}>
                 <button onClick={prevStep} aria-label="Previous">
                     <ChevronLeft size={32} />
                 </button>
             </div>
 
-            <div className="carousel-nav next hidden-mobile">
+            <div className={`carousel-nav next ${hasInteracted ? 'has-interacted' : ''}`}>
                 <button onClick={nextStep} aria-label="Next">
                     <ChevronRight size={32} />
                 </button>

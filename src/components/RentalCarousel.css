@@ -227,6 +227,29 @@
         display: none;
     }
 
+    .rental-carousel-nav button {
+        width: 36px;
+        height: 36px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .rental-carousel-nav button svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .rental-carousel-nav.prev button {
+        left: 0.5rem;
+    }
+
+    .rental-carousel-nav.next button {
+        right: 0.5rem;
+    }
+
+    .rental-carousel-wrapper {
+        padding: 0.5rem 0;
+    }
+
     .rental-carousel-content-area {
         height: 520px;
     }

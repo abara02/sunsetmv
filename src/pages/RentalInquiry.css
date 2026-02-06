@@ -224,9 +224,88 @@ textarea {
 @media (max-width: 900px) {
     .inquiry-grid {
         grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
     .form-card {
         position: static;
+        padding: 2rem 1.5rem;
+    }
+
+    .rental-details-column {
+        padding: 2rem 1.5rem;
+    }
+
+    .rental-details-column h1 {
+        font-size: 2rem;
+    }
+
+    .price-tag {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .rental-image-large {
+        height: 220px;
+    }
+}
+
+@media (max-width: 600px) {
+    .inquiry-page-container {
+        padding-top: 100px;
+        padding-bottom: 40px;
+    }
+
+    .rental-details-column,
+    .form-card {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .rental-details-column h1 {
+        font-size: 1.75rem;
+    }
+
+    .price-tag {
+        font-size: 1.5rem;
+    }
+
+    .details-content h3 {
+        font-size: 1.3rem;
+    }
+
+    .rental-description-main {
+        font-size: 1rem;
+    }
+
+    .info-list {
+        font-size: 0.95rem;
+        padding-left: 0.5rem;
+    }
+
+    .form-card h2 {
+        font-size: 1.75rem;
+    }
+
+    .form-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .input-with-icon input,
+    .input-with-icon textarea,
+    input,
+    textarea {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 0.95rem;
+    }
+
+    .submit-btn {
+        padding: 0.85rem;
+        font-size: 1rem;
     }
 }
