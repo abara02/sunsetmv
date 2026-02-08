@@ -241,6 +241,14 @@
     .rec-title {
         width: 100%;
         margin-bottom: 0.1rem;
+        font-family: 'Outfit', sans-serif;
+        /* Reverted to Outfit as requested */
+        font-size: 1.1rem;
+        font-weight: 500;
+        /* Unbold (Medium) */
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        color: #2C2C2C;
     }
 
     .rec-org,
@@ -265,10 +273,16 @@
     }
 
     .col-name {
+        font-family: 'Outfit', sans-serif;
+        /* Reverted to Outfit as requested */
         font-size: 1.1rem;
+        font-weight: 500;
+        /* Unbold (Medium) */
         width: 100%;
         margin-bottom: 0.1rem;
         line-height: 1.2;
+        letter-spacing: -0.01em;
+        color: #2C2C2C;
     }
 
     .col-count,
