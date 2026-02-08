@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { useCart } from '../context/CartContext';
-import { useParams, Link } from 'react-router-dom';
-import { useShop } from '../context/ShopContext';
-import { ArrowLeft, Wine } from 'lucide-react';
+'use client';
+
+import React, { useState, use } from 'react';
+import { useCart } from '../../../context/CartContext';
+import { useShop } from '../../../context/ShopContext';
+import { ArrowLeft, Wine as WineIcon } from 'lucide-react';
+import Link from 'next/link';
 import './ProductDetails.css';
 
-const ProductDetails = () => {
-    const { slug } = useParams();
+export default function ProductDetails(props) {
+    const params = use(props.params);
+    const slug = params.slug;
     const { wines, loading } = useShop();
     const [quantity, setQuantity] = useState(1);
     const { addToCart } = useCart();
@@ -26,7 +29,6 @@ const ProductDetails = () => {
     const handleAddToCart = () => {
         if (!wine) return;
         setAdding(true);
-        // Simulate a small delay for better UX
         setTimeout(() => {
             addToCart(wine, quantity);
             setAdding(false);
@@ -39,7 +41,7 @@ const ProductDetails = () => {
         return (
             <div className="container" style={{ padding: '100px 0', textAlign: 'center' }}>
                 <h2>Wine not found</h2>
-                <Link to="/shop" className="btn btn-outline">Return to Shop</Link>
+                <Link href="/shop" className="btn btn-outline">Return to Shop</Link>
             </div>
         );
     }
@@ -48,7 +50,7 @@ const ProductDetails = () => {
         <div className="product-details-page">
             <div className="container">
                 <div className="back-link">
-                    <Link to="/shop"><ArrowLeft size={16} /> Back to Shop</Link>
+                    <Link href="/shop"><ArrowLeft size={16} /> Back to Shop</Link>
                 </div>
 
                 <div className="product-layout">
@@ -109,7 +111,6 @@ const ProductDetails = () => {
                     </div>
                 </div>
 
-                {/* Accolades Section - Only if awards exist */}
                 {wine.awards && wine.awards.length > 0 && (
                     <div className="accolades-section">
                         <h2>Accolades/Awards</h2>
@@ -123,7 +124,6 @@ const ProductDetails = () => {
                     </div>
                 )}
 
-                {/* Tech Specs Section */}
                 {wine.specs && (
                     <div className="specs-section">
                         <h3>Specifications</h3>
@@ -149,10 +149,7 @@ const ProductDetails = () => {
                         </div>
                     </div>
                 )}
-
             </div>
         </div>
     );
-};
-
-export default ProductDetails;
+}

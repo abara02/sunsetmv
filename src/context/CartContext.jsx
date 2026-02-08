@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useState, useContext, useEffect, useMemo } from 'react';
 
 const CartContext = createContext();
@@ -7,25 +9,31 @@ export const useCart = () => {
 };
 
 export const CartProvider = ({ children }) => {
-    // Initialize state from local storage to persist cart across refreshes
-    const [cartItems, setCartItems] = useState(() => {
+    const [cartItems, setCartItems] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    // Load from local storage on mount
+    useEffect(() => {
         try {
             const storedCart = localStorage.getItem('smv_cart_v1');
-            return storedCart ? JSON.parse(storedCart) : [];
+            if (storedCart) {
+                setCartItems(JSON.parse(storedCart));
+            }
         } catch (err) {
             console.error("Failed to load cart from local storage", err);
-            return [];
         }
-    });
+        setIsLoaded(true);
+    }, []);
 
-    // Update local storage whenever cart items change
+    // Update local storage whenever cart items change, but only after initial load
     useEffect(() => {
+        if (!isLoaded) return;
         try {
             localStorage.setItem('smv_cart_v1', JSON.stringify(cartItems));
         } catch (err) {
             console.error("Failed to save cart to local storage", err);
         }
-    }, [cartItems]);
+    }, [cartItems, isLoaded]);
 
     // Cart Drawer State
     const [isCartOpen, setIsCartOpen] = useState(false);

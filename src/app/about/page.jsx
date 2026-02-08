@@ -1,9 +1,11 @@
+'use client';
+
 import React, { useEffect } from 'react';
 import './About.css';
-import familyPhoto from '../assets/family-photo.jpg';
-import winemakerPhoto from '../assets/winemaker-photo.jpg';
+const familyPhoto = '/family-photo.jpg';
+const winemakerPhoto = '/winemaker-photo.jpg';
 
-const About = () => {
+export default function About() {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -61,6 +63,4 @@ const About = () => {
             </div>
         </div>
     );
-};
-
-export default About;
+}

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useCallback } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";

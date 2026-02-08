@@ -1,13 +1,66 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+'use client';
+
+import React, { useState, useEffect, Suspense, use } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, User, Calendar, Clock, Mail, MessageSquare, Phone } from 'lucide-react';
 import './RentalInquiry.css';
 
-const RentalInquiry = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const rental = location.state?.rental;
+const rentals = [
+    {
+        id: 'full-tent',
+        title: 'Full Tent Rental',
+        price: '$550',
+        description: 'Reserved tented space for gatherings of up to 75 people',
+        details: `Four-hour rental period (no additional time or day-of setup included)
+Includes guest tables and chairs, plus one 6-foot rectangular table if needed
+No outside beverages permitted, all beverages and alcohol provided by Sunset Meadow Vineyards (including water)
+Wine service available with full bar setup
+No open-flame catering permitted; kitchen facilities are not available
+Decorations such as candles, sparklers, confetti, and streamers are not allowed
+A non-refundable 50% deposit is required upon booking; remaining balance due 7 days prior to the event`,
+        inquiryDescription: 'Enjoy a reserved, tented event space suitable for gatherings of up to 75 guests.\n\nPlease note: Rental price does not include wine or gratuity. Gratuity is cash only.',
+        image: '/private-tent.jpg',
+        images: ['/full-tent-1.jpg', '/full-tent-2.jpg']
+    },
+    {
+        id: 'half-tent',
+        title: 'Half Tent Rental',
+        price: '$330',
+        description: 'Reserved tented space for gatherings of up to 45 people',
+        inquiryDescription: 'Enjoy a reserved, tented event space suitable for gatherings of up to 45 guests.\n\nPlease note: Rental price does not include wine or gratuity. Gratuity is cash only.',
+        details: `Three-hour rental period (no additional time or day-of setup included)
+Includes guest tables and chairs, plus one 6-foot rectangular table if needed
+No outside beverages permitted, all beverages and alcohol provided by Sunset Meadow Vineyards (including water)
+Wine service available with full bar setup
+No open-flame catering permitted; kitchen facilities are not available
+Decorations such as candles, sparklers, confetti, and streamers are not allowed
+A non-refundable 50% deposit is required upon booking; remaining balance due 7 days prior to the event`,
+        image: '/private-half-tent.jpg',
+        images: ['/half-tent-1.jpg', '/full-tent-2.jpg']
+    },
+    {
+        id: 'gazebo',
+        title: 'Gazebo Rental',
+        price: '$50',
+        description: 'Reserved gazebo space for gatherings of up to 10 people',
+        details: `Two-hour rental period (no additional time or day-of setup included)
+Rental includes gazebo with chairs and tables
+Outside food is allowed
+No outside beverages permitted, all beverages and alcohol provided by Sunset Meadow Vineyards (including water)
+No open-flame catering permitted; kitchen facilities are not available
+Decorations such as candles, sparklers, confetti, and streamers are not allowed
+Non-refundable payment due up front upon booking`,
+        inquiryDescription: 'Enjoy a reserved gazebo space suitable for gatherings of up to 10 guests.\n\nPlease note: Rental price does not include wine or gratuity.',
+        image: '/gazebo-rental.jpg'
+    }
+];
+
+function RentalInquiryContent() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const rentalId = searchParams.get('id');
+    const rental = rentals.find(r => r.id === rentalId);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -19,14 +72,6 @@ const RentalInquiry = () => {
         comments: ''
     });
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        if (!rental) {
-            // Redirect back if no rental data passed (direct access)
-            // navigate('/events');
-        }
-    }, [rental, navigate]);
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -37,7 +82,6 @@ const RentalInquiry = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Here you would typically send the data to a backend or email service
         alert("Thank you for your inquiry! We'll get back to you shortly.");
         console.log("Form Data:", formData);
     };
@@ -48,7 +92,7 @@ const RentalInquiry = () => {
                 <div className="error-message">
                     <h2>Private Event Inquiry</h2>
                     <p>Please select a rental option from the events page first.</p>
-                    <button onClick={() => navigate('/events')} className="btn btn-primary">Go to Events</button>
+                    <button onClick={() => router.push('/events')} className="btn btn-primary">Go to Events</button>
                 </div>
             </div>
         );
@@ -57,18 +101,16 @@ const RentalInquiry = () => {
     return (
         <div className="inquiry-page-container">
             <div className="container">
-                <button onClick={() => navigate('/events')} className="back-link">
+                <button onClick={() => router.push('/events')} className="back-link">
                     <ArrowLeft size={20} /> Back to Events
                 </button>
 
                 <div className="inquiry-grid">
-                    {/* Left Column: Details */}
                     <div className="rental-details-column">
                         <h1>{rental.title}</h1>
                         <div className="price-tag">{rental.price}</div>
 
                         <div className="rental-image-large">
-                            {/* Use cycling images if available, otherwise single image or placeholder */}
                             {rental.images && rental.images.length > 0 ? (
                                 <CyclingImage
                                     images={rental.images}
@@ -84,7 +126,7 @@ const RentalInquiry = () => {
 
                         <h3>Rental Details</h3>
                         <div className="details-content">
-                            <p className="rental-description-main">
+                            <div className="rental-description-main">
                                 {(() => {
                                     const text = rental.inquiryDescription || rental.description;
                                     if (typeof text === 'string' && text.includes('Please note:')) {
@@ -98,10 +140,8 @@ const RentalInquiry = () => {
                                     }
                                     return text;
                                 })()}
-                            </p>
+                            </div>
 
-                            {/* Dynamically render the 'More info' text properly if it was passed as a long string or structured data 
-                                Since we are passing 'details' string in the next step, we render it here. */}
                             {rental.details && (
                                 <div className="additional-info">
                                     <h4>Additional Information:</h4>
@@ -125,7 +165,6 @@ const RentalInquiry = () => {
                         </div>
                     </div>
 
-                    {/* Right Column: Inquiry Form */}
                     <div className="inquiry-form-column">
                         <div className="form-card">
                             <h2>Inquiry Form</h2>
@@ -245,19 +284,16 @@ const RentalInquiry = () => {
             </div>
         </div>
     );
-};
+}
 
-// Helper component for cycling images
 const CyclingImage = ({ images, alt, interval = 3000, startIndex = 0 }) => {
     const [currentIndex, setCurrentIndex] = useState(startIndex);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!images || images.length <= 1) return;
-
         const timer = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % images.length);
         }, interval);
-
         return () => clearInterval(timer);
     }, [images, interval]);
 
@@ -279,4 +315,10 @@ const CyclingImage = ({ images, alt, interval = 3000, startIndex = 0 }) => {
     );
 };
 
-export default RentalInquiry;
+export default function RentalInquiry() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <RentalInquiryContent />
+        </Suspense>
+    );
+}

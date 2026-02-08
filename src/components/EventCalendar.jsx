@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight, List, Calendar as CalendarIcon } from 'lucide-react';
 import './EventCalendar.css';
 
@@ -7,7 +9,7 @@ const DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const EventCalendar = ({ events }) => {
-    const navigate = useNavigate();
+    const router = useRouter();
     // Default to February 2026 since that's where the primary demo event is
     const [currentDate, setCurrentDate] = useState(new Date(2026, 1, 1));
 
@@ -59,7 +61,7 @@ const EventCalendar = ({ events }) => {
                             <div
                                 key={event.id}
                                 className="calendar-event-pill clickable"
-                                onClick={() => navigate(`/events/${event.id}`)}
+                                onClick={() => router.push(`/events/${event.id}`)}
                                 title={`Click to view details for ${event.title}`}
                             >
                                 <div className="event-pill-info">
@@ -93,8 +95,8 @@ const EventCalendar = ({ events }) => {
 
             <div className="calendar-grid">
                 {/* Weekday Headers */}
-                {DAYS.map(day => (
-                    <div key={day} className="calendar-weekday">{day}</div>
+                {DAYS.map((day, index) => (
+                    <div key={`${day}-${index}`} className="calendar-weekday">{day}</div>
                 ))}
 
                 {/* Calendar Days */}

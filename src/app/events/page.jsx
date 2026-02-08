@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+'use client';
+
+import React, { useEffect, useState, Suspense } from 'react';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import './Events.css';
 import { Users, Music, Wine, List as ListIcon, Calendar as CalendarIcon } from 'lucide-react';
-import EventCalendar from '../components/EventCalendar';
-import RentalCarousel from '../components/RentalCarousel';
+import EventCalendar from '../../components/EventCalendar';
+import RentalCarousel from '../../components/RentalCarousel';
 
 const QUERY_EVENTS = `
   query GetEvents {
@@ -71,48 +74,37 @@ Non-refundable payment due up front upon booking`,
     }
 ];
 
-const Events = () => {
-    const { hash } = useLocation();
-    const [viewMode, setViewMode] = useState('list'); // 'list' or 'calendar'
+function EventsContent() {
+    const [viewMode, setViewMode] = useState('list');
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const searchParams = useSearchParams();
 
-    // Fetch events from CMS
     useEffect(() => {
         const fetchEvents = async () => {
             const graphqlUrl = '/graphql';
-            console.log('Attempting to fetch events from:', graphqlUrl);
-
             try {
-
                 const response = await fetch(graphqlUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ query: QUERY_EVENTS })
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    throw new Error('Server returned a non-JSON response.');
                 }
 
                 const json = await response.json();
-                console.log('WPGraphQL Response:', json);
-
                 const { data, errors } = json;
 
-                if (errors) {
-                    console.error('GraphQL Errors:', errors);
-                    throw new Error(errors[0].message);
-                }
+                if (errors) throw new Error(errors[0].message);
 
                 if (!data || !data.events || !data.events.nodes) {
-                    console.warn('No events data found in response');
                     setEvents([]);
                     return;
                 }
 
-                // Map data to the format expected by the component
                 const mappedEvents = data.events.nodes.map(node => {
                     const fields = node.eventDetails;
                     const dateObj = new Date(fields.eventDate);
@@ -122,19 +114,15 @@ const Events = () => {
                         title: fields.eventTitle,
                         desc: fields.eventDescription,
                         time: fields.eventTime,
-                        category: 'General', // Fallback as it's not in the screenshot
+                        category: 'General',
                         image: isWorkshop ? '/galentines-workshop.png' : (node.featuredImage?.node?.sourceUrl || null),
                         date: dateObj,
                         month: dateObj.toLocaleString('default', { month: 'short' }).toUpperCase(),
                         day: dateObj.getDate().toString().padStart(2, '0')
                     };
                 });
-
-                console.log('Mapped Events:', mappedEvents);
                 setEvents(mappedEvents);
             } catch (err) {
-                console.error('Error fetching events:', err);
-                // Fallback to mock data silently without notifying the user in the UI
                 const mockEvents = [
                     {
                         id: 'galentines-workshop',
@@ -168,35 +156,19 @@ const Events = () => {
         fetchEvents();
     }, []);
 
-    // Scroll to hash on load/change
-    useEffect(() => {
-        if (hash) {
-            const element = document.getElementById(hash.substring(1));
-            if (element) {
-                setTimeout(() => {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                }, 1000);
-            }
-        }
-    }, [hash]);
-
-    // Handle mobile detection for view restriction
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768);
-        };
+        setIsMobile(window.innerWidth <= 768);
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Force list view on mobile regardless of toggle state
     const effectiveViewMode = isMobile ? 'list' : viewMode;
 
     return (
         <div className="page-container events-page">
-            {/* Hero Section */}
             <div className="events-hero">
                 <div className="overlay"></div>
                 <div className="container hero-content">
@@ -206,14 +178,12 @@ const Events = () => {
             </div>
 
             <div className="container">
-                {/* Winery Events Section */}
                 <section id="scheduled-events" className="events-section fade-in">
                     <div className="section-header text-center">
                         <span className="pre-heading">Join Us For</span>
                         <h2>Upcoming Events</h2>
                         <div className="divider"></div>
 
-                        {/* View Toggle */}
                         {!isMobile && (
                             <div className="view-toggle-container">
                                 <div className="view-toggle">
@@ -238,7 +208,6 @@ const Events = () => {
                         <div className="text-center py-5">
                             <div className="loading-spinner"></div>
                         </div>
-
                     ) : events.length === 0 ? (
                         <div className="text-center py-5">
                             <p>No upcoming events at this time. Check back soon!</p>
@@ -260,7 +229,7 @@ const Events = () => {
                                                 <p className="event-time">{event.time}</p>
                                             </div>
                                             <div className="event-action-column">
-                                                <Link to={`/events/${event.id}`} className="btn btn-primary">Event Details</Link>
+                                                <Link href={`/events/${event.id}`} className="btn btn-primary">Event Details</Link>
                                             </div>
                                         </div>
                                     ))}
@@ -272,10 +241,8 @@ const Events = () => {
                     )}
                 </section>
 
-                {/* Divider */}
                 <hr className="section-divider" />
 
-                {/* Private Events Section */}
                 <section id="private-events" className="events-section fade-in">
                     <div className="section-header text-center">
                         <span className="pre-heading">Host Your Own</span>
@@ -296,10 +263,10 @@ const Events = () => {
                             <p>Follow us on social media for the latest events, announcements, promotions, and updates.</p>
                             <div className="banner-socials">
                                 <a href="https://www.facebook.com/SunsetMeadowVineyards" target="_blank" rel="noopener noreferrer" className="social-icon-link icon-wrap fb">
-                                    <img src="icons8-facebook-50.png" alt="Facebook" />
+                                    <img src="/icons8-facebook-50.png" alt="Facebook" />
                                 </a>
                                 <a href="https://www.instagram.com/sunsetmeadowvineyards/" target="_blank" rel="noopener noreferrer" className="social-icon-link icon-wrap ig">
-                                    <img src="icons8-instagram-50.png" alt="Instagram" />
+                                    <img src="/icons8-instagram-50.png" alt="Instagram" />
                                 </a>
                             </div>
                         </div>
@@ -308,6 +275,12 @@ const Events = () => {
             </div>
         </div>
     );
-};
+}
 
-export default Events;
+export default function Events() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <EventsContent />
+        </Suspense>
+    );
+}

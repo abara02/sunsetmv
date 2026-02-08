@@ -47,13 +47,15 @@
 }
 
 .welcome-intro {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    color: var(--color-accent);
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    color: var(--color-text-light);
     font-style: italic;
+    font-weight: 500;
 }
 
 .welcome-title {
+    font-family: var(--font-heading);
     font-size: 3rem;
     letter-spacing: 2px;
     margin: 0;
@@ -61,10 +63,12 @@
 }
 
 .welcome-location {
-    font-size: 1.1rem;
-    text-transform: uppercase;
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
     letter-spacing: 1px;
     color: var(--color-text-light);
+    font-style: italic;
+    font-weight: 500;
 }
 
 /* Split Banner Section */
@@ -115,8 +119,16 @@
     font-size: 3rem;
     margin-bottom: 2rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    font-family: var(--font-heading);
     color: white;
+}
+
+.wine-shop-panel h2 {
+    font-family: var(--font-serif);
+}
+
+.tasting-room-panel h2 {
+    font-family: var(--font-serif);
+    font-size: 3rem;
 }
 
 /* Product Spotlight */
@@ -132,8 +144,10 @@
 }
 
 .center-header h3 {
+    font-family: var(--font-serif);
     font-size: 1.1rem;
-    color: var(--color-primary);
+    color: var(--color-accent);
+    /* Gold/Accent for the pre-header on dark */
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 1rem;
@@ -147,24 +161,35 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: transparent;
-    border-radius: 0;
-    overflow: visible;
-    box-shadow: none;
-    max-width: 800px;
+    background-color: #53161D;
+    /* Burgundy */
+    border: 2.5px solid #3D1B10;
+    /* Dark Brown Border */
+    border-radius: 12px;
+    /* Remove border radius for edge-to-edge */
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    width: 94%;
+    max-width: 1700px;
     margin: 0 auto;
     text-align: center;
+    padding: 4rem;
+    color: #FDFBF7;
+    /* Cream */
 }
+
+
 
 .spotlight-header {
     padding-top: 1rem;
 }
 
 .spotlight-header h4 {
-    font-size: 1.25rem;
-    /* Smaller to match clean look */
-    margin-bottom: 1rem;
-    color: #53161d;
+    font-size: 2.5rem;
+    /* Larger title */
+    margin-bottom: 1.5rem;
+    color: #FDFBF7;
+    /* Cream */
     font-family: var(--font-heading);
     font-weight: 700;
 }
@@ -193,13 +218,64 @@
 }
 
 .spotlight-info p {
-    font-size: 1.05rem;
-    line-height: 1.8;
-    margin-bottom: 1rem;
-    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: rgba(253, 251, 247, 0.9);
+    /* Slightly transparent cream */
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+}
+
+@media (min-width: 901px) {
+    .spotlight-card {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+        background: linear-gradient(to right, #53161D 62%, #f8f8f8 62%);
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .spotlight-text-content {
+        flex: 0 0 62%;
+        padding-left: 4rem;
+        padding-right: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .spotlight-image {
+        flex: 0 0 38%;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 !important;
+    }
+
+    .spotlight-image img {
+        margin: 0 !important;
+        max-height: 500px;
+    }
+
+    .center-header {
+        text-align: left;
+    }
+
+    .spotlight-info {
+        padding: 1rem 0 0;
+        text-align: left;
+    }
+
+    .spotlight-info p {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
 }
 
 
@@ -216,32 +292,25 @@
 .awards-teaser {
     background-color: #f8f5f2;
     padding: 0 0 2rem;
-    margin: 0;
+    margin: 8rem 0 0;
 }
 
 .awards-teaser-content {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: center;
-    justify-content: center;
-    gap: 4rem;
+    gap: 8rem;
     max-width: 900px;
     margin: 0 auto;
-    flex-wrap: wrap;
-    /* responsive */
 }
 
 .awards-text-col {
-    flex: 1;
-    min-width: 300px;
     text-align: left;
-    order: 1;
-    /* First on desktop */
 }
 
 .awards-image-col {
-    flex: 0 0 180px;
-    order: 2;
-    /* Second on desktop */
+    width: 200px;
+    /* Restoring to smaller size */
 }
 
 .awards-teaser-img {
@@ -254,10 +323,11 @@
     color: var(--color-primary);
     font-size: 1.8rem;
     margin-bottom: 1rem;
-    font-family: var(--font-heading);
+    font-family: var(--font-serif);
 }
 
 .awards-text-col .clean-text {
+    font-family: var(--font-body);
     font-size: 1rem;
     font-style: italic;
     margin-bottom: 1.5rem;
@@ -267,6 +337,7 @@
 
 /* Button with background #f8f5f2 (matching section) */
 .btn-outline-custom {
+    font-family: var(--font-body);
     background-color: #f8f5f2;
     color: var(--color-primary);
     border: none;
@@ -294,15 +365,13 @@
 
 @media (max-width: 768px) {
     .awards-teaser-content {
-        flex-direction: column-reverse;
-        /* Image top on mobile? Or Text top? usually Image top */
-        gap: 2rem;
+        grid-template-columns: 1fr;
+        gap: 3rem;
         text-align: center;
     }
 
     .awards-text-col {
         text-align: center;
-        order: 2;
     }
 
     .awards-image-col {
@@ -386,7 +455,7 @@
 }
 
 .quote-content blockquote {
-    font-family: var(--font-heading, "Playfair Display", serif);
+    font-family: var(--font-serif);
     font-size: 1.35rem;
     font-style: italic;
     line-height: 1.6;
@@ -398,6 +467,7 @@
 
 .quote-content cite {
     display: block;
+    font-family: var(--font-serif);
     font-weight: 600;
     font-style: normal;
     color: var(--color-text, #333);
@@ -514,7 +584,7 @@
     }
 
     .quote-content.text-left {
-        /* Keep left alignment or center on mobile preference */
+        text-align: left;
     }
 
     .winemaker-grid {

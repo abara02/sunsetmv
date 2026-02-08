@@ -45,7 +45,7 @@
     width: 55%;
     height: 110%;
     transform: translateY(-50%);
-    background-image: url('../assets/barrel-cart-sketch.png');
+    background-image: url('/barrel-cart-sketch.png');
     background-repeat: no-repeat;
     background-position: center right;
     background-size: contain;

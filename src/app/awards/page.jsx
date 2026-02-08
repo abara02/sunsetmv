@@ -1,21 +1,19 @@
+'use client';
+
 import React from 'react';
-import { generalAwards, wineAwards } from '../data/awards';
-import { Trophy, Medal, Award, Star, Wine } from 'lucide-react';
-import PageHero from '../components/PageHero';
+import { generalAwards, wineAwards } from '../../data/awards';
+import PageHero from '../../components/PageHero';
 import './Awards.css';
 
 const Awards = () => {
-
-
     return (
         <div className="awards-page">
             <PageHero
                 title={<>AWARDS <br className="mobile-break" />& <br className="mobile-break" />ACCOLADES</>}
-                backgroundImage="test2.png"
+                backgroundImage="/test2.png"
                 logoSrc="/LOGO SMV (1).png"
             />
             <div className="awards-container">
-                {/* General Awards */}
                 <section className="general-awards-section">
                     <h2 className="section-title">Winery Recognitions</h2>
                     <div className="recognition-list">
@@ -29,7 +27,6 @@ const Awards = () => {
                     </div>
                 </section>
 
-                {/* Wine Awards Accordion */}
                 <section className="wine-awards-section">
                     <h2 className="section-title">Award-Winning Wines</h2>
                     <div className="wine-accordion-container">
@@ -63,13 +60,9 @@ const Awards = () => {
                                 .sort(([a], [b]) => {
                                     const indexA = wineOrder.indexOf(a);
                                     const indexB = wineOrder.indexOf(b);
-                                    // If both are in the list, sort by index
                                     if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-                                    // If only A is in list, comes first
                                     if (indexA !== -1) return -1;
-                                    // If only B is in list, comes first
                                     if (indexB !== -1) return 1;
-                                    // Otherwise sort alphabetically
                                     return a.localeCompare(b);
                                 })
                                 .map(([wineName, awards], index) => (
@@ -86,7 +79,6 @@ const Awards = () => {
 const WineAccordionItem = ({ wineName, awards }) => {
     const [isOpen, setIsOpen] = React.useState(false);
 
-    // Manual overrides for specific award counts as requested
     const manualCounts = {
         "Cayuga White": 12,
         "Chardonnay": 13,
@@ -103,7 +95,6 @@ const WineAccordionItem = ({ wineName, awards }) => {
         "Pyrrha’s Passion": 4
     };
 
-    // Use manual count if it exists, otherwise fallback to array length
     const count = manualCounts[wineName] || awards.length;
 
     return (

@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Plus, X } from 'lucide-react';
 import './FAQ.css';
 
@@ -11,13 +13,6 @@ const FAQ = () => {
     };
 
     const faqs = [
-        // EDIT THIS TO ADD NEW FAQS, then remove "//" from the lines below to 
-        // make it visible
-        // {
-        //  question: "",
-        //  answer: ""
-        //},
-
         {
             question: "Are dogs allowed?",
             answer: "Yes! Pets are welcome at Sunset Meadow. Please ensure your pet is leashed at all times, friendly with people and other animals, and never left unattended. Guests are responsible for cleaning up after their pets."
@@ -32,7 +27,7 @@ const FAQ = () => {
         },
         {
             question: "Do you sell your wine in local liquor stores?",
-            answer: <>Yes! Our wines are available at numerous package stores throughout the state. You can locate the store nearest you by visiting <Link to="/where-to-buy" className="faq-link">Where to Buy</Link>.</>
+            answer: <>Yes! Our wines are available at numerous package stores throughout the state. You can locate the store nearest you by visiting <Link href="/where-to-buy" className="faq-link">Where to Buy</Link>.</>
         },
         {
             question: "Do you have a restaurant?",
@@ -69,8 +64,6 @@ const FAQ = () => {
             <div className="faq-decor decor-top-left"></div>
             <div className="faq-decor decor-bottom-right"></div>
             <div className="faq-container">
-
-
                 <div className="faq-header">
                     <h1>FREQUENTLY ASKED QUESTIONS</h1>
                     <p>Find answers to common questions about your visit.</p>

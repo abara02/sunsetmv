@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import stores from '../data/stores';
+'use client';
+
+import React, { useState } from 'react';
+import stores from '../../data/stores';
 import './WhereToBuy.css';
 
-// Helper functions (defined outside component for safety)
-const deg2rad = (deg) => {
-    return deg * (Math.PI / 180);
-};
+const deg2rad = (deg) => deg * (Math.PI / 180);
 
 const getDistance = (lat1, lon1, lat2, lon2) => {
     const R = 3959;
@@ -19,15 +18,13 @@ const getDistance = (lat1, lon1, lat2, lon2) => {
     return R * c;
 };
 
-const WhereToBuy = () => {
+export default function WhereToBuy() {
     const [searchZip, setSearchZip] = useState('');
     const [radius, setRadius] = useState(200);
-    // Default to approximately center of CT
     const [userLocation, setUserLocation] = useState({ lat: 41.6032, lng: -72.7000 });
     const [viewMode, setViewMode] = useState('list');
     const [isSearching, setIsSearching] = useState(false);
 
-    // Initialize filteredStores WITH calculated distances to avoid render crash
     const [filteredStores, setFilteredStores] = useState(() => {
         const center = { lat: 41.6032, lng: -72.7000 };
         return stores.map(store => {
@@ -38,33 +35,26 @@ const WhereToBuy = () => {
 
     const handleSearch = async (e) => {
         e.preventDefault();
-
         if (!searchZip.trim()) return;
-
         setIsSearching(true);
         let center = userLocation;
 
         try {
-            // Use OpenStreetMap Nominatim API for free geocoding
-            // Restricted to US, with a bias towards the Northeast (CT/NY/MA area) to prioritize local towns like "Canaan"
-            // viewbox format: left,top,right,bottom (West, North, East, South) -> actually Nominatim expects min_lon,max_lat,max_lon,min_lat or x1,y1,x2,y2
-            // CT region approx: -74.3, 42.1, -71.7, 40.9
             const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=us&viewbox=-74.3,42.1,-71.7,40.9&bounded=0&q=${encodeURIComponent(searchZip)}`);
             const data = await response.json();
 
             if (data && data.length > 0) {
-                // Take the first result
                 const lat = parseFloat(data[0].lat);
                 const lon = parseFloat(data[0].lon);
                 center = { lat, lng: lon };
                 setUserLocation(center);
             } else {
+                alert(`Could not find location: "${searchZip}".`);
                 alert(`Could not find location: "${searchZip}". Returning to previous location.`);
                 setIsSearching(false);
                 return;
             }
 
-            // Filter and sort based on new real coordinates
             const results = stores.map(store => {
                 const distance = getDistance(center.lat, center.lng, store.lat, store.lng);
                 return { ...store, distance };
@@ -133,7 +123,6 @@ const WhereToBuy = () => {
 
             <div className="container wtb-simple-content">
                 <div className="wtb-list-header">
-                    {/* View Toggle */}
                     <div className="view-toggle-container">
                         <div className="view-toggle">
                             <button
@@ -189,56 +178,25 @@ const WhereToBuy = () => {
                                 </div>
                             </div>
                         ))}
-
-                        {filteredStores.length === 0 && (
-                            <div className="no-results">
-                                <p>No stores found within this radius. Please try a different zip code or town, or increase the search distance.</p>
-                            </div>
-                        )}
                     </div>
                 ) : (
                     <div className="map-placeholder-view realistic-map">
-                        {/* Realistic Demo Pins from actual stores data */}
                         <div className="map-pins-overlay">
                             {stores.slice(0, 35).map(store => {
-                                // Simple mapping formula for CT/Northeast region
-                                // Based on approximate bounds of the generated realistic map image
-                                const West = -74.5;
-                                const East = -70.5;
-                                const North = 42.8;
-                                const South = 40.2;
-
+                                const West = -74.5, East = -70.5, North = 42.8, South = 40.2;
                                 const left = ((store.lng - West) / (East - West)) * 100;
                                 const top = ((North - store.lat) / (North - South)) * 100;
-
                                 return (
-                                    <div
-                                        key={store.id}
-                                        className="map-pin teardrop"
-                                        style={{ top: `${top}%`, left: `${left}%` }}
-                                    >
+                                    <div key={store.id} className="map-pin teardrop" style={{ top: `${top}%`, left: `${left}%` }}>
                                         <div className="pin-marker-teardrop"></div>
                                         <div className="pin-tooltip">{store.name}</div>
                                     </div>
                                 );
                             })}
                         </div>
-
-                        <div className="map-demo-label">
-                            <h3 className="placeholder-title">Interactive Map Demo</h3>
-                            <p className="placeholder-subtitle">Using actual store locations across the region.</p>
-                            <button
-                                className="placeholder-btn"
-                                onClick={() => setViewMode('list')}
-                            >
-                                Return to List
-                            </button>
-                        </div>
                     </div>
                 )}
             </div>
         </div>
     );
-};
-
-export default WhereToBuy;
+}

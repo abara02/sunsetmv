@@ -1,16 +1,54 @@
-# React + Vite
+# Sunset Meadow Vineyards (Next.js)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project has been migrated from Vite to **Next.js 15.1.6** using the App Router. It is a full restoration of the Sunset Meadow Vineyards website with dynamic data fetching, cart functionality, and responsive design.
 
-Currently, two official plugins are available:
+## 🚀 Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+First, install the dependencies:
 
-## React Compiler
+```bash
+npm install
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Then, run the development server:
 
-## Expanding the ESLint configuration
+```bash
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Open [http://localhost:3000](http://localhost:3000) (or the port specified in the terminal) with your browser to see the result.
+
+## 🛠 Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **State Management**: React Context (Shop & Cart)
+- **Styling**: Vanilla CSS (migrated from original implementation)
+- **UI Icons**: Lucide React
+- **Maps**: React Leaflet
+- **Animations**: Framer Motion
+- **API**: GraphQL (WPGraphQL) & WooCommerce REST API
+
+## 📂 Project Structure
+
+- `src/app/`: Contains the application routes and pages.
+- `src/components/`: Reusable React components.
+- `src/context/`: Context providers for Shop and Cart state.
+- `src/data/`: Static fallback data for wines and events.
+- `public/`: Static assets (images, icons, etc.).
+
+## ⚙️ Configuration
+
+The project uses `next.config.js` for API rewrites to bypass CORS and proxy requests to the WordPress backend:
+- `/graphql` -> `http://sunsetmeadow-admin.local/graphql`
+- `/wp-json` -> `http://sunsetmeadow-admin.local/wp-json`
+
+## 📦 Deployment
+
+This project is optimized for deployment on **Vercel**. Run the build command locally to verify:
+
+```bash
+npm run build
+```
+
+---
+*Sunset Meadow Vineyards - Award-Winning Estate Winery*

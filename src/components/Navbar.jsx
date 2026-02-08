@@ -1,17 +1,20 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X, ShoppingBag, MapPin } from 'lucide-react';
 import './Navbar.css';
 
 const Navbar = React.memo(() => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const location = useLocation();
+    const pathname = usePathname();
 
     const { cartCount, openCart } = useCart();
 
-    const isSolidNavbar = location.pathname !== '/';
+    const isSolidNavbar = pathname !== '/';
 
     useEffect(() => {
         let rafId = null;
@@ -43,47 +46,47 @@ const Navbar = React.memo(() => {
     return (
         <nav
             className={`navbar ${scrolled || isSolidNavbar ? 'scrolled' : ''}`}
-            data-page={location.pathname.split('/')[1] || 'home'}
+            data-page={pathname.split('/')[1] || 'home'}
         >
             <div className="navbar-container container">
-                <Link to="/" className="logo">
+                <Link href="/" className="logo">
                     <img src="/smv-logo-footer.png" alt="Sunset Meadow Vineyards" />
                 </Link>
 
                 {/* Desktop Menu */}
                 <div className="nav-links desktop-only">
                     <div className="nav-item-dropdown">
-                        <Link to="/visit" className="dropdown-trigger">Visit</Link>
+                        <Link href="/visit" className="dropdown-trigger">Visit</Link>
                         <div className="dropdown-menu">
-                            <Link to="/visit#tasting-room">Tasting Room</Link>
-                            <Link to="/visit#location">Location</Link>
+                            <Link href="/visit#tasting-room">Tasting Room</Link>
+                            <Link href="/visit#location">Location</Link>
                         </div>
                     </div>
                     <div className="nav-item-dropdown">
-                        <Link to="/shop" className="dropdown-trigger">Shop</Link>
+                        <Link href="/shop" className="dropdown-trigger">Shop</Link>
                         <div className="dropdown-menu">
-                            <Link to="/shop?category=white">White Wines</Link>
-                            <Link to="/shop?category=fruit">Fruit Wines</Link>
-                            <Link to="/shop?category=rose">Rosé Wines</Link>
-                            <Link to="/shop?category=red">Red Wines</Link>
-                            <Link to="/shop?category=reserve">Reserve Wines</Link>
-                            <Link to="/shop?category=sparkling">Sparkling Wines</Link>
-                            <Link to="/shop?category=more">More</Link>
+                            <Link href="/shop?category=white">White Wines</Link>
+                            <Link href="/shop?category=fruit">Fruit Wines</Link>
+                            <Link href="/shop?category=rose">Rosé Wines</Link>
+                            <Link href="/shop?category=red">Red Wines</Link>
+                            <Link href="/shop?category=reserve">Reserve Wines</Link>
+                            <Link href="/shop?category=sparkling">Sparkling Wines</Link>
+                            <Link href="/shop?category=more">More</Link>
                         </div>
                     </div>
                     <div className="nav-item-dropdown">
-                        <Link to="/events" className="dropdown-trigger">Events</Link>
+                        <Link href="/events" className="dropdown-trigger">Events</Link>
                         <div className="dropdown-menu">
-                            <Link to="/events#scheduled-events">Scheduled Events</Link>
-                            <Link to="/events#private-events">Private Events</Link>
+                            <Link href="/events#scheduled-events">Scheduled Events</Link>
+                            <Link href="/events#private-events">Private Events</Link>
                         </div>
                     </div>
-                    <Link to="/about">Our Story</Link>
-                    <Link to="/faq">FAQ</Link>
+                    <Link href="/about">Our Story</Link>
+                    <Link href="/faq">FAQ</Link>
                 </div>
 
                 <div className="nav-actions">
-                    <Link to="/where-to-buy" className="icon-link" title="Where to Buy">
+                    <Link href="/where-to-buy" className="icon-link" title="Where to Buy">
                         <MapPin size={22} />
                     </Link>
 
@@ -98,11 +101,11 @@ const Navbar = React.memo(() => {
 
                 {/* Mobile Menu */}
                 <div className={`mobile-menu ${isOpen ? 'open' : ''}`}>
-                    <Link to="/shop" onClick={closeMenu}>Shop</Link>
-                    <Link to="/visit" onClick={closeMenu}>Visit</Link>
-                    <Link to="/events" onClick={closeMenu}>Events</Link>
-                    <Link to="/about" onClick={closeMenu}>Our Story</Link>
-                    <Link to="/faq" onClick={closeMenu}>FAQ</Link>
+                    <Link href="/shop" onClick={closeMenu}>Shop</Link>
+                    <Link href="/visit" onClick={closeMenu}>Visit</Link>
+                    <Link href="/events" onClick={closeMenu}>Events</Link>
+                    <Link href="/about" onClick={closeMenu}>Our Story</Link>
+                    <Link href="/faq" onClick={closeMenu}>FAQ</Link>
                 </div>
             </div>
         </nav>

@@ -1,7 +1,9 @@
+'use client';
+
 import React, { useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import { X, Minus, Plus, Trash2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import './CartDrawer.css';
 
 const CartDrawer = () => {
@@ -55,7 +57,7 @@ const CartDrawer = () => {
                                     </div>
                                     <div className="drawer-item-details">
                                         <div className="drawer-item-top">
-                                            <Link to={`/shop/${item.slug}`} onClick={closeCart} className="drawer-item-name">
+                                            <Link href={`/shop/${item.slug}`} onClick={closeCart} className="drawer-item-name">
                                                 {item.name}
                                             </Link>
                                             <div className="drawer-item-price-group">
@@ -94,13 +96,13 @@ const CartDrawer = () => {
                                 <span className="summary-price">${cartTotal.toFixed(2)}</span>
                             </div>
                             <p className="shipping-note">Taxes and shipping calculated at checkout</p>
-                            <Link to="/checkout" className="btn btn-primary btn-block checkout-btn" onClick={closeCart}>
+                            <Link href="/checkout" className="btn btn-primary btn-block checkout-btn" onClick={closeCart}>
                                 Proceed to Checkout
                             </Link>
                             <button className="continue-shopping-btn" onClick={closeCart}>
                                 Continue Shopping
                             </button>
-                            <Link to="/cart" className="view-cart-link" onClick={closeCart}>
+                            <Link href="/cart" className="view-cart-link" onClick={closeCart}>
                                 View Cart
                             </Link>
                         </div>

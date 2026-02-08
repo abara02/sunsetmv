@@ -1,7 +1,8 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import TastingCarousel from '../components/TastingCarousel';
+'use client';
+
+import React, { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import TastingCarousel from '../../components/TastingCarousel';
 import './Visit.css';
 
 const GET_VISIT_PAGE = `
@@ -17,27 +18,26 @@ const GET_VISIT_PAGE = `
   }
 `;
 
-const Visit = () => {
-    const { hash } = useLocation();
+function VisitContent() {
+    const searchParams = useSearchParams();
+    const hash = ''; // In Next.js, handling hash fragments is slightly different.
+
     const images = [
         '/visit-bar-bg.jpg',
         '/visit-bg-1.jpg',
         '/visit-bg-2.jpg'
     ];
 
-    const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
-    const [hours, setHours] = React.useState([]);
-    const [hoursTitle, setHoursTitle] = React.useState('Winter Hours');
-    const [loading, setLoading] = React.useState(true);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [hours, setHours] = useState([]);
+    const [hoursTitle, setHoursTitle] = useState('Winter Hours');
+    const [loading, setLoading] = useState(true);
 
-    // Fetch Hours from WordPress
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchVisitData = async () => {
             const graphqlUrl = '/graphql';
-
             const attemptFetch = async (uri, queryToUse) => {
                 try {
-                    console.log(`Visit Page: Trying fetch for URI "${uri}"`);
                     const response = await fetch(graphqlUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -46,47 +46,32 @@ const Visit = () => {
                             variables: { id: uri }
                         })
                     });
-                    const result = await response.json();
-
-                    // If the whole query fails (e.g. storeHoursDetails doesn't exist yet)
-                    if (result.errors) {
-                        const firstError = result.errors[0]?.message || 'Unknown error';
-                        console.warn('GraphQL error:', firstError);
-                        return null;
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                        throw new Error('Server returned a non-JSON response.');
                     }
 
-                    const page = result.data?.page;
+                    const json = await response.json();
+                    if (json.errors) return null;
+                    const page = json.data?.page;
                     if (!page) return null;
-
-                    const details = page.storeHoursEdit || page.storeHoursDetails;
-                    if (details) {
-                        console.log('--- HOURS DATA FOUND ---', details);
-                        return details;
-                    }
-                    return null;
+                    return page.storeHoursEdit || page.storeHoursDetails;
                 } catch (e) {
-                    console.error('Fetch error:', e);
                     return null;
                 }
             };
 
             try {
-                // Try multiple URI patterns
                 let details = await attemptFetch('/store-hours/', GET_VISIT_PAGE);
                 if (!details) details = await attemptFetch('store-hours', GET_VISIT_PAGE);
                 if (!details) details = await attemptFetch('/store-hours', GET_VISIT_PAGE);
 
                 if (details) {
-                    console.log('--- HOURS DATA FOUND ---', details);
                     setHoursTitle(details.hoursTitle || 'Winter Hours');
-
                     const rawContent = details.hoursList;
                     if (rawContent) {
-                        // Split by newlines and clean up each line
                         const lines = rawContent.split(/\r?\n/).filter(line => line.trim() !== '');
-
                         const mapped = lines.map(line => {
-                            // Split only at the FIRST colon to separate Day from Time
                             const firstColonIndex = line.indexOf(':');
                             if (firstColonIndex !== -1) {
                                 return {
@@ -94,13 +79,9 @@ const Visit = () => {
                                     value: line.substring(firstColonIndex + 1).trim()
                                 };
                             }
-                            // Fallback if no colon is found
                             return { label: '', value: line.trim() };
                         });
-
                         setHours(mapped);
-                    } else {
-                        setHours([]);
                     }
                 }
             } catch (err) {
@@ -113,7 +94,6 @@ const Visit = () => {
         fetchVisitData();
     }, []);
 
-    // Tasting Menu Data
     const tastingItems = [
         {
             title: "Classic Tasting",
@@ -140,34 +120,16 @@ const Visit = () => {
         }
     ];
 
-    /* 
-       Cycle images every 5 seconds.
-       We use a fade-in/out effect via CSS classes based on index.
-    */
-    React.useEffect(() => {
+    useEffect(() => {
         const interval = setInterval(() => {
             setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
         }, 5000);
-
         return () => clearInterval(interval);
     }, [images.length]);
-
-    // Scroll to hash on load/change
-    React.useEffect(() => {
-        if (hash) {
-            const element = document.getElementById(hash.substring(1));
-            if (element) {
-                setTimeout(() => {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-            }
-        }
-    }, [hash]);
 
     return (
         <div className="page-container visit-page">
             <div className="page-header visit-header-container">
-                {/* Slideshow Backgrounds */}
                 {images.map((img, index) => (
                     <div
                         key={index}
@@ -213,7 +175,6 @@ const Visit = () => {
                                             </React.Fragment>
                                         ))
                                     ) : (
-                                        /* Semi-static Fallback if WordPress isn't ready */
                                         <>
                                             <div className="day">Monday</div>
                                             <div className="time">Closed</div>
@@ -272,6 +233,12 @@ const Visit = () => {
             </div>
         </div>
     );
-};
+}
 
-export default Visit;
+export default function Visit() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <VisitContent />
+        </Suspense>
+    );
+}

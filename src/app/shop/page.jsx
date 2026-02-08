@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+'use client';
+
+import React, { useState, useEffect, Suspense } from 'react';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { Search, Filter } from 'lucide-react';
-import WineCard from '../components/WineCard';
-import { useShop } from '../context/ShopContext';
+import WineCard from '../../components/WineCard';
+import { useShop } from '../../context/ShopContext';
 import './Shop.css';
 
-const Shop = () => {
+function ShopContent() {
     const { wines, loading } = useShop();
     const [filter, setFilter] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
     const [showFilters, setShowFilters] = useState(false);
-    const location = useLocation();
+    const searchParams = useSearchParams();
 
     // Map URL category params to Filter names
     useEffect(() => {
-        const searchParams = new URLSearchParams(location.search);
         const category = searchParams.get('category');
 
         if (category) {
@@ -44,13 +46,9 @@ const Shop = () => {
                     setFilter('All');
             }
         } else {
-            // If no category param, maybe keep current or default to All? 
-            // Usually if I click "Shop" I might want to see All or keep my state. 
-            // Navbar "Shop" link goes to `/shop` which has no param.
-            // If I navigate from Fruit to Shop (main), I probably expect All.
             setFilter('All');
         }
-    }, [location.search]);
+    }, [searchParams]);
 
     // Filter logic
     const filteredWines = wines.filter(wine => {
@@ -118,7 +116,7 @@ const Shop = () => {
                         <div className="wine-grid">
                             {filteredWines.length > 0 ? (
                                 filteredWines.map(wine => (
-                                    <Link to={`/shop/${wine.slug}`} key={wine.id} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <Link href={`/shop/${wine.slug}`} key={wine.id} style={{ textDecoration: 'none', color: 'inherit' }}>
                                         <WineCard
                                             id={wine.id}
                                             slug={wine.slug}
@@ -145,6 +143,12 @@ const Shop = () => {
             </div>
         </div>
     );
-};
+}
 
-export default Shop;
+export default function Shop() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ShopContent />
+        </Suspense>
+    );
+}

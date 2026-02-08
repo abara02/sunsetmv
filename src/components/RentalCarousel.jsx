@@ -1,14 +1,16 @@
+'use client';
+
 import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Tent } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import "./RentalCarousel.css";
 
 const RentalCarousel = ({ items }) => {
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(0);
     const [hasInteracted, setHasInteracted] = useState(false);
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const nextStep = useCallback(() => {
         setDirection(1);
@@ -28,7 +30,7 @@ const RentalCarousel = ({ items }) => {
     };
 
     const handleInquire = (item) => {
-        navigate("/events/inquire", { state: { rental: item } });
+        router.push(`/events/inquire?id=${item.id}`);
     };
 
     const handleDragEnd = (_, info) => {

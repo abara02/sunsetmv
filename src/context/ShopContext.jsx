@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { wines as localWines } from '../data/wines';
 
@@ -45,8 +47,11 @@ export const ShopProvider = ({ children }) => {
             try {
                 const response = await fetch(restUrl);
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await response.text();
+                    console.error('Expected JSON but received:', text.substring(0, 100));
+                    throw new Error('Server returned a non-JSON response (likely an error page).');
                 }
 
                 const wpProducts = await response.json();

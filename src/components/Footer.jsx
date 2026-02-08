@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Facebook, Instagram, MapPin, Phone } from 'lucide-react';
 import './Footer.css';
 
@@ -9,7 +11,7 @@ const Footer = () => {
             <div className="container footer-content">
                 <div className="footer-column brand-col">
 
-                    <Link to="/" className="footer-logo-link">
+                    <Link href="/" className="footer-logo-link">
                         <img src="/smv-logo-footer.png" alt="Sunset Meadow Vineyards" className="footer-logo" />
                     </Link>
                     <div className="social-icons">
@@ -28,10 +30,10 @@ const Footer = () => {
                 <div className="footer-column">
                     <h4>Explore</h4>
                     <ul className="footer-links">
-                        <li><a href="/shop">Shop Wines</a></li>
-                        <li><a href="/visit">Visit & Tasting</a></li>
-                        <li><a href="/events">Events Calendar</a></li>
-                        <li><a href="/club">Wine Club</a></li>
+                        <li><Link href="/shop">Shop Wines</Link></li>
+                        <li><Link href="/visit">Visit & Tasting</Link></li>
+                        <li><Link href="/events">Events Calendar</Link></li>
+                        <li><Link href="/club">Wine Club</Link></li>
                     </ul>
                 </div>
 
