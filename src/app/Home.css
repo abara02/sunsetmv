@@ -363,19 +363,48 @@
     text-decoration-color: var(--color-gold);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+    .awards-teaser {
+        margin-top: 2rem;
+        /* Reduced to mimic image closeness */
+        padding-bottom: 2rem;
+    }
+
     .awards-teaser-content {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2rem;
+        /* Reduced gap between text column and image */
         text-align: center;
     }
 
     .awards-text-col {
         text-align: center;
+        margin-bottom: 0;
+        /* Remove bottom margin to rely on grid gap */
+    }
+
+    .awards-text-col h3 {
+        margin-bottom: 0.5rem;
+        /* Tighter title spacing */
+    }
+
+    .awards-text-col .clean-text {
+        margin-bottom: 1rem;
+        /* Tighter paragraph spacing */
+    }
+
+    .btn-outline-custom {
+        margin-top: 0.5rem;
+        /* Reduced top margin for link */
     }
 
     .awards-image-col {
         order: 1;
+        margin: 0 auto;
+        /* Center the image */
+        width: 100%;
+        max-width: 220px;
+        /* Reduced from 300px */
     }
 }
 
@@ -546,6 +575,12 @@
         height: auto;
     }
 
+    .split-content .btn {
+        border-radius: 4px;
+        font-weight: 600;
+        /* Match Shop Now button */
+    }
+
     .split-panel {
         width: 100%;
         /* Make it square-ish or at least substantial height */
@@ -636,5 +671,98 @@
         display: block;
         /* Removed line-clamp to show full text */
         overflow: visible;
+    }
+
+    /* Reorder Product Spotlight elements */
+    .spotlight-text-content {
+        display: contents;
+    }
+
+    .section-header.center-header {
+        order: 1;
+        width: 100%;
+    }
+
+    .spotlight-header {
+        order: 2;
+        width: 100%;
+    }
+
+    .spotlight-image {
+        order: 3;
+        margin-bottom: 1rem;
+    }
+
+    .spotlight-info {
+        order: 4;
+        width: 100%;
+        padding: 0 1rem;
+        /* Slight padding for text */
+    }
+
+    /* Reference Styling Overrides */
+    .spotlight-card {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        width: 100%;
+    }
+
+    .section-header.center-header h3 {
+        color: #333;
+        /* Dark text for "PRODUCT OF THE MONTH" */
+        font-size: 1rem;
+        letter-spacing: 2px;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .spotlight-header h4 {
+        color: #53161D;
+        /* Brand Burgundy for "Twisted Red" */
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .spotlight-info p {
+        color: #333;
+        /* Dark text for description */
+        font-size: 1.05rem;
+        line-height: 1.5;
+        margin-bottom: 2rem;
+        max-width: 100%;
+    }
+
+    /* Button Styling to match reference (Solid Red, White Text) */
+    .spotlight-info .btn-primary-inverted {
+        background-color: #53161D;
+        color: #fff;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        font-weight: 600;
+        text-transform: uppercase;
+        border-radius: 4px;
+        /* Optional: if reference has slight rounding */
+    }
+
+    .spotlight-info .btn-primary-inverted:hover {
+        background-color: #3D1B10;
+        /* Darker shade on hover */
+        color: #fff;
+    }
+
+    /* Apply matching border-radius and text style to "Our Story" button on mobile */
+    .quote-button-wrapper .btn {
+        border-radius: 4px;
+        font-weight: 600;
+        /* Match Shop Now button */
+    }
+
+    /* Hide quote content on mobile */
+    .quote-content {
+        display: none;
     }
 }
