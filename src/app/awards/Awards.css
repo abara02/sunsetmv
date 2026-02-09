@@ -49,7 +49,7 @@
 /* 3-Column List Layout (Left Aligned) */
 .recognition-row {
     display: grid;
-    grid-template-columns: 2fr 2fr 1fr;
+    grid-template-columns: 3fr 2fr 0.5fr;
     gap: 1rem;
     align-items: center;
     padding: 1.5rem 1rem;
@@ -62,11 +62,13 @@
 }
 
 .rec-title {
-    font-size: 1.1rem;
-    font-family: var(--font-heading);
-    color: var(--color-text);
+    font-size: 1.2rem;
+    font-family: 'Outfit', sans-serif;
+    color: #2C2C2C;
     font-weight: 500;
     text-align: left;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
 }
 
 .rec-org {
@@ -83,7 +85,7 @@
     font-weight: 700;
     letter-spacing: 1px;
     color: var(--color-burgundy);
-    text-align: left;
+    text-align: right;
 }
 
 .recognition-icon {
@@ -130,9 +132,11 @@
 .col-name {
     flex: 1;
     font-size: 1.1rem;
-    font-family: var(--font-heading);
-    color: var(--color-text);
+    font-family: 'Outfit', sans-serif;
+    color: #2C2C2C;
     font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
 }
 
 .col-count {

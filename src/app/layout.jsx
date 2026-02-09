@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import CartDrawer from '../components/CartDrawer';
 import { CartProvider } from '../context/CartContext';
 import { ShopProvider } from '../context/ShopContext';
+import AgeGate from '../components/AgeGate';
 
 export const metadata = {
     title: 'Sunset Meadow Vineyards',
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
             <body>
                 <ShopProvider>
                     <CartProvider>
+                        <AgeGate />
                         <Navbar />
                         <CartDrawer />
                         <main>{children}</main>
