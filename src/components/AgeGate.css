@@ -28,10 +28,10 @@
     border-radius: 8px;
     overflow: hidden;
     /* Ensure content doesn't spill out */
-    border: 2px solid #D4AF37;
-    /* Gold outline */
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3), 0 10px 30px rgba(0, 0, 0, 0.7);
-    /* Add subtle gold glow */
+    border: 2px solid #800000;
+    /* Maroon outline */
+    box-shadow: 0 0 15px rgba(128, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.7);
+    /* Add subtle maroon glow */
     font-family: var(--font-heading, serif);
     /* Flexbox to center the inner card */
     display: flex;
