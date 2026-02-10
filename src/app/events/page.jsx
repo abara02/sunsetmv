@@ -125,6 +125,7 @@ function EventsContent() {
                 });
                 setEvents(mappedEvents);
             } catch (err) {
+                console.error("GraphQL Fetch Error:", err);
                 const mockEvents = [
                     {
                         id: 'galentines-workshop',

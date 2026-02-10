@@ -59,6 +59,7 @@ function VisitContent() {
                     if (!page) return null;
                     return page.storeHoursEdit || page.storeHoursDetails;
                 } catch (e) {
+                    console.error("Fetch attempt failed:", e);
                     return null;
                 }
             };
