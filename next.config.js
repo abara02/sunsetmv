@@ -4,11 +4,11 @@ const nextConfig = {
         return [
             {
                 source: '/graphql',
-                destination: 'http://sunsetmeadow-admin.local/graphql',
+                destination: `${process.env.WORDPRESS_URL}/graphql`,
             },
             {
                 source: '/wp-json/:path*',
-                destination: 'http://sunsetmeadow-admin.local/wp-json/:path*',
+                destination: `${process.env.WORDPRESS_URL}/wp-json/:path*`,
             },
         ];
     },
