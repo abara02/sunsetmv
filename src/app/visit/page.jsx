@@ -44,7 +44,9 @@ function VisitContent() {
                         body: JSON.stringify({
                             query: queryToUse,
                             variables: { id: uri }
-                        })
+                        }),
+                        cache: 'no-store',
+                        next: { revalidate: 0 }
                     });
                     const contentType = response.headers.get('content-type');
                     if (!contentType || !contentType.includes('application/json')) {

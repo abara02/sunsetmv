@@ -87,7 +87,9 @@ function EventsContent() {
                 const response = await fetch(graphqlUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query: QUERY_EVENTS })
+                    body: JSON.stringify({ query: QUERY_EVENTS }),
+                    cache: 'no-store',
+                    next: { revalidate: 0 }
                 });
 
                 const contentType = response.headers.get('content-type');
