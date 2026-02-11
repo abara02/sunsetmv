@@ -1,11 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     async rewrites() {
-        const WP_BASE_URL = process.env.WP_BASE_URL;
-
-        if (!WP_BASE_URL) {
-            throw new Error("Missing WP_BASE_URL environment variable");
-        }
+        const WP_BASE_URL = process.env.WP_BASE_URL || 'http://white-rhinoceros-681232.hostingersite.com';
 
         return [
             {

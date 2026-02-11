@@ -124,7 +124,7 @@ export default function EventDetails(props) {
                     }),
                     time: fields.eventTime || fields.event_time || '',
                     cost: fields.eventCost || fields.event_cost || null,
-                    imageUrl: isWorkshop ? '/galentines-workshop.png' : (fields.eventImage?.node?.sourceUrl || fields.event_image?.node?.sourceUrl || null),
+                    imageUrl: isWorkshop ? '/eventsdummy.png' : (fields.eventImage?.node?.sourceUrl || fields.event_image?.node?.sourceUrl || null),
                     imageAlt: fields.eventImage?.node?.altText || fields.event_image?.node?.altText || eventTitle || 'Event Image',
                     link: finalLink
                 });
@@ -138,7 +138,7 @@ export default function EventDetails(props) {
                         date: 'Friday, February 13, 2026',
                         time: '6:00 PM - 8:00 PM',
                         cost: '$75.00',
-                        imageUrl: '/galentines-workshop.png',
+                        imageUrl: '/eventsdummy.png',
                         imageAlt: 'Galentines Charcuterie Workshop',
                         link: { url: 'https://www.eventbrite.com', title: 'Register on Eventbrite' }
                     });

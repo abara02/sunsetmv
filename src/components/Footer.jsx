@@ -16,13 +16,13 @@ const Footer = () => {
                     </Link>
                     <div className="social-icons">
                         <a href="https://www.instagram.com/sunsetmeadowvineyards/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="icon-wrap ig">
-                            <img src="icons8-instagram-50.png" alt="Instagram" />
+                            <img src="/icons8-instagram-50.png" alt="Instagram" />
                         </a>
                         <a href="https://www.google.com/search?q=sunset+meadow+vineyards+reviews" target="_blank" rel="noopener noreferrer" aria-label="Google Reviews" className="icon-wrap g">
-                            <img src="icons8-google-50.png" alt="Google Reviews" />
+                            <img src="/icons8-google-50.png" alt="Google Reviews" />
                         </a>
                         <a href="https://www.facebook.com/sunsetmeadowvineyards" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="icon-wrap fb">
-                            <img src="icons8-facebook-50.png" alt="Facebook" />
+                            <img src="/icons8-facebook-50.png" alt="Facebook" />
                         </a>
                     </div>
                 </div>

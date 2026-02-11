@@ -87,9 +87,7 @@ function EventsContent() {
                 const response = await fetch(graphqlUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query: QUERY_EVENTS }),
-                    cache: 'no-store',
-                    next: { revalidate: 0 }
+                    body: JSON.stringify({ query: QUERY_EVENTS })
                 });
 
                 const contentType = response.headers.get('content-type');
@@ -117,7 +115,7 @@ function EventsContent() {
                         desc: fields.eventDescription,
                         time: fields.eventTime,
                         category: 'General',
-                        image: isWorkshop ? '/galentines-workshop.png' : (node.featuredImage?.node?.sourceUrl || null),
+                        image: isWorkshop ? '/eventsdummy.png' : (node.featuredImage?.node?.sourceUrl || null),
                         date: dateObj,
                         month: dateObj.toLocaleString('default', { month: 'short' }).toUpperCase(),
                         day: dateObj.getDate().toString().padStart(2, '0')
@@ -125,7 +123,6 @@ function EventsContent() {
                 });
                 setEvents(mappedEvents);
             } catch (err) {
-                console.error("GraphQL Fetch Error:", err);
                 const mockEvents = [
                     {
                         id: 'galentines-workshop',
@@ -133,7 +130,7 @@ function EventsContent() {
                         desc: 'Hey ladies! Join Mommy Salami Charcuterie for a fun in-person Galentines Day Charcuterie Workshop at Sunset Meadow Vineyards! 💕🫒 Whether you’re a charcuterie pro or new to the game, we’ll guide you through creating beautiful, delicious boards perfect for sharing with your besties.',
                         time: '6:00 PM - 8:00 PM',
                         category: 'Workshop',
-                        image: '/galentines-workshop.png',
+                        image: '/eventsdummy.png',
                         date: new Date('2026-02-13T18:00:00'),
                         month: 'FEB',
                         day: '13'
