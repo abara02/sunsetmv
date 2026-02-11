@@ -92,7 +92,9 @@ function EventsContent() {
 
                 const contentType = response.headers.get('content-type');
                 if (!contentType || !contentType.includes('application/json')) {
-                    throw new Error('Server returned a non-JSON response.');
+                    const text = await response.text();
+                    console.error('Expected JSON but received:', text.substring(0, 500));
+                    throw new Error(`WordPress returned ${response.status} ${response.statusText}. Please ensure your local WordPress site is running.`);
                 }
 
                 const json = await response.json();

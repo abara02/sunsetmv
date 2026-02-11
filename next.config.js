@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     async rewrites() {
-        const WP_BASE_URL = process.env.WP_BASE_URL || 'http://white-rhinoceros-681232.hostingersite.com';
+        const WP_BASE_URL = process.env.WP_BASE_URL || 'http://sunsetmeadow-admin.local';
+
+        console.log('Using WordPress Base URL:', WP_BASE_URL);
 
         return [
             {
