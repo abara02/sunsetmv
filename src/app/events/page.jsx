@@ -261,15 +261,24 @@ function EventsContent() {
                         <>
                             {effectiveViewMode === 'list' ? (
                                 <div className="events-list fade-in">
-                                    {events
-                                        .filter(event => {
+                                    {(() => {
+                                        const filtered = events.filter(event => {
                                             const today = new Date();
                                             today.setHours(0, 0, 0, 0);
                                             const eventDate = new Date(event.date);
                                             eventDate.setHours(0, 0, 0, 0);
                                             return eventDate >= today;
-                                        })
-                                        .map(event => (
+                                        });
+
+                                        if (filtered.length === 0) {
+                                            return (
+                                                <div className="no-events-message text-center py-5">
+                                                    <p>Nothing scheduled right now. Check back later for updates!</p>
+                                                </div>
+                                            );
+                                        }
+
+                                        return filtered.map(event => (
                                             <div key={event.id} className="event-card">
                                                 <div className="event-date-column">
                                                     <div className="date-box">
@@ -285,7 +294,8 @@ function EventsContent() {
                                                     <Link href={`/events/${event.id}`} className="btn btn-primary">Event Details</Link>
                                                 </div>
                                             </div>
-                                        ))}
+                                        ));
+                                    })()}
                                 </div>
                             ) : (
                                 <EventCalendar events={events} />
