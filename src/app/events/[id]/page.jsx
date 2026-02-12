@@ -9,6 +9,7 @@ const GET_EVENT_BY_ID = `
   query GetEvent($id: ID!) {
     event(id: $id) {
       id
+      title
       eventDetails {
         eventTitle
         eventDescription
@@ -24,6 +25,19 @@ const GET_EVENT_BY_ID = `
         eventLink {
           url
           title
+        }
+      }
+      event_details {
+        event_title
+        event_description
+        event_date
+        event_time
+        event_cost
+        event_image {
+          node {
+            sourceUrl
+            altText
+          }
         }
         event_link {
           url
@@ -70,11 +84,20 @@ export default function EventDetails(props) {
                     if (fieldToStrip) {
                         const subfieldRegex = new RegExp(`${fieldToStrip}\\s*\\{[^}]*\\}`, 'g');
                         if (subfieldRegex.test(currentQuery)) {
-                            currentQuery = currentQuery.replace(subfieldRegex, fieldToStrip);
+                            currentQuery = currentQuery.replace(subfieldRegex, '');
                         } else {
                             const fieldRegex = new RegExp(`${fieldToStrip}\\s*({[^{}]*({[^{}]*}[^{}]*)*|)`, 'g');
                             currentQuery = currentQuery.replace(fieldRegex, '');
                         }
+
+                        // Cleanup: Remove parent fields that now have empty braces { }
+                        let cleaned = true;
+                        while (cleaned) {
+                            const prev = currentQuery;
+                            currentQuery = currentQuery.replace(/[\w_]+\s*\{\s*\}/g, '');
+                            cleaned = prev !== currentQuery;
+                        }
+
                         result = await fetchWithQuery(currentQuery);
                         attempts++;
                     } else {
@@ -85,14 +108,18 @@ export default function EventDetails(props) {
                 if (result.errors) throw new Error(result.errors[0].message);
 
                 if (!result.data || !result.data.event) {
-                    const MINIMAL_QUERY = `query GetEvent($id: ID!) { event(id: $id) { id eventDetails { eventTitle } } }`;
+                    const MINIMAL_QUERY = `query GetEvent($id: ID!) { event(id: $id) { id title eventDetails { eventTitle } event_details { event_title } } }`;
                     const minimalResult = await fetchWithQuery(MINIMAL_QUERY);
                     if (!minimalResult.data?.event) throw new Error('Event not found');
                     result = minimalResult;
                 }
 
-                const fields = result.data.event.eventDetails || {};
-                const dateObj = fields.eventDate ? new Date(fields.eventDate) : new Date();
+                const node = result.data.event;
+                const fields = node.eventDetails || node.event_details || {};
+                const eventTitle = fields.eventTitle || fields.event_title || (typeof node.title === 'string' ? node.title : node.title?.rendered) || 'Untitled Event';
+
+                const rawDate = fields.eventDate || fields.event_date;
+                const dateObj = rawDate ? new Date(rawDate) : new Date();
 
                 const getLink = (linkField) => {
                     if (!linkField) return null;
@@ -109,11 +136,10 @@ export default function EventDetails(props) {
                 };
 
                 const finalLink = getLink(fields.eventLink || fields.event_link);
-                const eventTitle = fields.eventTitle || fields.event_title || 'Untitled Event';
                 const isWorkshop = eventTitle.toLowerCase().includes('galentine');
 
                 setEvent({
-                    id: result.data.event.id,
+                    id: node.id,
                     title: eventTitle,
                     description: fields.eventDescription || fields.event_description || '',
                     date: dateObj.toLocaleDateString('default', {
