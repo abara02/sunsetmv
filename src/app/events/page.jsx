@@ -13,6 +13,8 @@ const QUERY_EVENTS = `
     events {
       nodes {
         id
+        databaseId
+        slug
         title
         eventDetails {
           eventTitle
@@ -172,7 +174,7 @@ function EventsContent() {
                     const dateObj = fields.eventDate || fields.event_date ? new Date(fields.eventDate || fields.event_date) : new Date();
                     const isWorkshop = eventTitle.toLowerCase().includes('galentine');
                     return {
-                        id: node.id,
+                        id: node.databaseId?.toString() || node.slug || node.id,
                         title: eventTitle,
                         desc: fields.eventDescription || fields.event_description || '',
                         time: fields.eventTime || fields.event_time || '',

@@ -6,9 +6,11 @@ import { Calendar, Clock, ArrowLeft, ExternalLink } from 'lucide-react';
 import './EventDetails.css';
 
 const GET_EVENT_BY_ID = `
-  query GetEvent($id: ID!) {
-    event(id: $id) {
+  query GetEvent($id: ID!, $idType: EventIdType!) {
+    event(id: $id, idType: $idType) {
       id
+      databaseId
+      slug
       title
       eventDetails {
         eventTitle
@@ -60,13 +62,16 @@ export default function EventDetails(props) {
             const graphqlUrl = '/graphql';
             let currentQuery = GET_EVENT_BY_ID;
 
-            const fetchWithQuery = async (queryToUse) => {
+            // Determine idType: If numeric, it's DATABASE_ID, otherwise SLUG
+            const guessedIdType = /^\d+$/.test(id) ? 'DATABASE_ID' : 'SLUG';
+
+            const fetchWithQuery = async (queryToUse, variables = { id, idType: guessedIdType }) => {
                 const response = await fetch(graphqlUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         query: queryToUse,
-                        variables: { id: id }
+                        variables: variables
                     })
                 });
                 return await response.json();
@@ -133,14 +138,29 @@ export default function EventDetails(props) {
                 }
 
                 if (!result.data || !result.data.event) {
-                    console.warn(`Event not found for ID ${id}, trying minimal fallback`);
-                    const MINIMAL_QUERY = `query GetEvent($id: ID!) { event(id: $id) { id title eventDetails { eventTitle } event_details { event_title } } }`;
-                    const minimalResult = await fetchWithQuery(MINIMAL_QUERY);
-                    if (!minimalResult.data?.event) {
-                        console.error('Minimal fallback failed:', minimalResult.errors);
-                        throw new Error('Event not found');
+                    console.warn(`Event not found for ID ${id} as ${guessedIdType}, trying ID fallback`);
+                    // Fallback 1: Try as Global ID (idType: ID)
+                    const globalIdResult = await fetchWithQuery(currentQuery, { id, idType: 'ID' });
+
+                    if (globalIdResult.data?.event) {
+                        result = globalIdResult;
+                    } else {
+                        console.warn(`Event not found as Global ID either, trying minimal fallback`);
+                        // Fallback 2: Minimal query
+                        const MINIMAL_QUERY = `query GetEvent($id: ID!, $idType: EventIdType!) { event(id: $id, idType: $idType) { id databaseId slug title eventDetails { eventTitle } event_details { event_title } } }`;
+                        const minimalResult = await fetchWithQuery(MINIMAL_QUERY);
+                        if (!minimalResult.data?.event) {
+                            // Last ditch effort: Try minimal as Global ID
+                            const minimalGlobalResult = await fetchWithQuery(MINIMAL_QUERY, { id, idType: 'ID' });
+                            if (!minimalGlobalResult.data?.event) {
+                                console.error('All fetching attempts failed for event:', id);
+                                throw new Error('Event not found');
+                            }
+                            result = minimalGlobalResult;
+                        } else {
+                            result = minimalResult;
+                        }
                     }
-                    result = minimalResult;
                 }
 
                 const node = result.data.event;
