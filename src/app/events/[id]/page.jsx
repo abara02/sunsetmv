@@ -24,10 +24,7 @@ const GET_EVENT_BY_ID = `
             altText
           }
         }
-        eventLink {
-          url
-          title
-        }
+        eventLink
       }
       event_details {
         event_title
@@ -41,10 +38,7 @@ const GET_EVENT_BY_ID = `
             altText
           }
         }
-        event_link {
-          url
-          title
-        }
+        event_link
       }
     }
   }
@@ -147,7 +141,7 @@ export default function EventDetails(props) {
                     } else {
                         console.warn(`Event not found as Global ID either, trying minimal fallback`);
                         // Fallback 2: Minimal query
-                        const MINIMAL_QUERY = `query GetEvent($id: ID!, $idType: EventIdType!) { event(id: $id, idType: $idType) { id databaseId slug title eventDetails { eventTitle } event_details { event_title } } }`;
+                        const MINIMAL_QUERY = `query GetEvent($id: ID!, $idType: EventIdType!) { event(id: $id, idType: $idType) { id databaseId slug title eventDetails { eventTitle eventLink } event_details { event_title event_link } } }`;
                         const minimalResult = await fetchWithQuery(MINIMAL_QUERY);
                         if (!minimalResult.data?.event) {
                             // Last ditch effort: Try minimal as Global ID
@@ -173,12 +167,12 @@ export default function EventDetails(props) {
                 const getLink = (linkField) => {
                     if (!linkField) return null;
                     if (typeof linkField === 'string') {
-                        if (linkField.startsWith('http')) return { url: linkField, title: 'Register Now' };
+                        if (linkField.startsWith('http')) return { url: linkField, title: 'Purchase Tickets' };
                         return null;
                     }
                     if (typeof linkField === 'object') {
                         const url = linkField.url || linkField.target || Object.values(linkField).find(v => typeof v === 'string' && v.startsWith('http'));
-                        const title = linkField.title || 'Register Now';
+                        const title = linkField.title || 'Purchase Tickets';
                         if (url) return { url, title };
                     }
                     return null;
@@ -293,7 +287,7 @@ export default function EventDetails(props) {
                             {event.link && (
                                 <div className="event-register-container">
                                     <a href={event.link.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                                        {event.link.title || 'Register Now'} <ExternalLink size={14} />
+                                        {event.link.title || 'Purchase Tickets'} <ExternalLink size={14} />
                                     </a>
                                 </div>
                             )}
