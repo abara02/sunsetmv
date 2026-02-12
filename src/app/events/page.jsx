@@ -261,23 +261,31 @@ function EventsContent() {
                         <>
                             {effectiveViewMode === 'list' ? (
                                 <div className="events-list fade-in">
-                                    {events.map(event => (
-                                        <div key={event.id} className="event-card">
-                                            <div className="event-date-column">
-                                                <div className="date-box">
-                                                    <span className="month">{event.month}</span>
-                                                    <span className="day">{event.day}</span>
+                                    {events
+                                        .filter(event => {
+                                            const today = new Date();
+                                            today.setHours(0, 0, 0, 0);
+                                            const eventDate = new Date(event.date);
+                                            eventDate.setHours(0, 0, 0, 0);
+                                            return eventDate >= today;
+                                        })
+                                        .map(event => (
+                                            <div key={event.id} className="event-card">
+                                                <div className="event-date-column">
+                                                    <div className="date-box">
+                                                        <span className="month">{event.month}</span>
+                                                        <span className="day">{event.day}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="event-details-column">
+                                                    <h3>{event.title}</h3>
+                                                    <p className="event-time">{event.time}</p>
+                                                </div>
+                                                <div className="event-action-column">
+                                                    <Link href={`/events/${event.id}`} className="btn btn-primary">Event Details</Link>
                                                 </div>
                                             </div>
-                                            <div className="event-details-column">
-                                                <h3>{event.title}</h3>
-                                                <p className="event-time">{event.time}</p>
-                                            </div>
-                                            <div className="event-action-column">
-                                                <Link href={`/events/${event.id}`} className="btn btn-primary">Event Details</Link>
-                                            </div>
-                                        </div>
-                                    ))}
+                                        ))}
                                 </div>
                             ) : (
                                 <EventCalendar events={events} />

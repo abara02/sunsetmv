@@ -10,8 +10,9 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 
 const EventCalendar = ({ events }) => {
     const router = useRouter();
-    // Default to February 2026 since that's where the primary demo event is
-    const [currentDate, setCurrentDate] = useState(new Date(2026, 1, 1));
+    // Default to the current month/year
+    const today = new Date();
+    const [currentDate, setCurrentDate] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
 
     const getDaysInMonth = (date) => {
         return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -21,7 +22,11 @@ const EventCalendar = ({ events }) => {
         return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
     };
 
+    const isCurrentMonth = currentDate.getMonth() === today.getMonth() &&
+        currentDate.getFullYear() === today.getFullYear();
+
     const prevMonth = () => {
+        if (isCurrentMonth) return; // Prevent going to previous months
         setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
     };
 
@@ -82,10 +87,18 @@ const EventCalendar = ({ events }) => {
         <div className="event-calendar-container fade-in">
             <div className="calendar-header-controls">
                 <div className="month-nav">
-                    <button onClick={prevMonth} className="nav-btn"><ChevronLeft size={24} /></button>
-                    <button onClick={nextMonth} className="nav-btn"><ChevronRight size={24} /></button>
-                    {/* Placeholder for "This Month" button if needed */}
-                    <button className="btn-today" onClick={() => setCurrentDate(new Date())}>This Month</button>
+                    <button
+                        onClick={prevMonth}
+                        className={`nav-btn ${isCurrentMonth ? 'disabled' : ''}`}
+                        disabled={isCurrentMonth}
+                        title={isCurrentMonth ? "Cannot go to past months" : "Previous Month"}
+                    >
+                        <ChevronLeft size={24} />
+                    </button>
+                    <button onClick={nextMonth} className="nav-btn" title="Next Month">
+                        <ChevronRight size={24} />
+                    </button>
+                    <button className="btn-today" onClick={() => setCurrentDate(new Date(today.getFullYear(), today.getMonth(), 1))}>This Month</button>
                 </div>
                 <h2>{MONTHS[currentDate.getMonth()]} {currentDate.getFullYear()}</h2>
 
