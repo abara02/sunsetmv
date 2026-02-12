@@ -112,12 +112,30 @@ function EventsContent() {
                     const fieldToStrip = match ? match[1] : null;
 
                     if (fieldToStrip) {
-                        const subfieldRegex = new RegExp(`${fieldToStrip}\\s*\\{[^}]*\\}`, 'g');
-                        if (subfieldRegex.test(currentQuery)) {
-                            currentQuery = currentQuery.replace(subfieldRegex, '');
-                        } else {
-                            const fieldRegex = new RegExp(`${fieldToStrip}\\s*({[^{}]*({[^{}]*}[^{}]*)*|)`, 'g');
-                            currentQuery = currentQuery.replace(fieldRegex, '');
+                        // Robust stripping: Find the field and its selection set if it has one
+                        const fieldIndex = currentQuery.indexOf(fieldToStrip);
+                        if (fieldIndex !== -1) {
+                            let endPos = fieldIndex + fieldToStrip.length;
+                            // Check if followed by a selection set { ... }
+                            const nextCharMatch = currentQuery.slice(endPos).match(/^\s*\{/);
+                            if (nextCharMatch) {
+                                // Find matching closing brace
+                                let braceCount = 0;
+                                let foundStart = false;
+                                for (let i = endPos; i < currentQuery.length; i++) {
+                                    if (currentQuery[i] === '{') {
+                                        braceCount++;
+                                        foundStart = true;
+                                    } else if (currentQuery[i] === '}') {
+                                        braceCount--;
+                                    }
+                                    if (foundStart && braceCount === 0) {
+                                        endPos = i + 1;
+                                        break;
+                                    }
+                                }
+                            }
+                            currentQuery = currentQuery.slice(0, fieldIndex) + currentQuery.slice(endPos);
                         }
 
                         // Cleanup: Remove any parent fields that now have empty braces { }

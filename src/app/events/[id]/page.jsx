@@ -82,12 +82,32 @@ export default function EventDetails(props) {
                     const fieldToStrip = match ? match[1] : null;
 
                     if (fieldToStrip) {
-                        const subfieldRegex = new RegExp(`${fieldToStrip}\\s*\\{[^}]*\\}`, 'g');
-                        if (subfieldRegex.test(currentQuery)) {
-                            currentQuery = currentQuery.replace(subfieldRegex, '');
-                        } else {
-                            const fieldRegex = new RegExp(`${fieldToStrip}\\s*({[^{}]*({[^{}]*}[^{}]*)*|)`, 'g');
-                            currentQuery = currentQuery.replace(fieldRegex, '');
+                        console.log(`Attempting to strip missing field: ${fieldToStrip}`);
+
+                        // Robust stripping: Find the field and its selection set if it has one
+                        const fieldIndex = currentQuery.indexOf(fieldToStrip);
+                        if (fieldIndex !== -1) {
+                            let endPos = fieldIndex + fieldToStrip.length;
+                            // Check if followed by a selection set { ... }
+                            const nextCharMatch = currentQuery.slice(endPos).match(/^\s*\{/);
+                            if (nextCharMatch) {
+                                // Find matching closing brace
+                                let braceCount = 0;
+                                let foundStart = false;
+                                for (let i = endPos; i < currentQuery.length; i++) {
+                                    if (currentQuery[i] === '{') {
+                                        braceCount++;
+                                        foundStart = true;
+                                    } else if (currentQuery[i] === '}') {
+                                        braceCount--;
+                                    }
+                                    if (foundStart && braceCount === 0) {
+                                        endPos = i + 1;
+                                        break;
+                                    }
+                                }
+                            }
+                            currentQuery = currentQuery.slice(0, fieldIndex) + currentQuery.slice(endPos);
                         }
 
                         // Cleanup: Remove parent fields that now have empty braces { }
@@ -98,6 +118,7 @@ export default function EventDetails(props) {
                             cleaned = prev !== currentQuery;
                         }
 
+                        console.log('Retrying with query:', currentQuery);
                         result = await fetchWithQuery(currentQuery);
                         attempts++;
                     } else {
@@ -105,12 +126,20 @@ export default function EventDetails(props) {
                     }
                 }
 
-                if (result.errors) throw new Error(result.errors[0].message);
+                if (result.errors) {
+                    console.error('❌ GraphQL Errors for EventDetails:', JSON.stringify(result.errors, null, 2));
+                    console.log('Final query attempted:', currentQuery);
+                    throw new Error(result.errors[0].message);
+                }
 
                 if (!result.data || !result.data.event) {
+                    console.warn(`Event not found for ID ${id}, trying minimal fallback`);
                     const MINIMAL_QUERY = `query GetEvent($id: ID!) { event(id: $id) { id title eventDetails { eventTitle } event_details { event_title } } }`;
                     const minimalResult = await fetchWithQuery(MINIMAL_QUERY);
-                    if (!minimalResult.data?.event) throw new Error('Event not found');
+                    if (!minimalResult.data?.event) {
+                        console.error('Minimal fallback failed:', minimalResult.errors);
+                        throw new Error('Event not found');
+                    }
                     result = minimalResult;
                 }
 
