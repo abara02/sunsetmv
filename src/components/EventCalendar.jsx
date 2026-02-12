@@ -22,11 +22,14 @@ const EventCalendar = ({ events }) => {
         return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
     };
 
-    const isCurrentMonth = currentDate.getMonth() === today.getMonth() &&
-        currentDate.getFullYear() === today.getFullYear();
+    const isMinMonth = (() => {
+        const minDate = new Date(today.getFullYear(), today.getMonth() - 2, 1);
+        return (currentDate.getFullYear() < minDate.getFullYear()) ||
+            (currentDate.getFullYear() === minDate.getFullYear() && currentDate.getMonth() <= minDate.getMonth());
+    })();
 
     const prevMonth = () => {
-        if (isCurrentMonth) return; // Prevent going to previous months
+        if (isMinMonth) return; // Prevent going further than 2 months back
         setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
     };
 
@@ -89,9 +92,9 @@ const EventCalendar = ({ events }) => {
                 <div className="month-nav">
                     <button
                         onClick={prevMonth}
-                        className={`nav-btn ${isCurrentMonth ? 'disabled' : ''}`}
-                        disabled={isCurrentMonth}
-                        title={isCurrentMonth ? "Cannot go to past months" : "Previous Month"}
+                        className={`nav-btn ${isMinMonth ? 'disabled' : ''}`}
+                        disabled={isMinMonth}
+                        title={isMinMonth ? "Cannot go further back than 2 months" : "Previous Month"}
                     >
                         <ChevronLeft size={24} />
                     </button>
