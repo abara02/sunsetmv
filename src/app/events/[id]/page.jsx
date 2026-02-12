@@ -150,16 +150,23 @@ export default function EventDetails(props) {
             }
         };
 
+        window.scrollTo(0, 0);
         fetchEvent();
     }, [id]);
 
-    if (loading) return <div className="container py-5 text-center"><div className="loading-spinner"></div></div>;
+    if (loading) return (
+        <div className="page-container event-details-loading">
+            <div className="loading-spinner"></div>
+        </div>
+    );
 
     if (error || !event) return (
-        <div className="container py-5 text-center">
-            <h2>Oops!</h2>
-            <p>{error || 'Event not found'}</p>
-            <Link href="/events" className="btn btn-primary mt-3">Back to Events</Link>
+        <div className="page-container event-details-error">
+            <div className="container py-5 text-center">
+                <h2>Oops!</h2>
+                <p>{error || 'Event not found'}</p>
+                <Link href="/events" className="btn btn-primary mt-3">Back to Events</Link>
+            </div>
         </div>
     );
 

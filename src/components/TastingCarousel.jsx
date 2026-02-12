@@ -41,6 +41,15 @@ const TastingCarousel = ({ items }) => {
         }
     };
 
+    const [isMobile, setIsMobile] = useState(false);
+
+    React.useEffect(() => {
+        setIsMobile(window.innerWidth < 768);
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <div className="carousel-wrapper">
             {/* Navigation Arrows */}
@@ -74,7 +83,7 @@ const TastingCarousel = ({ items }) => {
                                     zIndex: isActive ? 10 : 1
                                 }}
                                 animate={{
-                                    x: offset * (window.innerWidth < 768 ? 320 : 400),
+                                    x: offset * (isMobile ? 320 : 400),
                                     scale: isActive ? 1 : 0.85,
                                     opacity: isActive ? 1 : 0.5,
                                     zIndex: isActive ? 10 : 1

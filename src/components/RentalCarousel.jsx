@@ -43,7 +43,15 @@ const RentalCarousel = ({ items }) => {
         }
     };
 
-    const isMobile = window.innerWidth < 768;
+    const [isMobile, setIsMobile] = useState(false);
+
+    React.useEffect(() => {
+        setIsMobile(window.innerWidth < 768);
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const spacing = isMobile ? 340 : 420;
 
     return (

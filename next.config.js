@@ -16,6 +16,18 @@ const nextConfig = {
             },
         ];
     },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: '**', // Allows images from any HTTPS source, which is useful during domain transitions
+            },
+            {
+                protocol: 'http',
+                hostname: '**',
+            }
+        ],
+    },
 };
 
 export default nextConfig;

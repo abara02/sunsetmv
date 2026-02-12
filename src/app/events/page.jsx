@@ -13,11 +13,18 @@ const QUERY_EVENTS = `
     events {
       nodes {
         id
+        title
         eventDetails {
           eventTitle
           eventDescription
           eventDate
           eventTime
+        }
+        event_details {
+          event_title
+          event_description
+          event_date
+          event_time
         }
       }
     }
@@ -83,41 +90,76 @@ function EventsContent() {
     useEffect(() => {
         const fetchEvents = async () => {
             const graphqlUrl = '/graphql';
-            try {
+            let currentQuery = QUERY_EVENTS;
+
+            const fetchWithQuery = async (q) => {
                 const response = await fetch(graphqlUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query: QUERY_EVENTS })
+                    body: JSON.stringify({ query: q })
                 });
+                return await response.json();
+            };
 
-                const contentType = response.headers.get('content-type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    const text = await response.text();
-                    console.error('Expected JSON but received:', text.substring(0, 500));
-                    throw new Error(`WordPress returned ${response.status} ${response.statusText}. Please ensure your local WordPress site is running.`);
+            try {
+                let result = await fetchWithQuery(currentQuery);
+
+                // Resilience: Strip missing fields if WordPress has a different schema
+                let attempts = 0;
+                while (result.errors && attempts < 5) {
+                    const errorMsg = result.errors[0].message;
+                    const match = errorMsg.match(/[Ff]ield ["']([^"']+)["']/);
+                    const fieldToStrip = match ? match[1] : null;
+
+                    if (fieldToStrip) {
+                        const subfieldRegex = new RegExp(`${fieldToStrip}\\s*\\{[^}]*\\}`, 'g');
+                        if (subfieldRegex.test(currentQuery)) {
+                            currentQuery = currentQuery.replace(subfieldRegex, '');
+                        } else {
+                            const fieldRegex = new RegExp(`${fieldToStrip}\\s*({[^{}]*({[^{}]*}[^{}]*)*|)`, 'g');
+                            currentQuery = currentQuery.replace(fieldRegex, '');
+                        }
+
+                        // Cleanup: Remove any parent fields that now have empty braces { }
+                        let cleaned = true;
+                        while (cleaned) {
+                            const prev = currentQuery;
+                            currentQuery = currentQuery.replace(/[\w_]+\s*\{\s*\}/g, '');
+                            cleaned = prev !== currentQuery;
+                        }
+
+                        result = await fetchWithQuery(currentQuery);
+                        attempts++;
+                    } else {
+                        break;
+                    }
                 }
 
-                const json = await response.json();
-                const { data, errors } = json;
+                if (result.errors) {
+                    console.error('❌ GraphQL Errors for Events:', JSON.stringify(result.errors, null, 2));
+                    console.log('Query sent was:', currentQuery);
+                    throw new Error(result.errors[0].message);
+                }
 
-                if (errors) throw new Error(errors[0].message);
-
+                const { data } = result;
                 if (!data || !data.events || !data.events.nodes) {
+                    console.warn('No events found in GraphQL response:', data);
                     setEvents([]);
                     return;
                 }
 
                 const mappedEvents = data.events.nodes.map(node => {
-                    const fields = node.eventDetails;
-                    const dateObj = new Date(fields.eventDate);
-                    const isWorkshop = fields.eventTitle.toLowerCase().includes('galentine');
+                    const fields = node.eventDetails || node.event_details || {};
+                    const eventTitle = fields.eventTitle || fields.event_title || (typeof node.title === 'string' ? node.title : node.title?.rendered) || 'Untitled Event';
+                    const dateObj = fields.eventDate || fields.event_date ? new Date(fields.eventDate || fields.event_date) : new Date();
+                    const isWorkshop = eventTitle.toLowerCase().includes('galentine');
                     return {
                         id: node.id,
-                        title: fields.eventTitle,
-                        desc: fields.eventDescription,
-                        time: fields.eventTime,
+                        title: eventTitle,
+                        desc: fields.eventDescription || fields.event_description || '',
+                        time: fields.eventTime || fields.event_time || '',
                         category: 'General',
-                        image: isWorkshop ? '/eventsdummy.png' : (node.featuredImage?.node?.sourceUrl || null),
+                        image: isWorkshop ? '/eventsdummy.png' : (node.featuredImage?.node?.sourceUrl || fields.eventImage?.node?.sourceUrl || fields.event_image?.node?.sourceUrl || null),
                         date: dateObj,
                         month: dateObj.toLocaleString('default', { month: 'short' }).toUpperCase(),
                         day: dateObj.getDate().toString().padStart(2, '0')
@@ -125,6 +167,7 @@ function EventsContent() {
                 });
                 setEvents(mappedEvents);
             } catch (err) {
+                console.error('Events fetch error, falling back to mock data:', err);
                 const mockEvents = [
                     {
                         id: 'galentines-workshop',

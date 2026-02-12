@@ -14,6 +14,16 @@ const GET_VISIT_PAGE = `
         hoursTitle
         hoursList
       }
+      editHours {
+        hoursTitle
+        hoursList
+        hours_title
+        hours_list
+      }
+      edit_hours {
+        hours_title
+        hours_list
+      }
     }
   }
 `;
@@ -37,12 +47,13 @@ function VisitContent() {
         const fetchVisitData = async () => {
             const graphqlUrl = '/graphql';
             const attemptFetch = async (uri, queryToUse) => {
-                try {
+                let currentQuery = queryToUse;
+                const fetchWithQuery = async (q) => {
                     const response = await fetch(graphqlUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            query: queryToUse,
+                            query: q,
                             variables: { id: uri }
                         })
                     });
@@ -50,13 +61,61 @@ function VisitContent() {
                     if (!contentType || !contentType.includes('application/json')) {
                         throw new Error('Server returned a non-JSON response.');
                     }
+                    return await response.json();
+                };
 
-                    const json = await response.json();
-                    if (json.errors) return null;
-                    const page = json.data?.page;
-                    if (!page) return null;
-                    return page.storeHoursEdit || page.storeHoursDetails;
+                try {
+                    let result = await fetchWithQuery(currentQuery);
+
+                    // Resilience: Strip missing fields if WordPress has a different schema
+                    let attempts = 0;
+                    while (result.errors && attempts < 5) {
+                        const errorMsg = result.errors[0].message;
+                        const match = errorMsg.match(/[Ff]ield ["']([^"']+)["']/);
+                        const fieldToStrip = match ? match[1] : null;
+
+                        if (fieldToStrip) {
+                            const subfieldRegex = new RegExp(`${fieldToStrip}\\s*\\{[^}]*\\}`, 'g');
+                            if (subfieldRegex.test(currentQuery)) {
+                                currentQuery = currentQuery.replace(subfieldRegex, '');
+                            } else {
+                                const fieldRegex = new RegExp(`${fieldToStrip}\\s*({[^{}]*({[^{}]*}[^{}]*)*|)`, 'g');
+                                currentQuery = currentQuery.replace(fieldRegex, '');
+                            }
+
+                            // Cleanup: Remove any parent fields that now have empty braces { }
+                            // We do this multiple times to handle nested empty fields
+                            let cleaned = true;
+                            while (cleaned) {
+                                const prev = currentQuery;
+                                currentQuery = currentQuery.replace(/[\w_]+\s*\{\s*\}/g, '');
+                                cleaned = prev !== currentQuery;
+                            }
+
+                            result = await fetchWithQuery(currentQuery);
+                            attempts++;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    if (result.errors) {
+                        console.error(`❌ GraphQL Errors for Visit URI ${uri}:`, JSON.stringify(result.errors, null, 2));
+                        console.log('Query sent was:', currentQuery);
+                        return null; // Return null so the caller can try the next URI variation
+                    }
+
+                    const pageNode = result.data?.page;
+                    if (!pageNode) {
+                        console.warn(`No page found for URI ${uri}`);
+                        return null;
+                    }
+
+                    console.log(`Successfully fetched visit data for URI ${uri}:`, pageNode);
+                    // Support multiple field names (storeHoursEdit, storeHoursDetails, editHours)
+                    return pageNode.storeHoursEdit || pageNode.storeHoursDetails || pageNode.editHours || pageNode.edit_hours;
                 } catch (e) {
+                    console.error(`Fetch error for URI ${uri}:`, e);
                     return null;
                 }
             };
@@ -67,8 +126,8 @@ function VisitContent() {
                 if (!details) details = await attemptFetch('/store-hours', GET_VISIT_PAGE);
 
                 if (details) {
-                    setHoursTitle(details.hoursTitle || 'Winter Hours');
-                    const rawContent = details.hoursList;
+                    setHoursTitle(details.hoursTitle || details.hours_title || 'Winter Hours');
+                    const rawContent = details.hoursList || details.hours_list;
                     if (rawContent) {
                         const lines = rawContent.split(/\r?\n/).filter(line => line.trim() !== '');
                         const mapped = lines.map(line => {
