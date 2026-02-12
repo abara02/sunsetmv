@@ -161,6 +161,27 @@
     }
 }
 
+/* No Events Card */
+.no-events-card {
+    background: white;
+    padding: 4rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    max-width: 700px;
+    margin: 2rem auto;
+    border: 1px solid #f0f0f0;
+}
+
+.no-events-card p {
+    color: var(--color-primary, #53161D);
+    font-size: 1.8rem;
+    font-family: var(--font-heading);
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
 /* Events List (Winery Events) */
 .events-list {
     display: flex;

@@ -272,7 +272,7 @@ function EventsContent() {
 
                                         if (filtered.length === 0) {
                                             return (
-                                                <div className="no-events-message text-center py-5">
+                                                <div className="no-events-card fade-in">
                                                     <p>Nothing scheduled right now. Check back later for updates!</p>
                                                 </div>
                                             );
