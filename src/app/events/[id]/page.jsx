@@ -162,13 +162,7 @@ export default function EventDetails(props) {
                 const eventTitle = fields.eventTitle || fields.event_title || (typeof node.title === 'string' ? node.title : node.title?.rendered) || 'Untitled Event';
 
                 const rawDate = fields.eventDate || fields.event_date;
-                let dateObj;
-                if (rawDate) {
-                    const [year, month, day] = rawDate.split('-').map(Number);
-                    dateObj = new Date(year, month - 1, day);
-                } else {
-                    dateObj = new Date();
-                }
+                const dateObj = rawDate ? new Date(rawDate) : new Date();
 
                 const getLink = (linkField) => {
                     if (!linkField) return null;

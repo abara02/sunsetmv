@@ -171,17 +171,7 @@ function EventsContent() {
                 const mappedEvents = data.events.nodes.map(node => {
                     const fields = node.eventDetails || node.event_details || {};
                     const eventTitle = fields.eventTitle || fields.event_title || (typeof node.title === 'string' ? node.title : node.title?.rendered) || 'Untitled Event';
-
-                    const rawDate = fields.eventDate || fields.event_date;
-                    let dateObj;
-                    if (rawDate) {
-                        // Split YYYY-MM-DD and create date in local time
-                        const [year, month, day] = rawDate.split('-').map(Number);
-                        dateObj = new Date(year, month - 1, day);
-                    } else {
-                        dateObj = new Date();
-                    }
-
+                    const dateObj = fields.eventDate || fields.event_date ? new Date(fields.eventDate || fields.event_date) : new Date();
                     const isWorkshop = eventTitle.toLowerCase().includes('galentine');
                     return {
                         id: node.databaseId?.toString() || node.slug || node.id,
