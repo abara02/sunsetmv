@@ -78,9 +78,9 @@ const Cart = () => {
                             <span>${cartTotal.toFixed(2)}</span>
                         </div>
 
-                        <button className="btn btn-primary checkout-btn" onClick={() => alert("Checkout integration coming soon!")}>
+                        <Link href="/checkout" className="btn btn-primary checkout-btn" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             Proceed to Checkout <ArrowRight size={18} style={{ display: 'inline', marginLeft: '8px' }} />
-                        </button>
+                        </Link>
 
                         <div style={{ marginTop: '1.5rem', textAlign: 'center', width: '100%' }}>
                             <Link href="/shop" style={{ color: '#666', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>

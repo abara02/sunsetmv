@@ -1,8 +1,33 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import stores from '../../data/stores';
 import './WhereToBuy.css';
+import 'leaflet/dist/leaflet.css';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import L from 'leaflet';
+
+// Fix for default marker icons in Leaflet
+const burgundyIcon = new L.DivIcon({
+    className: 'custom-div-icon',
+    html: `
+        <div style='background-color:#53161d; width:24px; height:24px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;'>
+            <div style='background-color: white; width: 8px; height: 8px; border-radius: 50%;'></div>
+        </div>
+    `,
+    iconSize: [24, 24],
+    iconAnchor: [12, 24],
+    popupAnchor: [0, -24]
+});
+
+// Component to handle map centering
+function ChangeView({ center, zoom }) {
+    const map = useMap();
+    useEffect(() => {
+        map.setView(center, zoom);
+    }, [center, zoom, map]);
+    return null;
+}
 
 const deg2rad = (deg) => deg * (Math.PI / 180);
 
@@ -18,9 +43,18 @@ const getDistance = (lat1, lon1, lat2, lon2) => {
     return R * c;
 };
 
+const getZoomLevel = (radius) => {
+    if (radius <= 10) return 12;
+    if (radius <= 25) return 11;
+    if (radius <= 50) return 10;
+    if (radius <= 100) return 9;
+    if (radius <= 200) return 8;
+    return 2; // Global
+};
+
 export default function WhereToBuy() {
     const [searchZip, setSearchZip] = useState('');
-    const [radius, setRadius] = useState(200);
+    const [radius, setRadius] = useState(100);
     const [userLocation, setUserLocation] = useState({ lat: 41.6032, lng: -72.7000 });
     const [viewMode, setViewMode] = useState('list');
     const [isSearching, setIsSearching] = useState(false);
@@ -30,7 +64,8 @@ export default function WhereToBuy() {
         return stores.map(store => {
             const distance = getDistance(center.lat, center.lng, store.lat, store.lng);
             return { ...store, distance };
-        }).sort((a, b) => a.distance - b.distance);
+        }).filter(store => store.distance <= 100)
+            .sort((a, b) => a.distance - b.distance);
     });
 
     const handleSearch = async (e) => {
@@ -70,6 +105,8 @@ export default function WhereToBuy() {
             setIsSearching(false);
         }
     };
+
+    const [selectedStore, setSelectedStore] = useState(null);
 
     return (
         <div className="where-to-buy-page">
@@ -180,20 +217,43 @@ export default function WhereToBuy() {
                         ))}
                     </div>
                 ) : (
-                    <div className="map-placeholder-view realistic-map">
-                        <div className="map-pins-overlay">
-                            {stores.slice(0, 35).map(store => {
-                                const West = -74.5, East = -70.5, North = 42.8, South = 40.2;
-                                const left = ((store.lng - West) / (East - West)) * 100;
-                                const top = ((North - store.lat) / (North - South)) * 100;
-                                return (
-                                    <div key={store.id} className="map-pin teardrop" style={{ top: `${top}%`, left: `${left}%` }}>
-                                        <div className="pin-marker-teardrop"></div>
-                                        <div className="pin-tooltip">{store.name}</div>
-                                    </div>
-                                );
-                            })}
-                        </div>
+                    <div className="map-container-wrapper">
+                        <MapContainer
+                            center={[userLocation.lat, userLocation.lng]}
+                            zoom={getZoomLevel(radius)}
+                            style={{ height: '600px', width: '100%', borderRadius: '12px' }}
+                            scrollWheelZoom={true}
+                        >
+                            <ChangeView center={[userLocation.lat, userLocation.lng]} zoom={filteredStores.length > 0 ? getZoomLevel(radius) : 8} />
+                            <TileLayer
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+                            {filteredStores.map(store => (
+                                <Marker
+                                    key={store.id}
+                                    position={[store.lat, store.lng]}
+                                    icon={burgundyIcon}
+                                >
+                                    <Popup>
+                                        <div className="map-popup-content">
+                                            <h3 className="popup-store-name">{store.name}</h3>
+                                            <p className="popup-store-address">{store.address}</p>
+                                            <p className="popup-store-location">{store.city}, {store.state} {store.zip}</p>
+                                            {store.phone && <p className="popup-store-phone">{store.phone}</p>}
+                                            <a
+                                                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(store.address + ' ' + store.city + ' ' + store.state)}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="popup-directions-btn"
+                                            >
+                                                Get Directions
+                                            </a>
+                                        </div>
+                                    </Popup>
+                                </Marker>
+                            ))}
+                        </MapContainer>
                     </div>
                 )}
             </div>

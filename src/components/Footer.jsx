@@ -33,7 +33,6 @@ const Footer = () => {
                         <li><Link href="/shop">Shop Wines</Link></li>
                         <li><Link href="/visit">Visit & Tasting</Link></li>
                         <li><Link href="/events">Events Calendar</Link></li>
-                        <li><Link href="/club">Wine Club</Link></li>
                     </ul>
                 </div>
 

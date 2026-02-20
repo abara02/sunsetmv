@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ShoppingBag, MapPin } from 'lucide-react';
+import { Menu, X, ShoppingBag, MapPin, User } from 'lucide-react';
 import './Navbar.css';
 
 const Navbar = React.memo(() => {
@@ -88,6 +88,10 @@ const Navbar = React.memo(() => {
                 <div className="nav-actions">
                     <Link href="/where-to-buy" className="icon-link" title="Where to Buy">
                         <MapPin size={22} />
+                    </Link>
+
+                    <Link href="/account" className="icon-link" title="Account">
+                        <User size={22} />
                     </Link>
 
                     <button className="icon-link cart-trigger" title="Cart" onClick={openCart}>
