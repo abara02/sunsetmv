@@ -44,6 +44,7 @@ export default function WineClub() {
                                 <li>Fully customizable wine selections</li>
                                 <li>Access to new wine releases</li>
                             </ul>
+                            <img src="/gold-badge.png" alt="Gold Member Badge" className="tier-badge" />
                         </div>
 
                         {/* Platinum Membership Card */}
@@ -62,6 +63,7 @@ export default function WineClub() {
                                 <li>Exclusive access to reserve & limited release wines</li>
                                 <li>Priority access to events at SMV</li>
                             </ul>
+                            <img src="/platinum-badge.png" alt="Platinum Member Badge" className="tier-badge" />
                         </div>
 
                     </div>
