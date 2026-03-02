@@ -409,5 +409,21 @@ export const wines = [
             dimensions: "4 × 3 × 1 in"
         },
         image: "/wines/MullingSpice.png"
+    },
+
+    // ICE WINE
+    {
+        id: 26,
+        slug: 'midnight-ice',
+        name: "Midnight Ice",
+        type: "Ice Wine",
+        price: 0, // Price, sale, and stock info to be fetched/matched from WordPress
+        description: "This tropical tasting delight using our Vidal Blanc grape was picked frozen and displays flavors of apricot, honey, and ripe raisin. Perfect to pour over ice cream, fresh fruit, or for that special occasion. (375 ml)",
+        specs: {
+            alc: "9 % by vol",
+            weight: "2 lbs",
+            dimensions: "2 × 2 × 10 in"
+        },
+        image: "/wines/midnight-ice.png"
     }
 ];
