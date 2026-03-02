@@ -4,6 +4,7 @@ import React from 'react';
 import Hero from '../components/Hero';
 import Link from 'next/link';
 const familyPhoto = '/family-photo.jpg';
+import ProductOfTheMonth from '../components/ProductOfTheMonth';
 import './Home.css';
 
 export default function Home() {
@@ -39,26 +40,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Product of the Month */}
-            <section className="section product-spotlight">
-                <div className="spotlight-card">
-                    <div className="spotlight-text-content">
-                        <div className="section-header center-header">
-                            <h3>Product of the Month</h3>
-                        </div>
-                        <div className="spotlight-header">
-                            <h4>Shades</h4>
-                        </div>
-                        <div className="spotlight-info">
-                            <p>A fruity, pomegranate hued, sparkling wine. Bursting with flavors of bright raspberry and pomegranate with just a hint of effervescence.</p>
-                            <Link href="/shop/shades" className="btn btn-primary-inverted">Shop Now</Link>
-                        </div>
-                    </div>
-                    <div className="spotlight-image">
-                        <img src="/wines/shades.png" alt="Shades" />
-                    </div>
-                </div>
-            </section>
+            <ProductOfTheMonth />
 
             {/* Our Story & History */}
             <section className="section text-center story-section teaser-section">
