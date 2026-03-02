@@ -5,6 +5,7 @@ import { useCart } from '../../../context/CartContext';
 import { useShop } from '../../../context/ShopContext';
 import { ArrowLeft, Wine as WineIcon } from 'lucide-react';
 import Link from 'next/link';
+import SoldOutModal from '../../../components/SoldOutModal';
 import './ProductDetails.css';
 
 export default function ProductDetails(props) {
@@ -15,6 +16,7 @@ export default function ProductDetails(props) {
     const { addToCart } = useCart();
     const [adding, setAdding] = useState(false);
     const [added, setAdded] = useState(false);
+    const [showSoldOutModal, setShowSoldOutModal] = useState(false);
 
     if (loading) {
         return (
@@ -27,7 +29,13 @@ export default function ProductDetails(props) {
     const wine = wines.find(w => w.slug === slug);
 
     const handleAddToCart = () => {
-        if (!wine || wine.isOutOfStock) return;
+        if (!wine) return;
+
+        if (wine.isOutOfStock) {
+            setShowSoldOutModal(true);
+            return;
+        }
+
         setAdding(true);
         setTimeout(() => {
             addToCart(wine, quantity);
@@ -94,7 +102,7 @@ export default function ProductDetails(props) {
                             <button
                                 className="btn btn-primary add-btn"
                                 onClick={handleAddToCart}
-                                disabled={adding || wine.isOutOfStock}
+                                disabled={adding}
                             >
                                 {wine.isOutOfStock ? 'OUT OF STOCK' : (adding ? 'ADDING...' : 'ADD TO CART')}
                             </button>
@@ -115,7 +123,7 @@ export default function ProductDetails(props) {
                             <img src={wine.image} alt={wine.name} className="main-product-image" />
                         ) : (
                             <div className="placeholder-details-image">
-                                <Wine size={120} strokeWidth={0.5} color="#ccc" />
+                                <WineIcon size={120} strokeWidth={0.5} color="#ccc" />
                             </div>
                         )}
                         {wine.isFanFavorite && <div className="fan-favorite-badge">Fan Favorite</div>}
@@ -161,6 +169,10 @@ export default function ProductDetails(props) {
                     </div>
                 )}
             </div>
+            <SoldOutModal
+                isOpen={showSoldOutModal}
+                onClose={() => setShowSoldOutModal(false)}
+            />
         </div>
     );
 }

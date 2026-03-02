@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Search, Filter } from 'lucide-react';
 import WineCard from '../../components/WineCard';
+import SoldOutModal from '../../components/SoldOutModal';
 import { useShop } from '../../context/ShopContext';
 import './Shop.css';
 
@@ -13,6 +14,7 @@ function ShopContent() {
     const [filter, setFilter] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
     const [showFilters, setShowFilters] = useState(false);
+    const [showSoldOutModal, setShowSoldOutModal] = useState(false);
     const searchParams = useSearchParams();
 
     // Map URL category params to Filter names
@@ -57,7 +59,7 @@ function ShopContent() {
         return matchesCategory && matchesSearch;
     });
 
-    // Get unique types for filter buttons (ensure ordered as requested)
+    // Get unique types for filter buttons
     const filterTypes = ['All', 'White', 'Fruit', 'Rosé', 'Red', 'Reserve', 'Sparkling', 'More'];
 
     return (
@@ -77,7 +79,6 @@ function ShopContent() {
                     </div>
                 ) : (
                     <>
-                        {/* Shop Controls: Search & Filter Toggle */}
                         <div className="shop-controls">
                             <div className="search-wrapper">
                                 <Search className="search-icon" size={20} />
@@ -98,7 +99,6 @@ function ShopContent() {
                             </button>
                         </div>
 
-                        {/* Collapsible Filter Section */}
                         <div className={`filters-container ${showFilters ? 'open' : ''}`}>
                             <div className="filters">
                                 {filterTypes.map(type => (
@@ -129,6 +129,7 @@ function ShopContent() {
                                             image={wine.image}
                                             isFanFavorite={wine.isFanFavorite}
                                             isOutOfStock={wine.isOutOfStock}
+                                            onSoldOut={() => setShowSoldOutModal(true)}
                                         />
                                     </Link>
                                 ))
@@ -142,6 +143,11 @@ function ShopContent() {
                     </>
                 )}
             </div>
+
+            <SoldOutModal
+                isOpen={showSoldOutModal}
+                onClose={() => setShowSoldOutModal(false)}
+            />
         </div>
     );
 }
