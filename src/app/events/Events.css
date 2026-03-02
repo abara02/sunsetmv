@@ -4,7 +4,7 @@
 .events-hero {
     height: 60vh;
     min-height: 400px;
-    background-image: url('/events.png');
+    background-image: url('/events-hero.png');
     /* hayride tour photo */
     background-size: cover;
     background-position: center 10%;
@@ -13,6 +13,11 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 4rem;
+    transition: opacity 0.6s ease;
+}
+
+.hero-fade-out {
+    opacity: 0;
 }
 
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { useEffect, useState, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import './Events.css';
@@ -232,9 +232,31 @@ function EventsContent() {
 
     const effectiveViewMode = isMobile ? 'list' : viewMode;
 
+    const heroImages = [
+        '/events-hero.png',
+        '/cars.png',
+        '/events.png',
+    ];
+    const [heroIndex, setHeroIndex] = useState(0);
+    const [fading, setFading] = useState(false);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setFading(true);
+            setTimeout(() => {
+                setHeroIndex(prev => (prev + 1) % heroImages.length);
+                setFading(false);
+            }, 600);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <div className="page-container events-page">
-            <div className="events-hero">
+            <div
+                className={`events-hero${fading ? ' hero-fade-out' : ''}`}
+                style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('${heroImages[heroIndex]}')` }}
+            >
                 <div className="overlay"></div>
                 <div className="container hero-content">
                     <h1>Events at SMV</h1>
