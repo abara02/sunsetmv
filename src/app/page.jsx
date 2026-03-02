@@ -1,90 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Hero from '../components/Hero';
+import ProductOfTheMonth from '../components/ProductOfTheMonth';
 import Link from 'next/link';
 const familyPhoto = '/family-photo.jpg';
 import './Home.css';
 
-const QUERY_PRODUCT_OF_THE_MONTH = `
-  query GetProductOfTheMonth {
-    productOfTheMonths(first: 1) {
-      nodes {
-        title
-        Productmonthdetails {
-          wineName_
-          description
-          image {
-            node {
-              sourceUrl
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
 export default function Home() {
-    const [productOfMonth, setProductOfMonth] = useState(null);
-    const [loadingSpotlight, setLoadingSpotlight] = useState(true);
-
-    useEffect(() => {
-        const fetchProductOfMonth = async () => {
-            try {
-                const response = await fetch('/graphql', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query: QUERY_PRODUCT_OF_THE_MONTH })
-                });
-
-                const { data, errors } = await response.json();
-
-                if (errors) {
-                    throw new Error('GraphQL Errors found');
-                }
-
-                if (data?.productOfTheMonths?.nodes?.length > 0) {
-                    const node = data.productOfTheMonths.nodes[0];
-                    const details = node.Productmonthdetails || {};
-
-                    // Use the dedicated wineName_ field, fallback to post title if empty
-                    const displayName = details.wineName_ || node.title;
-
-                    // Auto-generate the slug from the wine name (e.g., "Twisted Red" -> "twisted-red")
-                    const computedSlug = displayName
-                        .toLowerCase()
-                        .replace(/[^a-z0-9]+/g, '-')
-                        .replace(/(^-|-$)+/g, '');
-
-                    setProductOfMonth({
-                        title: displayName,
-                        description: details.description,
-                        // This links directly to the SunsetMV Next.js shop, NOT WordPress
-                        shopLink: computedSlug ? `/shop/${computedSlug}` : '/shop',
-                        imageUrl: details.image?.node?.sourceUrl
-                    });
-                }
-            } catch (err) {
-                console.error('Error fetching Product of the Month:', err);
-            } finally {
-                setLoadingSpotlight(false);
-            }
-        };
-
-        fetchProductOfMonth();
-    }, []);
-
-    // Fallback content until WordPress is set up and returns data
-    const fallbackProduct = {
-        title: 'Twisted Red',
-        description: 'An exquisitely balanced Bordeaux style wine. This Cabernet blend will tantalize your taste buds with hints of spice, blackberry, black cherry, plum and vanilla.',
-        shopLink: '/shop/twisted-red',
-        imageUrl: '/wines/twisted-red.png'
-    };
-
-    const displayProduct = productOfMonth || fallbackProduct;
-
     return (
         <div className="home-page">
             <Hero />
@@ -118,33 +41,7 @@ export default function Home() {
             </section>
 
             {/* Product of the Month */}
-            <section className="section product-spotlight">
-                {loadingSpotlight ? (
-                    <div className="spotlight-loading text-center" style={{ padding: '4rem', color: 'white' }}>
-                        Loading Feature...
-                    </div>
-                ) : (
-                    <div className="spotlight-card fade-in">
-                        <div className="spotlight-text-content">
-                            <div className="section-header center-header">
-                                <h3>Product of the Month</h3>
-                            </div>
-                            <div className="spotlight-header">
-                                <h4>{displayProduct.title}</h4>
-                            </div>
-                            <div className="spotlight-info">
-                                <p>{displayProduct.description}</p>
-                                <Link href={displayProduct.shopLink} className="btn btn-primary-inverted">Shop Now</Link>
-                            </div>
-                        </div>
-                        <div className="spotlight-image">
-                            {displayProduct.imageUrl && (
-                                <img src={displayProduct.imageUrl} alt={displayProduct.title} />
-                            )}
-                        </div>
-                    </div>
-                )}
-            </section>
+            <ProductOfTheMonth />
 
             {/* Our Story & History */}
             <section className="section text-center story-section teaser-section">

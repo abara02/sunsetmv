@@ -143,21 +143,6 @@
     margin-bottom: 0.5rem;
 }
 
-.spotlight-loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 300px;
-    background-color: #53161D;
-    border-radius: 12px;
-    width: 94%;
-    max-width: 1700px;
-    margin: 0 auto;
-    font-size: 1.2rem;
-    font-family: var(--font-heading);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-}
-
 .center-header h3 {
     font-family: var(--font-serif);
     font-size: 1.1rem;
