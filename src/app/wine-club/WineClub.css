@@ -262,6 +262,7 @@
 
 .cta-text {
     font-size: 1.8rem;
+    font-family: var(--font-heading);
     color: var(--color-text-main);
     margin-bottom: 0.5rem;
 }
