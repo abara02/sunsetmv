@@ -3,175 +3,77 @@
 import React, { useState, useEffect } from 'react';
 import Hero from '../components/Hero';
 import Link from 'next/link';
-import { wines } from '../data/wines';
 const familyPhoto = '/family-photo.jpg';
 import './Home.css';
 
-const QUERY_POTM = `
-  query GetPOTM {
-    potms(first: 5) {
+const QUERY_PRODUCT_OF_THE_MONTH = `
+  query GetProductOfTheMonth {
+    productOfTheMonths(first: 1) {
       nodes {
         title
-        slug
-        winename
-        winedescription
-        acf {
-          winename
-          winedescription
+        productMonthDetails {
+          description
+          shopLink
+          image {
+            node {
+              sourceUrl
+            }
+          }
         }
-        potmFields {
-          winename
-          winedescription
-        }
-        potm_fields {
-          winename
-          winedescription
-        }
-      }
-    }
-    updatePotm {
-      winename
-      winedescription
-    }
-    acfOptionsPOTM {
-      updatePotm {
-        winename
-        winedescription
       }
     }
   }
 `;
 
 export default function Home() {
-    const [potmData, setPotmData] = useState({
-        name: 'Twisted Red',
-        description: 'An exquisitely balanced Bordeaux style wine. This Cabernet blend will tantalize your taste buds with hints of spice, blackberry, black cherry, plum and vanilla.',
-        image: '/wines/twisted-red.png',
-        slug: 'twisted-red'
-    });
-    const [loading, setLoading] = useState(true);
-    const [errorInfo, setErrorInfo] = useState(null);
+    const [productOfMonth, setProductOfMonth] = useState(null);
+    const [loadingSpotlight, setLoadingSpotlight] = useState(true);
 
     useEffect(() => {
-        const fetchPOTM = async () => {
+        const fetchProductOfMonth = async () => {
             try {
                 const response = await fetch('/graphql', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query: QUERY_POTM })
+                    body: JSON.stringify({ query: QUERY_PRODUCT_OF_THE_MONTH })
                 });
 
-                const result = await response.json();
-                console.log('DEBUG: POTM Full Response:', result);
+                const { data, errors } = await response.json();
 
-                const data = result.data || {};
+                if (errors) {
+                    throw new Error('GraphQL Errors found');
+                }
 
-                // ULTRA-RESILIENT extraction: Find ANY field that resembles wine name/description
-                const findField = (obj, targetKeys) => {
-                    const results = { name: null, desc: null };
-                    const search = (item) => {
-                        if (!item || typeof item !== 'object') return;
+                if (data?.productOfTheMonths?.nodes?.length > 0) {
+                    const node = data.productOfTheMonths.nodes[0];
+                    const details = node.productMonthDetails || {};
 
-                        // If it's an array (like nodes), search each element
-                        if (Array.isArray(item)) {
-                            item.forEach(search);
-                            return;
-                        }
-
-                        for (const key in item) {
-                            const lowKey = key.toLowerCase();
-                            const val = item[key];
-
-                            // Check for name match
-                            if (targetKeys.name.some(k => lowKey === k || lowKey.includes(k)) && !results.name) {
-                                if (typeof val === 'string' && val.length > 2) results.name = val;
-                            }
-                            // Check for desc match
-                            if (targetKeys.desc.some(k => lowKey === k || lowKey.includes(k)) && !results.desc) {
-                                if (typeof val === 'string' && val.length > 5) results.desc = val;
-                            }
-
-                            if (results.name && (results.desc || targetKeys.desc.length === 0)) return;
-                            if (typeof val === 'object') search(val);
-                        }
-                    };
-
-                    search(obj);
-                    return results.name ? results : null;
-                };
-
-                const potm = findField(data, {
-                    name: ['winename', 'potm_name', 'product_name', 'wine_name', 'title'],
-                    desc: ['winedescription', 'potm_description', 'product_description', 'wine_description', 'description', 'desc']
-                });
-
-                if (potm) {
-                    const winename = potm.name;
-                    const winedescription = potm.desc;
-                    console.log('DEBUG: Match Found:', { winename, winedescription });
-
-                    const matchedWine = wines.find(w =>
-                        w.name.toLowerCase().trim() === winename.toLowerCase().trim()
-                    );
-
-                    if (matchedWine) {
-                        setPotmData({
-                            name: matchedWine.name,
-                            description: winedescription || matchedWine.description,
-                            image: matchedWine.image,
-                            slug: matchedWine.slug
-                        });
-                        setErrorInfo(null);
-                    } else {
-                        // Try matching by slug if name doesn't match perfectly
-                        const wineBySlug = wines.find(w =>
-                            winename.toLowerCase().replace(/\s+/g, '-').includes(w.slug)
-                        );
-
-                        if (wineBySlug) {
-                            setPotmData({
-                                name: wineBySlug.name,
-                                description: winedescription || wineBySlug.description,
-                                image: wineBySlug.image,
-                                slug: wineBySlug.slug
-                            });
-                            setErrorInfo(null);
-                        } else {
-                            setPotmData(prev => ({
-                                ...prev,
-                                name: winename,
-                                description: winedescription || prev.description
-                            }));
-                            setErrorInfo(`Found "${winename}" but it doesn't match a local wine name.`);
-                        }
-                    }
-                } else {
-                    const allKeys = [];
-                    const getKeys = (obj, prefix = '') => {
-                        if (!obj || typeof obj !== 'object' || allKeys.length > 20) return;
-                        Object.keys(obj).forEach(k => {
-                            allKeys.push(prefix + k);
-                            if (typeof obj[k] === 'object') getKeys(obj[k], prefix + k + '.');
-                        });
-                    };
-                    getKeys(data);
-
-                    if (result.errors) {
-                        setErrorInfo(`GraphQL Error: ${result.errors[0].message}`);
-                    } else {
-                        setErrorInfo(`No wine data found. Returned keys: ${allKeys.join(', ')}`);
-                    }
+                    setProductOfMonth({
+                        title: node.title,
+                        description: details.description,
+                        shopLink: details.shopLink || '/shop',
+                        imageUrl: details.image?.node?.sourceUrl
+                    });
                 }
             } catch (err) {
-                console.error('DEBUG: Fetch failed:', err);
-                setErrorInfo(`Fetch Failed: ${err.message}`);
+                console.error('Error fetching Product of the Month:', err);
             } finally {
-                setLoading(false);
+                setLoadingSpotlight(false);
             }
         };
 
-        fetchPOTM();
+        fetchProductOfMonth();
     }, []);
+
+    // Fallback content until WordPress is set up and returns data
+    const fallbackProduct = {
+        title: 'Twisted Red',
+        description: 'An exquisitely balanced Bordeaux style wine. This Cabernet blend will tantalize your taste buds with hints of spice, blackberry, black cherry, plum and vanilla.',
+        shopLink: '/shop/twisted-red',
+        imageUrl: '/wines/twisted-red.png'
+    };
+
+    const displayProduct = productOfMonth || fallbackProduct;
 
     return (
         <div className="home-page">
@@ -207,23 +109,31 @@ export default function Home() {
 
             {/* Product of the Month */}
             <section className="section product-spotlight">
-                <div className="spotlight-card">
-                    <div className="spotlight-text-content">
-                        <div className="section-header center-header">
-                            <h3>Product of the Month</h3>
+                {loadingSpotlight ? (
+                    <div className="spotlight-loading text-center" style={{ padding: '4rem', color: 'white' }}>
+                        Loading Feature...
+                    </div>
+                ) : (
+                    <div className="spotlight-card fade-in">
+                        <div className="spotlight-text-content">
+                            <div className="section-header center-header">
+                                <h3>Product of the Month</h3>
+                            </div>
+                            <div className="spotlight-header">
+                                <h4>{displayProduct.title}</h4>
+                            </div>
+                            <div className="spotlight-info">
+                                <p>{displayProduct.description}</p>
+                                <Link href={displayProduct.shopLink} className="btn btn-primary-inverted">Shop Now</Link>
+                            </div>
                         </div>
-                        <div className="spotlight-header">
-                            <h4>{potmData.name}</h4>
-                        </div>
-                        <div className="spotlight-info">
-                            <p>{potmData.description}</p>
-                            <Link href={`/shop/${potmData.slug}`} className="btn btn-primary-inverted">Shop Now</Link>
+                        <div className="spotlight-image">
+                            {displayProduct.imageUrl && (
+                                <img src={displayProduct.imageUrl} alt={displayProduct.title} />
+                            )}
                         </div>
                     </div>
-                    <div className="spotlight-image">
-                        <img src={potmData.image} alt={potmData.name} />
-                    </div>
-                </div>
+                )}
             </section>
 
             {/* Our Story & History */}
@@ -274,20 +184,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-
-            {/* Debug Helper (Visible only if there's an error) */}
-            {errorInfo && (
-                <div style={{
-                    padding: '1rem',
-                    background: '#fff0f0',
-                    borderTop: '2px solid red',
-                    fontSize: '12px',
-                    color: '#d00',
-                    textAlign: 'center'
-                }}>
-                    <strong>POTM Sync Debug:</strong> {errorInfo}
-                </div>
-            )}
         </div>
     );
 }
