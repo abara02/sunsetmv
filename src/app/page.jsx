@@ -12,7 +12,7 @@ const QUERY_PRODUCT_OF_THE_MONTH = `
       nodes {
         title
         productMonthDetails {
-          wineName
+          wineName_
           description
           image {
             node {
@@ -48,8 +48,8 @@ export default function Home() {
                     const node = data.productOfTheMonths.nodes[0];
                     const details = node.productMonthDetails || {};
 
-                    // Use the dedicated wineName field, fallback to post title if empty
-                    const displayName = details.wineName || node.title;
+                    // Use the dedicated wineName_ field, fallback to post title if empty
+                    const displayName = details.wineName_ || node.title;
 
                     // Auto-generate the slug from the wine name (e.g., "Twisted Red" -> "twisted-red")
                     const computedSlug = displayName
