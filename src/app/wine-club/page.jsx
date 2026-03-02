@@ -12,7 +12,6 @@ export default function WineClub() {
                 <div className="overlay"></div>
                 <div className="container hero-content">
                     <h1>Wine Club</h1>
-                    <p>Join the Sunset Meadow Vineyards family and enjoy exclusive benefits, customizable shipments, and premium access.</p>
                 </div>
             </div>
 
