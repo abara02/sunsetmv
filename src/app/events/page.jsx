@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef, Suspense } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import './Events.css';
@@ -232,30 +232,9 @@ function EventsContent() {
 
     const effectiveViewMode = isMobile ? 'list' : viewMode;
 
-    const heroImages = [
-        '/events-hero.png',
-        '/cars.png',
-        '/events.png',
-    ];
-    const [heroIndex, setHeroIndex] = useState(0);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setHeroIndex(prev => (prev + 1) % heroImages.length);
-        }, 5000);
-        return () => clearInterval(interval);
-    }, []);
-
     return (
         <div className="page-container events-page">
             <div className="events-hero">
-                {heroImages.map((img, index) => (
-                    <div
-                        key={index}
-                        className={`events-hero-slide ${index === heroIndex ? 'active' : ''}`}
-                        style={{ backgroundImage: `url(${img})` }}
-                    />
-                ))}
                 <div className="overlay"></div>
                 <div className="container hero-content">
                     <h1>Events at SMV</h1>

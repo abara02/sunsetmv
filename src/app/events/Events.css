@@ -4,45 +4,16 @@
 .events-hero {
     height: 60vh;
     min-height: 400px;
+    background-image: url('/events-hero.png');
+    /* hayride tour photo */
     background-size: cover;
-    background-position: center 60%;
+    background-position: center 10%;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 4rem;
-    overflow: hidden;
 }
-
-.events-hero-slide {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center 60%;
-    opacity: 0;
-    transition: opacity 1.2s ease-in-out;
-}
-
-.events-hero-slide.active {
-    opacity: 1;
-}
-
-/* Individual slide positioning — adjust % for each photo */
-.events-hero-slide:nth-child(1) {
-    background-position: center 60%;
-}
-
-/* events-hero.png (hayride) */
-.events-hero-slide:nth-child(2) {
-    background-position: center 30%;
-}
-
-/* cars.png */
-.events-hero-slide:nth-child(3) {
-    background-position: center 50%;
-}
-
-/* events.png */
 
 
 .events-hero .overlay {
