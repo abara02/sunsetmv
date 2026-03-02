@@ -17,6 +17,11 @@ const QUERY_POM = `
           wineName
           description
           shopLink
+          productImage {
+            node {
+              sourceUrl
+            }
+          }
         }
       }
     }
@@ -48,11 +53,14 @@ export default function ProductOfTheMonth() {
 
                 if (nodes && nodes.length > 0) {
                     const node = nodes[0];
+                    const acfImage = node.productFeatures?.productImage?.node?.sourceUrl;
+                    const featuredImage = node.featuredImage?.node?.sourceUrl;
+
                     setPomData({
                         title: node.productFeatures?.wineName || node.title,
                         description: node.productFeatures?.description || '',
                         shopLink: node.productFeatures?.shopLink || '/shop',
-                        imageUrl: node.featuredImage?.node?.sourceUrl || null
+                        imageUrl: acfImage || featuredImage || null
                     });
                 } else {
                     setPomData(null); // No data found, use fallback
