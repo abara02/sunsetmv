@@ -54,10 +54,12 @@ function ShopContent() {
 
     // Filter logic
     const filteredWines = wines.filter(wine => {
-        const matchesCategory = filter === 'All' || wine.type === filter;
+        const matchesCategory = filter === 'All' ||
+            (Array.isArray(wine.type) ? wine.type.includes(filter) : wine.type === filter);
         const matchesSearch = wine.name.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesCategory && matchesSearch;
     });
+
 
     // Get unique types for filter buttons
     const filterTypes = ['All', 'White', 'Fruit', 'Rosé', 'Red', 'Reserve', 'Sparkling', 'More'];
