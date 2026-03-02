@@ -13,6 +13,23 @@ const QUERY_POTM = `
       winename
       winedescription
     }
+    updatePotms {
+      nodes {
+        winename
+        winedescription
+        title
+      }
+    }
+    potm {
+      winename
+      winedescription
+    }
+    acfOptionsPOTM {
+      updatePotm {
+        winename
+        winedescription
+      }
+    }
   }
 `;
 
@@ -24,6 +41,7 @@ export default function Home() {
         slug: 'twisted-red'
     });
     const [loading, setLoading] = useState(true);
+    const [errorInfo, setErrorInfo] = useState(null);
 
     useEffect(() => {
         const fetchPOTM = async () => {
@@ -33,21 +51,40 @@ export default function Home() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ query: QUERY_POTM })
                 });
+
                 const result = await response.json();
-                console.log('DEBUG: POTM GraphQL Response:', JSON.stringify(result, null, 2));
+                console.log('DEBUG: POTM Full Response:', result);
 
-                const { data } = result;
-                if (data && (data.updatePotm || data.updatePotms)) {
-                    const potm = data.updatePotm || (data.updatePotms?.nodes ? data.updatePotms.nodes[0] : null);
-                    if (!potm) {
-                        console.warn('DEBUG: No POTM data found in response matching keys.');
-                        return;
+                if (result.errors) {
+                    console.error('DEBUG: GraphQL Errors:', result.errors);
+                    setErrorInfo(`GraphQL Error: ${result.errors[0].message}`);
+                }
+
+                const data = result.data || {};
+
+                // Flexible data extraction
+                const findPOTM = (obj) => {
+                    if (!obj || typeof obj !== 'object') return null;
+                    if (obj.winename) return obj;
+
+                    for (const key in obj) {
+                        if (key === 'nodes' && Array.isArray(obj[key])) {
+                            const found = findPOTM(obj[key][0]);
+                            if (found) return found;
+                        } else {
+                            const found = findPOTM(obj[key]);
+                            if (found) return found;
+                        }
                     }
+                    return null;
+                };
 
+                const potm = findPOTM(data);
+
+                if (potm) {
                     const { winename, winedescription } = potm;
-                    console.log('DEBUG: Found POTM fields:', { winename, winedescription });
 
-                    // Match with local wine data for image and slug
+                    // Match with local wine data
                     const matchedWine = wines.find(w =>
                         w.name.toLowerCase().trim() === winename.toLowerCase().trim()
                     );
@@ -60,17 +97,18 @@ export default function Home() {
                             slug: matchedWine.slug
                         });
                     } else {
-                        // If name doesn't match a wine, strictly use the text but keep default image/slug
-                        // (or fallback to Twisted Red if safer)
                         setPotmData(prev => ({
                             ...prev,
                             name: winename,
                             description: winedescription || prev.description
                         }));
                     }
+                } else if (!result.errors) {
+                    setErrorInfo('No POTM data found in WordPress response.');
                 }
             } catch (err) {
-                console.error('Error fetching Product of the Month:', err);
+                console.error('DEBUG: Fetch failed:', err);
+                setErrorInfo(`Fetch Failed: ${err.message}`);
             } finally {
                 setLoading(false);
             }
@@ -161,25 +199,13 @@ export default function Home() {
 
             {/* Awards Teaser */}
             <section className="section awards-teaser">
-                <div className="container">
-                    <div className="awards-teaser-content">
-                        <div className="awards-text-col">
-                            <h3>Award-Winning Excellence</h3>
-                            <p className="clean-text">
-                                Sunset Meadow Vineyards has been named one of the 101 Best Wineries in America by the Daily Meal.
-                            </p>
-                            <Link href="/awards" className="btn btn-outline-custom">View All Awards</Link>
-                        </div>
-                        <div className="awards-image-col">
-                            <img
-                                src="/daily-meal-award.jpg"
-                                alt="Top 101 Winery in America"
-                                className="awards-teaser-img"
-                            />
-                        </div>
-                    </div>
-                </div>
+                ...
             </section>
+
+            {/* Hidden Debug Helper (for local testing/debugging WordPress sync) */}
+            <div style={{ display: 'none' }} id="potm-debug-info">
+                {errorInfo}
+            </div>
         </div>
     );
 }
