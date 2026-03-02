@@ -25,13 +25,6 @@ export default function WineClub() {
                     <p className="section-intro" style={{ textAlign: 'left', margin: '0 auto 2rem auto' }}>
                         Elevate your wine experience with our Gold and Platinum memberships. As a member, you'll receive hand-selected shipments, exclusive discounts, and priority access to our finest creations.
                     </p>
-
-                    <div className="tasting-perk-banner">
-                        <div className="tasting-perk-content">
-                            <h3>Quarterly Tastings</h3>
-                            <p>Members receive <strong>FREE QUARTERLY TASTINGS</strong> for themselves and one guest!</p>
-                        </div>
-                    </div>
                 </section>
 
                 {/* Memberships Grid */}
@@ -73,6 +66,14 @@ export default function WineClub() {
 
                     </div>
                 </section>
+
+                {/* Tasting Perk Banner */}
+                <div className="tasting-perk-banner fade-in">
+                    <div className="tasting-perk-content">
+                        <h3>Quarterly Tastings</h3>
+                        <p>Members receive free quarterly tastings for themselves and one guest!</p>
+                    </div>
+                </div>
 
                 {/* Terms and Conditions */}
                 <section className="club-terms-section fade-in">
