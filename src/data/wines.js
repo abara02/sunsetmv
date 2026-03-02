@@ -8,8 +8,8 @@ export const wines = [
         price: 26.99,
         description: "Aged in steel tanks then in french oak barrels, this wine is light & crispy with mellow acidity & a touch of french oak.",
         awards: [
-            "2012 International Eastern Wine Competition Gold Medal Winner",
-            "2012 Finger Lakes International Wine Competition Bronze Medal Winner"
+            "International Eastern Wine Competition Gold Medal Winner",
+            "Finger Lakes International Wine Competition Bronze Medal Winner"
         ],
         specs: {
             alc: "11.5 % by vol",
@@ -27,13 +27,13 @@ export const wines = [
         price: 21.99,
         description: "A crisp, refreshing, fruit-forward white wine with hints of grapefruit, citrus and peach. Similar to a Sauvignon Blanc. Enjoy with chicken or fish!",
         awards: [
-            "2012 Finger Lakes International Wine Competition Silver Medal Winner",
-            "2012 International Eastern Wine Competition Bronze Medal Winner",
-            "2011 Grand Harvest International Wine Competition Bronze Medal Winner",
-            "2010 International Eastern Wine Competition Bronze Medal Winner",
-            "2010 Grand Harvest International Wine Competition Silver Medal Winner",
-            "2009 Finger Lakes International Competition Gold Medal Winner",
-            "2008 International Eastern Wine Competition Bronze Medal Winner"
+            "Finger Lakes International Wine Competition Silver Medal Winner",
+            "International Eastern Wine Competition Bronze Medal Winner",
+            "Grand Harvest International Wine Competition Bronze Medal Winner",
+            "International Eastern Wine Competition Bronze Medal Winner",
+            "Grand Harvest International Wine Competition Silver Medal Winner",
+            "Finger Lakes International Competition Gold Medal Winner",
+            "International Eastern Wine Competition Bronze Medal Winner"
         ],
         specs: {
             alc: "11.25 % by vol",
@@ -64,9 +64,9 @@ export const wines = [
         price: 25.99,
         description: "Elegant, clean and delicately balanced this wine is a medium bodied white with little to no acidity and a hint of melon and a soft buttery popcorn finish.",
         awards: [
-            "2010 Finger Lakes International Wine Competition Bronze Medal Winner",
-            "2009 Eastern States Wine Competition Silver Medal Winner",
-            "2008 International Eastern Wine Competition Bronze Medal Winner"
+            "Finger Lakes International Wine Competition Bronze Medal Winner",
+            "Eastern States Wine Competition Silver Medal Winner",
+            "International Eastern Wine Competition Bronze Medal Winner"
         ],
         specs: {
             alc: "12 % by vol",
@@ -171,10 +171,10 @@ export const wines = [
         price: 23.99,
         description: "A delicate, surprisingly elegant, crisp, dry wine, with hints of raspberry. Suitable to a wide range of cuisines.",
         awards: [
-            "2012 CT Specialty Food Competition Gold Medal Winner",
-            "2011 International Eastern Wine Competition Bronze Medal Winner",
-            "2011 CT Specialty Food Competition Silver Medal Winner",
-            "2011 Finger Lakes International Wine Competition Silver Medal Winner"
+            "CT Specialty Food Competition Gold Medal Winner",
+            "International Eastern Wine Competition Bronze Medal Winner",
+            "CT Specialty Food Competition Silver Medal Winner",
+            "Finger Lakes International Wine Competition Silver Medal Winner"
         ],
         specs: {
             alc: "11.5 % by vol",
@@ -192,18 +192,18 @@ export const wines = [
         price: 23.99,
         description: "Fruity and refreshing with hints of strawberry and rhubarb. Perfect summer wine!",
         awards: [
-            "2012 CT Specialty Foods Wine Competition Gold Medal Winner",
-            "2011 International Eastern Wine Competition Bronze Medal Winner",
-            "2011 Finger Lakes International Wine Competition Silver Medal Winner",
-            "2011 CT Specialty Food Competition Silver Medal Winner",
-            "2011 Grand Harvest International Wine Competition Bronze Medal Winner",
-            "2010 Dallas Morning News Wine Competion Bronze Medal Winner",
-            "2010 Grand Harvest International Wine Competition Bronze Medal Winner",
-            "2010 International Eastern Wine Competition Bronze Medal Winner",
-            "2009 Grand Harvest International Wine Competition Bronze Medal Winner",
-            "2009 Amenti DelVino Wine Competition Silver Medal Winner",
-            "2009 International Eastern States Competition Silver Medal Winner",
-            "2008 International Eastern States Competition Silver Medal Winner"
+            "CT Specialty Foods Wine Competition Gold Medal Winner",
+            "International Eastern Wine Competition Bronze Medal Winner",
+            "Finger Lakes International Wine Competition Silver Medal Winner",
+            "CT Specialty Food Competition Silver Medal Winner",
+            "Grand Harvest International Wine Competition Bronze Medal Winner",
+            "Dallas Morning News Wine Competion Bronze Medal Winner",
+            "Grand Harvest International Wine Competition Bronze Medal Winner",
+            "International Eastern Wine Competition Bronze Medal Winner",
+            "Grand Harvest International Wine Competition Bronze Medal Winner",
+            "Amenti DelVino Wine Competition Silver Medal Winner",
+            "International Eastern States Competition Silver Medal Winner",
+            "International Eastern States Competition Silver Medal Winner"
         ],
         specs: {
             alc: "11.25 % by vol",
@@ -250,9 +250,9 @@ export const wines = [
         price: 30.99,
         description: "Aged on a combination of American and French Oaks. Well balanced, Medium Bodied Notice the deep color with tastes of dark cherry and hints of black pepper and butter. Great with red meat or Italian dishes.",
         awards: [
-            "2011 Finger Lakes International Wine Competition Silver Medal Winner",
-            "2010 Finger Lakes International Wine Competition Silver Medal Winner",
-            "2010 Grand Harvest International Wine Competition Bronze Medal Winner"
+            "Finger Lakes International Wine Competition Silver Medal Winner",
+            "Finger Lakes International Wine Competition Silver Medal Winner",
+            "Grand Harvest International Wine Competition Bronze Medal Winner"
         ],
         specs: {
             alc: "13 % by vol",
@@ -270,9 +270,9 @@ export const wines = [
         price: 29.99,
         description: "An exquisitely balanced Bordeaux style wine. This Cabernet blend will tantalize your taste buds with hints of spice, blackberry, black cherry, plum and vanilla.",
         awards: [
-            "2010 Finger Lakes International Wine Competition Bronze Medal Winner",
-            "2009 Grand Harvest Competition Silver Medal Winner",
-            "2008 International Eastern States Competition Bronze Medal Winner"
+            "Finger Lakes International Wine Competition Bronze Medal Winner",
+            "Grand Harvest Competition Silver Medal Winner",
+            "International Eastern States Competition Bronze Medal Winner"
         ],
         specs: {
             alc: "14 % by vol",
