@@ -1,12 +1,75 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Hero from '../components/Hero';
 import Link from 'next/link';
+import { wines } from '../data/wines';
 const familyPhoto = '/family-photo.jpg';
 import './Home.css';
 
+const QUERY_POTM = `
+  query GetPOTM {
+    updatePotm {
+      winename
+      winedescription
+    }
+  }
+`;
+
 export default function Home() {
+    const [potmData, setPotmData] = useState({
+        name: 'Twisted Red',
+        description: 'An exquisitely balanced Bordeaux style wine. This Cabernet blend will tantalize your taste buds with hints of spice, blackberry, black cherry, plum and vanilla.',
+        image: '/wines/twisted-red.png',
+        slug: 'twisted-red'
+    });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPOTM = async () => {
+            try {
+                const response = await fetch('/graphql', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: QUERY_POTM })
+                });
+                const { data } = await response.json();
+
+                if (data && data.updatePotm) {
+                    const { winename, winedescription } = data.updatePotm;
+
+                    // Match with local wine data for image and slug
+                    const matchedWine = wines.find(w =>
+                        w.name.toLowerCase().trim() === winename.toLowerCase().trim()
+                    );
+
+                    if (matchedWine) {
+                        setPotmData({
+                            name: matchedWine.name,
+                            description: winedescription || matchedWine.description,
+                            image: matchedWine.image,
+                            slug: matchedWine.slug
+                        });
+                    } else {
+                        // If name doesn't match a wine, strictly use the text but keep default image/slug
+                        // (or fallback to Twisted Red if safer)
+                        setPotmData(prev => ({
+                            ...prev,
+                            name: winename,
+                            description: winedescription || prev.description
+                        }));
+                    }
+                }
+            } catch (err) {
+                console.error('Error fetching Product of the Month:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPOTM();
+    }, []);
+
     return (
         <div className="home-page">
             <Hero />
@@ -47,15 +110,15 @@ export default function Home() {
                             <h3>Product of the Month</h3>
                         </div>
                         <div className="spotlight-header">
-                            <h4>Twisted Red</h4>
+                            <h4>{potmData.name}</h4>
                         </div>
                         <div className="spotlight-info">
-                            <p>An exquisitely balanced Bordeaux style wine. This Cabernet blend will tantalize your taste buds with hints of spice, blackberry, black cherry, plum and vanilla.</p>
-                            <Link href="/shop/twisted-red" className="btn btn-primary-inverted">Shop Now</Link>
+                            <p>{potmData.description}</p>
+                            <Link href={`/shop/${potmData.slug}`} className="btn btn-primary-inverted">Shop Now</Link>
                         </div>
                     </div>
                     <div className="spotlight-image">
-                        <img src="/wines/twisted-red.png" alt="Twisted Red" />
+                        <img src={potmData.image} alt={potmData.name} />
                     </div>
                 </div>
             </section>
