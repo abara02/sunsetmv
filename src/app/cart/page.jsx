@@ -16,6 +16,7 @@ const Cart = () => {
         cartTotal,
         cartCount,
         hasCaseDiscount,
+        bottlesUntilDiscount,
         isQuantityValid
     } = useCart();
 
