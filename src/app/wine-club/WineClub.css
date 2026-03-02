@@ -166,14 +166,12 @@
     color: #53161D;
 }
 
-.shipment-badge {
-    display: inline-block;
-    background: #f4f4f4;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.9rem;
+.shipment-subtitle {
+    display: block;
+    font-size: 1.15rem;
     font-weight: 500;
     color: var(--color-text-muted);
+    margin-top: 0.5rem;
 }
 
 .card-price {
@@ -225,36 +223,6 @@
 
 .platinum-tier .benefits-list li::before {
     color: var(--color-burgundy);
-}
-
-.card-action {
-    text-align: center;
-}
-
-.card-action .btn {
-    width: 100%;
-    padding: 1rem;
-    font-size: 1.1rem;
-}
-
-.btn-platinum {
-    background-color: var(--color-burgundy);
-    border: 1px solid var(--color-burgundy);
-}
-
-.btn-platinum:hover {
-    background-color: #3a0d12;
-}
-
-.gold-tier .btn-primary {
-    background-color: transparent;
-    border: 2px solid var(--color-accent, #c5a059);
-    color: var(--color-accent, #c5a059);
-}
-
-.gold-tier .btn-primary:hover {
-    background-color: var(--color-accent, #c5a059);
-    color: white;
 }
 
 .club-footer-info {

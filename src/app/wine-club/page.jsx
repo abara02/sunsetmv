@@ -42,18 +42,15 @@ export default function WineClub() {
                         <div className="membership-card gold-tier">
                             <div className="card-header">
                                 <h3>Gold Membership</h3>
+                                <div className="shipment-subtitle">6 bottles/shipment</div>
                             </div>
                             <ul className="benefits-list">
-                                <li><strong>6 bottles</strong>/shipment</li>
                                 <li>$120–163/shipment</li>
                                 <li>$25 flat rate shipping</li>
                                 <li>15% off all Sunset Meadows Vineyard wines</li>
                                 <li>Fully customizable wine selections</li>
                                 <li>Access to new wine releases</li>
                             </ul>
-                            <div className="card-action">
-                                <Link href="/account" className="btn btn-primary">Join Gold Club</Link>
-                            </div>
                         </div>
 
                         {/* Platinum Membership Card */}
@@ -61,9 +58,9 @@ export default function WineClub() {
                             {/* <div className="popular-tag">Most Popular</div> */}
                             <div className="card-header">
                                 <h3>Platinum Membership</h3>
+                                <div className="shipment-subtitle">12 bottles/shipment</div>
                             </div>
                             <ul className="benefits-list">
-                                <li><strong>12 bottles</strong>/shipment</li>
                                 <li>$239–325/shipment</li>
                                 <li>$25 flat rate shipping</li>
                                 <li>15% off all Sunset Meadows Vineyard wines</li>
@@ -72,9 +69,6 @@ export default function WineClub() {
                                 <li>Exclusive access to reserve & limited release wines</li>
                                 <li>Priority access to events at SMV</li>
                             </ul>
-                            <div className="card-action">
-                                <Link href="/account" className="btn btn-primary btn-platinum">Join Platinum Club</Link>
-                            </div>
                         </div>
 
                     </div>
