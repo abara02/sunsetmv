@@ -1,28 +1,23 @@
-/* Rental Carousel Styles */
 .rental-carousel-wrapper {
     position: relative;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 0;
-    overflow: hidden;
+    overflow: visible;
 }
 
-/* Allow overflow on larger screens for shadow/cut-off issues */
-@media (min-width: 1024px) {
-    .rental-carousel-wrapper {
-        overflow: visible;
-    }
-}
 
 .rental-carousel-content-area {
     position: relative;
-    height: 550px;
+    height: 600px;
+    /* Increased to accommodate padding */
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible;
+    padding: 2rem 0;
 }
 
 .rental-carousel-card {
