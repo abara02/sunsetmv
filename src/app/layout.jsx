@@ -15,15 +15,17 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body>
-                <ShopProvider>
-                    <CartProvider>
-                        <AgeGate />
-                        <Navbar />
-                        <CartDrawer />
-                        <main>{children}</main>
-                        <Footer />
-                    </CartProvider>
-                </ShopProvider>
+                <div className="site-wrapper" style={{ overflowX: 'hidden', position: 'relative', width: '100%', minHeight: '100vh' }}>
+                    <ShopProvider>
+                        <CartProvider>
+                            <AgeGate />
+                            <Navbar />
+                            <CartDrawer />
+                            <main>{children}</main>
+                            <Footer />
+                        </CartProvider>
+                    </ShopProvider>
+                </div>
             </body>
         </html>
     );

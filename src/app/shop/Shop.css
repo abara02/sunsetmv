@@ -4,6 +4,12 @@
     min-height: 80vh;
 }
 
+@media (max-width: 768px) {
+    .page-container {
+        padding-top: 56px;
+    }
+}
+
 .shop-header {
     background-color: var(--color-burgundy);
     color: var(--color-white);
