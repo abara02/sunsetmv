@@ -83,17 +83,6 @@ export default function ProductDetails(props) {
                             {wine.isOutOfStock ? 'Out of Stock' : 'In Stock'}
                         </div>
 
-                        {!wine.isOutOfStock && (
-                            <div className="promo-banner">
-                                <div className="case-discount-promo">
-                                    <strong>SAVE 10%</strong> on orders of 12 bottles or more!
-                                </div>
-                                <div className="shipping-rules-note">
-                                    We ship in orders of 1, 2, 3, 6, or 12 bottles.
-                                </div>
-                            </div>
-                        )}
-
                         <div className="add-to-cart-section">
                             <div className={`quantity-selector ${wine.isOutOfStock ? 'disabled' : ''}`}>
                                 <button
@@ -119,6 +108,12 @@ export default function ProductDetails(props) {
                             </button>
                             {added && <span style={{ marginLeft: '10px', color: 'green', fontWeight: 'bold' }}>Added!</span>}
                         </div>
+
+                        {!wine.isOutOfStock && (
+                            <div className="details-case-discount">
+                                Case Discount: 10% off when you buy 12 bottles
+                            </div>
+                        )}
 
                         <div className="product-description-tabs">
                             <div className="tab-header">DESCRIPTION</div>

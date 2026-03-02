@@ -60,20 +60,15 @@ const WineCard = ({ id, slug, name, type, price, regularPrice, salePrice, onSale
                 <h3>{name}</h3>
                 {type !== 'More' && <p className="wine-type">{type}</p>}
                 <div className="price-display">
-                    {onSale && regularPrice ? (
+                    {onSale && regularPrice && !isOutOfStock ? (
                         <>
                             <span className="regular-price">${regularPrice.toFixed(2)}</span>
                             <span className="sale-price">${price.toFixed(2)}</span>
                         </>
                     ) : (
-                        <span className="wine-price">${price.toFixed(2)}</span>
+                        <span>${price.toFixed(2)}</span>
                     )}
                 </div>
-                {!isOutOfStock && (
-                    <div className="case-discount-tag">
-                        10% OFF 12 Bottles
-                    </div>
-                )}
             </div>
         </div>
     );
