@@ -199,7 +199,24 @@ export default function Home() {
 
             {/* Awards Teaser */}
             <section className="section awards-teaser">
-                ...
+                <div className="container">
+                    <div className="awards-teaser-content">
+                        <div className="awards-text-col">
+                            <h3>Award-Winning Excellence</h3>
+                            <p className="clean-text">
+                                Sunset Meadow Vineyards has been named one of the 101 Best Wineries in America by the Daily Meal.
+                            </p>
+                            <Link href="/awards" className="btn btn-outline-custom">View All Awards</Link>
+                        </div>
+                        <div className="awards-image-col">
+                            <img
+                                src="/daily-meal-award.jpg"
+                                alt="Top 101 Winery in America"
+                                className="awards-teaser-img"
+                            />
+                        </div>
+                    </div>
+                </div>
             </section>
 
             {/* Hidden Debug Helper (for local testing/debugging WordPress sync) */}
