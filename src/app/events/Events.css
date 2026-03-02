@@ -27,6 +27,23 @@
     opacity: 1;
 }
 
+/* Individual slide positioning — adjust % for each photo */
+.events-hero-slide:nth-child(1) {
+    background-position: center 60%;
+}
+
+/* events-hero.png (hayride) */
+.events-hero-slide:nth-child(2) {
+    background-position: center 30%;
+}
+
+/* cars.png */
+.events-hero-slide:nth-child(3) {
+    background-position: center 50%;
+}
+
+/* events.png */
+
 
 .events-hero .overlay {
     position: absolute;
