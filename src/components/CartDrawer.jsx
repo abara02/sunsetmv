@@ -13,7 +13,12 @@ const CartDrawer = () => {
         closeCart,
         updateQuantity,
         removeFromCart,
-        cartTotal
+        cartCount,
+        subtotal,
+        discountAmount,
+        cartTotal,
+        hasCaseDiscount,
+        isQuantityValid
     } = useCart();
 
     // Prevent body scroll when drawer is open
@@ -91,12 +96,41 @@ const CartDrawer = () => {
                         </div>
 
                         <div className="cart-drawer-footer">
-                            <div className="cart-summary-line">
-                                <span>Subtotal ({cartItems.length} items)</span>
-                                <span className="summary-price">${cartTotal.toFixed(2)}</span>
+                            <div className="shipping-info-banner">
+                                We ship in orders of 1, 2, 3, 6, or 12 bottles.
                             </div>
-                            <p className="shipping-note">Taxes and shipping calculated at checkout</p>
-                            <Link href="/checkout" className="btn btn-primary btn-block checkout-btn" onClick={closeCart}>
+
+                            <div className="cart-summary-details">
+                                <div className="cart-summary-line">
+                                    <span>Subtotal ({cartCount} {cartCount === 1 ? 'item' : 'items'})</span>
+                                    <span className="summary-price">${subtotal.toFixed(2)}</span>
+                                </div>
+                                {hasCaseDiscount && (
+                                    <div className="cart-summary-line discount-line">
+                                        <span>Case Discount (10% Off)</span>
+                                        <span className="summary-price">-${discountAmount.toFixed(2)}</span>
+                                    </div>
+                                )}
+                                <div className="cart-summary-line total-line">
+                                    <span>Total</span>
+                                    <span className="summary-price">${cartTotal.toFixed(2)}</span>
+                                </div>
+                            </div>
+
+                            {!isQuantityValid && cartCount > 0 && (
+                                <div className="shipping-warning">
+                                    To proceed, please adjust your cart to 1, 2, 3, 6, or 12 bottles.
+                                </div>
+                            )}
+
+                            <Link
+                                href="/checkout"
+                                className={`btn btn-primary btn-block checkout-btn ${!isQuantityValid ? 'disabled' : ''}`}
+                                onClick={(e) => {
+                                    if (!isQuantityValid) e.preventDefault();
+                                    else closeCart();
+                                }}
+                            >
                                 Proceed to Checkout
                             </Link>
                             <button className="continue-shopping-btn" onClick={closeCart}>

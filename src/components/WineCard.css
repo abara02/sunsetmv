@@ -260,3 +260,13 @@
     color: var(--color-burgundy);
     font-size: 1.1rem;
 }
+
+.case-discount-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #2E7D32;
+    /* Success Forest Green */
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}

@@ -3,11 +3,21 @@
 import React from 'react';
 import Link from 'next/link';
 import { useCart } from '../../context/CartContext';
-import { Trash2, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Trash2, ArrowRight, ArrowLeft, AlertCircle } from 'lucide-react';
 import './Cart.css';
 
 const Cart = () => {
-    const { cartItems, removeFromCart, updateQuantity, cartTotal } = useCart();
+    const {
+        cartItems,
+        removeFromCart,
+        updateQuantity,
+        subtotal,
+        discountAmount,
+        cartTotal,
+        cartCount,
+        hasCaseDiscount,
+        isQuantityValid
+    } = useCart();
 
     if (cartItems.length === 0) {
         return (
@@ -69,16 +79,42 @@ const Cart = () => {
                     </div>
 
                     <div className="cart-summary">
-                        <div className="summary-row">
-                            <span>Subtotal</span>
-                            <span>${cartTotal.toFixed(2)}</span>
+                        <div className="shipping-notice-cart">
+                            <strong>Shipping Policy:</strong> We ship in orders of 1, 2, 3, 6, or 12 bottles.
                         </div>
+
+                        {!isQuantityValid && (
+                            <div className="cart-warning-banner">
+                                <AlertCircle size={20} />
+                                <span>Please adjust your total quantity to 1, 2, 3, 6, or 12 bottles to checkout. Current total: {cartCount} bottles.</span>
+                            </div>
+                        )}
+
+                        <div className="summary-row">
+                            <span>Subtotal ({cartCount} bottles)</span>
+                            <span>${subtotal.toFixed(2)}</span>
+                        </div>
+
+                        {hasCaseDiscount && (
+                            <div className="summary-row discount-row">
+                                <span>12 Bottle Case Discount (10% Off)</span>
+                                <span>-${discountAmount.toFixed(2)}</span>
+                            </div>
+                        )}
+
                         <div className="summary-row summary-total">
                             <span>Total</span>
                             <span>${cartTotal.toFixed(2)}</span>
                         </div>
 
-                        <Link href="/checkout" className="btn btn-primary checkout-btn" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Link
+                            href="/checkout"
+                            className={`btn btn-primary checkout-btn ${!isQuantityValid ? 'disabled' : ''}`}
+                            style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            onClick={(e) => {
+                                if (!isQuantityValid) e.preventDefault();
+                            }}
+                        >
                             Proceed to Checkout <ArrowRight size={18} style={{ display: 'inline', marginLeft: '8px' }} />
                         </Link>
 

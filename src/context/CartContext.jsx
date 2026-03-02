@@ -95,14 +95,24 @@ export const CartProvider = ({ children }) => {
         setCartItems([]);
     };
 
-    // Calculate totals
+    const ALLOWED_SHIPPING_QUANTITIES = [1, 2, 3, 6, 12];
+
+    // Calculate totals and validation
     const cartCount = useMemo(() => {
         return cartItems.reduce((total, item) => total + item.quantity, 0);
     }, [cartItems]);
 
-    const cartTotal = useMemo(() => {
+    const isQuantityValid = useMemo(() => {
+        return ALLOWED_SHIPPING_QUANTITIES.includes(cartCount);
+    }, [cartCount]);
+
+    const subtotal = useMemo(() => {
         return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
     }, [cartItems]);
+
+    const hasCaseDiscount = cartCount === 12;
+    const discountAmount = hasCaseDiscount ? subtotal * 0.10 : 0;
+    const cartTotal = subtotal - discountAmount;
 
     const value = {
         cartItems,
@@ -111,7 +121,12 @@ export const CartProvider = ({ children }) => {
         updateQuantity,
         clearCart,
         cartCount,
+        subtotal,
+        discountAmount,
         cartTotal,
+        hasCaseDiscount,
+        isQuantityValid,
+        ALLOWED_SHIPPING_QUANTITIES,
         isCartOpen,
         openCart,
         closeCart,

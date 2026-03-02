@@ -122,6 +122,26 @@
     border-radius: 50%;
 }
 
+.promo-banner {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background-color: #fdfbf7;
+    border: 1px solid rgba(193, 154, 107, 0.2);
+    border-radius: 8px;
+}
+
+.case-discount-promo {
+    color: #2E7D32;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.shipping-rules-note {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
 /* Add to Cart Section */
 .add-to-cart-section {
     display: flex;
