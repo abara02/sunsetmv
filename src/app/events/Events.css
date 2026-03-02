@@ -15,12 +15,6 @@
     margin-bottom: 4rem;
 }
 
-/* Fallback if image missing, or use one of existing ones */
-.events-hero {
-    background-color: var(--color-green);
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/visit-bg-2.jpg');
-    /* Reuse existing asset */
-}
 
 .events-hero .overlay {
     position: absolute;
