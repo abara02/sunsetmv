@@ -74,10 +74,27 @@ export default function WineClub() {
                     </div>
                 </section>
 
-                {/* FAQ / Additional Info (Optional for Future) */}
-                <section className="club-footer-info text-center fade-in">
-                    <p className="text-muted">Membership requires a minimum commitment of two shipments. Terms and conditions apply.</p>
-                    <Link href="/contact" className="btn btn-outline" style={{ marginTop: '1rem' }}>Contact Us for Details</Link>
+                {/* Terms and Conditions */}
+                <section className="club-terms-section fade-in">
+                    <div className="terms-container">
+                        <h3>Terms and Conditions</h3>
+                        <ul className="terms-list">
+                            <li>Starting fee of $45 to join the wine club</li>
+                            <li>Wine club members must accept 4 shipments prior to cancellation or a $75 cancellation fee will be charged</li>
+                            <li>Wine club shipment details will be emailed to the email provided 2 weeks prior to shipping</li>
+                            <li>Upon shipping, the credit card on file will be charged</li>
+                            <li>Orders can be picked up directly from the winery for no charge on specific pick up days</li>
+                            <li>Shipments are scheduled for March, June, September, and December</li>
+                            <li>Currently only offering shipping to Connecticut and Florida</li>
+                        </ul>
+                    </div>
+                </section>
+
+                {/* Call to Action */}
+                <section className="club-cta text-center fade-in">
+                    <p className="cta-text">Interested in joining our <strong>WINE CLUB</strong>?</p>
+                    <p className="cta-subtext">Ask one of our associates today!</p>
+                    <Link href="/visit" className="btn btn-outline" style={{ marginTop: '1.5rem' }}>Visit Us</Link>
                 </section>
 
             </div>
