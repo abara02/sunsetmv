@@ -128,6 +128,7 @@ function ShopContent() {
                                             onSale={wine.onSale}
                                             image={wine.image}
                                             isFanFavorite={wine.isFanFavorite}
+                                            isOutOfStock={wine.isOutOfStock}
                                         />
                                     </Link>
                                 ))

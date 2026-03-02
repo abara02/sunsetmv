@@ -72,6 +72,10 @@ function RentalInquiryContent() {
         comments: ''
     });
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSent, setIsSent] = useState(false);
+    const [error, setError] = useState(null);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -80,10 +84,45 @@ function RentalInquiryContent() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert("Thank you for your inquiry! We'll get back to you shortly.");
-        console.log("Form Data:", formData);
+        setIsSubmitting(true);
+        setError(null);
+
+        const formDataToSend = new FormData();
+        formDataToSend.append("access_key", "69bbd9ad-a0ad-427e-853e-88838bb23cdd");
+        formDataToSend.append("subject", `New Event Inquiry: ${formData.name}`);
+        formDataToSend.append("from_name", formData.renterName);
+        formDataToSend.append("replyto", formData.email);
+
+        // Add all form fields
+        formDataToSend.append("Rental Type", rental.title);
+        formDataToSend.append("Email", formData.email);
+        formDataToSend.append("Party Name", formData.name);
+        formDataToSend.append("Date Requested", formData.date);
+        formDataToSend.append("Time Requested", formData.time);
+        formDataToSend.append("Attendees", formData.attendees);
+        formDataToSend.append("Renter Name", formData.renterName);
+        formDataToSend.append("Comments", formData.comments);
+
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formDataToSend
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                setIsSent(true);
+            } else {
+                setError(result.message || "Something went wrong. Please try again.");
+            }
+        } catch (err) {
+            setError("Failed to send inquiry. Please check your connection.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     if (!rental) {
@@ -167,117 +206,162 @@ function RentalInquiryContent() {
 
                     <div className="inquiry-form-column">
                         <div className="form-card">
-                            <h2>Inquiry Form</h2>
-                            <p className="form-subtitle">Fill out the details below to start planning your event — or feel free to contact us directly with any questions!</p>
+                            <AnimatePresence mode="wait">
+                                {isSent ? (
+                                    <motion.div
+                                        key="success"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className="success-message"
+                                    >
+                                        <div className="success-icon">✓</div>
+                                        <h2>Inquiry Sent!</h2>
+                                        <p>Thank you for your interest in Sunset Meadow Vineyards. We've received your request for the <strong>{rental.title}</strong> and will get back to you at <strong>{formData.email}</strong> shortly.</p>
+                                        <button
+                                            onClick={() => setIsSent(false)}
+                                            className="btn btn-secondary"
+                                            style={{ marginTop: '2rem' }}
+                                        >
+                                            Send Another Inquiry
+                                        </button>
+                                    </motion.div>
+                                ) : (
+                                    <motion.div
+                                        key="form"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                    >
+                                        <h2>Inquiry Form</h2>
+                                        <p className="form-subtitle">Fill out the details below to start planning your event — or feel free to contact us directly with any questions!</p>
 
-                            <form onSubmit={handleSubmit}>
-                                <div className="form-group">
-                                    <label htmlFor="email">Email Address (to be sent from)</label>
-                                    <div className="input-with-icon">
-                                        <Mail size={18} />
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            name="email"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            required
-                                            placeholder="your@email.com"
-                                        />
-                                    </div>
-                                </div>
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="form-group">
+                                                <label htmlFor="email">Email Address (to be sent from)</label>
+                                                <div className="input-with-icon">
+                                                    <Mail size={18} />
+                                                    <input
+                                                        type="email"
+                                                        id="email"
+                                                        name="email"
+                                                        value={formData.email}
+                                                        onChange={handleChange}
+                                                        required
+                                                        placeholder="your@email.com"
+                                                        disabled={isSubmitting}
+                                                    />
+                                                </div>
+                                            </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="name">Name of Party / Event Title</label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required
-                                        placeholder="e.g. Smith Family Reunion"
-                                    />
-                                </div>
+                                            <div className="form-group">
+                                                <label htmlFor="name">Name of Party / Event Title</label>
+                                                <input
+                                                    type="text"
+                                                    id="name"
+                                                    name="name"
+                                                    value={formData.name}
+                                                    onChange={handleChange}
+                                                    required
+                                                    placeholder="e.g. Rose's Bridal Shower"
+                                                    disabled={isSubmitting}
+                                                />
+                                            </div>
 
-                                <div className="form-row">
-                                    <div className="form-group">
-                                        <label htmlFor="date">Date Requested</label>
-                                        <div className="input-with-icon">
-                                            <Calendar size={18} />
-                                            <input
-                                                type="date"
-                                                id="date"
-                                                name="date"
-                                                value={formData.date}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="time">Time</label>
-                                        <div className="input-with-icon">
-                                            <Clock size={18} />
-                                            <input
-                                                type="time"
-                                                id="time"
-                                                name="time"
-                                                value={formData.time}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
+                                            <div className="form-row">
+                                                <div className="form-group">
+                                                    <label htmlFor="date">Date Requested</label>
+                                                    <div className="input-with-icon">
+                                                        <Calendar size={18} />
+                                                        <input
+                                                            type="date"
+                                                            id="date"
+                                                            name="date"
+                                                            value={formData.date}
+                                                            onChange={handleChange}
+                                                            required
+                                                            disabled={isSubmitting}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="time">Time Requested</label>
+                                                    <div className="input-with-icon">
+                                                        <Clock size={18} />
+                                                        <input
+                                                            type="text"
+                                                            id="time"
+                                                            name="time"
+                                                            value={formData.time}
+                                                            onChange={handleChange}
+                                                            required
+                                                            placeholder="e.g. 12:00 PM"
+                                                            disabled={isSubmitting}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                <div className="form-row">
-                                    <div className="form-group">
-                                        <label htmlFor="attendees"># of Attendees</label>
-                                        <div className="input-with-icon">
-                                            <User size={18} />
-                                            <input
-                                                type="number"
-                                                id="attendees"
-                                                name="attendees"
-                                                value={formData.attendees}
-                                                onChange={handleChange}
-                                                required
-                                                min="1"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="renterName">Renter Name</label>
-                                        <input
-                                            type="text"
-                                            id="renterName"
-                                            name="renterName"
-                                            value={formData.renterName}
-                                            onChange={handleChange}
-                                            required
-                                            placeholder="Full Name"
-                                        />
-                                    </div>
-                                </div>
+                                            <div className="form-row">
+                                                <div className="form-group">
+                                                    <label htmlFor="attendees"># of Attendees</label>
+                                                    <div className="input-with-icon">
+                                                        <User size={18} />
+                                                        <input
+                                                            type="number"
+                                                            id="attendees"
+                                                            name="attendees"
+                                                            value={formData.attendees}
+                                                            onChange={handleChange}
+                                                            required
+                                                            min="1"
+                                                            disabled={isSubmitting}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="renterName">Renter Name</label>
+                                                    <input
+                                                        type="text"
+                                                        id="renterName"
+                                                        name="renterName"
+                                                        value={formData.renterName}
+                                                        onChange={handleChange}
+                                                        required
+                                                        placeholder="Full Name"
+                                                        disabled={isSubmitting}
+                                                    />
+                                                </div>
+                                            </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="comments">Additional comments / questions</label>
-                                    <div className="input-with-icon textarea-icon">
-                                        <MessageSquare size={18} />
-                                        <textarea
-                                            id="comments"
-                                            name="comments"
-                                            value={formData.comments}
-                                            onChange={handleChange}
-                                            rows="4"
-                                            placeholder="Tell us more about your event needs..."
-                                        />
-                                    </div>
-                                </div>
+                                            <div className="form-group">
+                                                <label htmlFor="comments">Additional comments / questions</label>
+                                                <div className="input-with-icon textarea-icon">
+                                                    <MessageSquare size={18} />
+                                                    <textarea
+                                                        id="comments"
+                                                        name="comments"
+                                                        value={formData.comments}
+                                                        onChange={handleChange}
+                                                        rows="4"
+                                                        placeholder="Tell us more about your event needs..."
+                                                        disabled={isSubmitting}
+                                                    />
+                                                </div>
+                                            </div>
 
-                                <button type="submit" className="btn btn-primary submit-btn">Submit</button>
-                            </form>
+                                            {error && <div className="error-text" style={{ color: 'red', marginBottom: '1rem', fontSize: '0.9rem' }}>{error}</div>}
+
+                                            <button
+                                                type="submit"
+                                                className="btn btn-primary submit-btn"
+                                                disabled={isSubmitting}
+                                            >
+                                                {isSubmitting ? 'Sending...' : 'Submit'}
+                                            </button>
+                                        </form>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     </div>
                 </div>

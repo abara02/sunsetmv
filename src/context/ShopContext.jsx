@@ -82,13 +82,17 @@ export const ShopProvider = ({ children }) => {
                             // Check sale status based on price difference or explicit flag
                             const isOnSale = wpMatch.on_sale || (regPrice && slPrice && slPrice < regPrice);
 
+                            // Check stock status (WooCommerce Store API uses is_in_stock boolean)
+                            const isOutOfStock = wpMatch.is_in_stock === false || wpMatch.low_stock_remaining === 0;
+
                             updatedCount++;
                             return {
                                 ...localWine,
                                 price: livePrice || localWine.price,
                                 regularPrice: regPrice,
                                 salePrice: slPrice,
-                                onSale: isOnSale
+                                onSale: isOnSale,
+                                isOutOfStock: isOutOfStock
                             };
                         }
 
