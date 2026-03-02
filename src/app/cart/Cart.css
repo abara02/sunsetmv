@@ -118,6 +118,33 @@
 }
 
 /* Summary Section */
+.summary-total {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--color-burgundy);
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+}
+
+.cart-discount-upsell {
+    width: 100%;
+    background: linear-gradient(135deg, var(--color-burgundy), #5d0e1a);
+    color: white;
+    padding: 1.25rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 1.15rem;
+    box-shadow: 0 4px 15px rgba(116, 21, 34, 0.2);
+}
+
+.upsell-icon {
+    font-size: 1.75rem;
+}
+
 .shipping-notice-cart {
     width: 100%;
     background: #fdf2f2;

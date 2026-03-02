@@ -79,6 +79,13 @@ const Cart = () => {
                     </div>
 
                     <div className="cart-summary">
+                        {bottlesUntilDiscount > 0 && (
+                            <div className="cart-discount-upsell">
+                                <span className="upsell-icon">🎉</span>
+                                <span>Add <strong>{bottlesUntilDiscount}</strong> more {bottlesUntilDiscount === 1 ? 'bottle' : 'bottles'} to your cart and <strong>SAVE 10%</strong> on your entire order!</span>
+                            </div>
+                        )}
+
                         <div className="shipping-notice-cart">
                             <strong>Shipping Policy:</strong> We ship in orders of 1, 2, 3, 6, or 12 bottles.
                         </div>

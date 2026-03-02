@@ -18,6 +18,7 @@ const CartDrawer = () => {
         discountAmount,
         cartTotal,
         hasCaseDiscount,
+        bottlesUntilDiscount,
         isQuantityValid
     } = useCart();
 
@@ -96,6 +97,12 @@ const CartDrawer = () => {
                         </div>
 
                         <div className="cart-drawer-footer">
+                            {bottlesUntilDiscount > 0 && (
+                                <div className="discount-upsell-banner">
+                                    Add <strong>{bottlesUntilDiscount}</strong> more {bottlesUntilDiscount === 1 ? 'bottle' : 'bottles'} to get <strong>10% OFF</strong> your entire order!
+                                </div>
+                            )}
+
                             <div className="shipping-info-banner">
                                 We ship in orders of 1, 2, 3, 6, or 12 bottles.
                             </div>

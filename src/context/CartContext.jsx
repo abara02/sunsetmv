@@ -113,6 +113,7 @@ export const CartProvider = ({ children }) => {
     const hasCaseDiscount = cartCount === 12;
     const discountAmount = hasCaseDiscount ? subtotal * 0.10 : 0;
     const cartTotal = subtotal - discountAmount;
+    const bottlesUntilDiscount = cartCount < 12 ? 12 - cartCount : 0;
 
     const value = {
         cartItems,
@@ -125,6 +126,7 @@ export const CartProvider = ({ children }) => {
         discountAmount,
         cartTotal,
         hasCaseDiscount,
+        bottlesUntilDiscount,
         isQuantityValid,
         ALLOWED_SHIPPING_QUANTITIES,
         isCartOpen,
