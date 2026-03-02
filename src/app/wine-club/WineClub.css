@@ -233,10 +233,7 @@
 }
 
 .terms-container {
-    background-color: #fcfcfc;
-    border: 1px solid #eaeaea;
-    border-radius: 12px;
-    padding: 2.5rem 3rem;
+    padding: 0 1.5rem;
 }
 
 .terms-container h3 {
@@ -244,8 +241,6 @@
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
     text-align: left;
-    border-bottom: 1px solid #eaeaea;
-    padding-bottom: 1rem;
 }
 
 .terms-list {
