@@ -42,13 +42,24 @@ const TastingCarousel = ({ items }) => {
     };
 
     const [isMobile, setIsMobile] = useState(false);
+    const [screenWidth, setScreenWidth] = useState(400); // Default desktop spacing
 
     React.useEffect(() => {
-        setIsMobile(window.innerWidth < 768);
-        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        const handleResize = () => {
+            const width = window.innerWidth;
+            setIsMobile(width < 768);
+            setScreenWidth(width);
+        };
+
+        // Initial setup
+        handleResize();
+
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    // Determine spacing: on mobile push it fully off screen, on desktop use fixed spacing
+    const baseSpacing = isMobile ? screenWidth : 400;
 
     return (
         <div className="carousel-wrapper">
@@ -77,19 +88,19 @@ const TastingCarousel = ({ items }) => {
                                 key={`${index + offset}-${item.title}`} // Unique key based on index to force re-render/animate
                                 custom={direction}
                                 initial={{
-                                    x: offset * 350 + (direction * 100), // Adjust spacing
+                                    x: offset * baseSpacing + (direction * 100),
                                     scale: isActive ? 1 : 0.8,
-                                    opacity: isActive ? 1 : 0.4,
+                                    opacity: isActive ? 1 : (isMobile ? 0 : 0.4),
                                     zIndex: isActive ? 10 : 1
                                 }}
                                 animate={{
-                                    x: offset * (isMobile ? 320 : 400),
+                                    x: offset * baseSpacing,
                                     scale: isActive ? 1 : 0.85,
-                                    opacity: isActive ? 1 : 0.5,
+                                    opacity: isActive ? 1 : (isMobile ? 0 : 0.5),
                                     zIndex: isActive ? 10 : 1
                                 }}
                                 exit={{
-                                    x: offset * 350 - (direction * 100),
+                                    x: offset * baseSpacing - (direction * 100),
                                     opacity: 0,
                                     scale: 0.7
                                 }}
