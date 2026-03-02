@@ -9,11 +9,21 @@ import './Home.css';
 
 const QUERY_POTM = `
   query GetPOTM {
-    potms(first: 1) {
+    potms(first: 5) {
       nodes {
+        title
+        slug
         winename
         winedescription
+        acf {
+          winename
+          winedescription
+        }
         potmFields {
+          winename
+          winedescription
+        }
+        potm_fields {
           winename
           winedescription
         }
