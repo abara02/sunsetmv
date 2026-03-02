@@ -112,7 +112,6 @@
     position: relative;
     border: 1px solid #eaeaea;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
 }
 
 .membership-card:hover {
@@ -224,17 +223,6 @@
 
 .platinum-tier .benefits-list li::before {
     color: var(--color-burgundy);
-}
-
-.tier-badge {
-    position: absolute;
-    bottom: -10px;
-    right: -10px;
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    opacity: 0.9;
-    pointer-events: none;
 }
 
 /* Terms and Conditions */

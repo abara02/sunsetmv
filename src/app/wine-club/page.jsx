@@ -44,7 +44,6 @@ export default function WineClub() {
                                 <li>Fully customizable wine selections</li>
                                 <li>Access to new wine releases</li>
                             </ul>
-                            <img src="/gold-badge.png" alt="Gold Member Badge" className="tier-badge" />
                         </div>
 
                         {/* Platinum Membership Card */}
@@ -63,7 +62,6 @@ export default function WineClub() {
                                 <li>Exclusive access to reserve & limited release wines</li>
                                 <li>Priority access to events at SMV</li>
                             </ul>
-                            <img src="/platinum-badge.png" alt="Platinum Member Badge" className="tier-badge" />
                         </div>
 
                     </div>
@@ -95,8 +93,8 @@ export default function WineClub() {
 
                 {/* Call to Action */}
                 <section className="club-cta text-center fade-in">
-                    <p className="cta-text">Interested in joining our <strong>WINE CLUB</strong>?</p>
-                    <p className="cta-subtext">Ask one of our associates today!</p>
+                    <p className="cta-text">Interested in joining our Wine Club?</p>
+                    <p className="cta-subtext">Visit us and speak with one of our associates today.</p>
                     <Link href="/visit" className="btn btn-outline" style={{ marginTop: '1.5rem' }}>Visit Us</Link>
                 </section>
 
