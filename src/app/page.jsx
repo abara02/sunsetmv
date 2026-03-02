@@ -12,8 +12,8 @@ const QUERY_PRODUCT_OF_THE_MONTH = `
       nodes {
         title
         productMonthDetails {
+          wineName
           description
-          shopLink
           image {
             node {
               sourceUrl
@@ -48,10 +48,20 @@ export default function Home() {
                     const node = data.productOfTheMonths.nodes[0];
                     const details = node.productMonthDetails || {};
 
+                    // Use the dedicated wineName field, fallback to post title if empty
+                    const displayName = details.wineName || node.title;
+
+                    // Auto-generate the slug from the wine name (e.g., "Twisted Red" -> "twisted-red")
+                    const computedSlug = displayName
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/(^-|-$)+/g, '');
+
                     setProductOfMonth({
-                        title: node.title,
+                        title: displayName,
                         description: details.description,
-                        shopLink: details.shopLink || '/shop',
+                        // This links directly to the SunsetMV Next.js shop, NOT WordPress
+                        shopLink: computedSlug ? `/shop/${computedSlug}` : '/shop',
                         imageUrl: details.image?.node?.sourceUrl
                     });
                 }
