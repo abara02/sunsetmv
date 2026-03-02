@@ -27,7 +27,7 @@ export default function ProductDetails(props) {
     const wine = wines.find(w => w.slug === slug);
 
     const handleAddToCart = () => {
-        if (!wine) return;
+        if (!wine || wine.isOutOfStock) return;
         setAdding(true);
         setTimeout(() => {
             addToCart(wine, quantity);
@@ -47,7 +47,7 @@ export default function ProductDetails(props) {
     }
 
     return (
-        <div className="product-details-page">
+        <div className={`product-details-page ${wine.isOutOfStock ? 'is-out-of-stock' : ''}`}>
             <div className="container">
                 <div className="back-link">
                     <Link href="/shop"><ArrowLeft size={16} /> Back to Shop</Link>
@@ -60,7 +60,7 @@ export default function ProductDetails(props) {
                         <h1 className="product-title">{wine.name}</h1>
 
                         <div className="product-price">
-                            {wine.onSale && wine.regularPrice ? (
+                            {wine.onSale && wine.regularPrice && !wine.isOutOfStock ? (
                                 <div className="price-stack">
                                     <span className="details-regular-price">${wine.regularPrice.toFixed(2)}</span>
                                     <span className="details-sale-price">${wine.price.toFixed(2)}</span>
@@ -70,22 +70,33 @@ export default function ProductDetails(props) {
                             )}
                         </div>
 
-                        <div className="stock-status">
-                            <span className="indicator"></span> In Stock
+                        <div className={`stock-status ${wine.isOutOfStock ? 'out-of-stock' : 'in-stock'}`}>
+                            <span className="indicator"></span>
+                            {wine.isOutOfStock ? 'Out of Stock' : 'In Stock'}
                         </div>
 
                         <div className="add-to-cart-section">
-                            <div className="quantity-selector">
-                                <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
+                            <div className={`quantity-selector ${wine.isOutOfStock ? 'disabled' : ''}`}>
+                                <button
+                                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                                    disabled={wine.isOutOfStock}
+                                >
+                                    -
+                                </button>
                                 <span>{quantity}</span>
-                                <button onClick={() => setQuantity(quantity + 1)}>+</button>
+                                <button
+                                    onClick={() => setQuantity(quantity + 1)}
+                                    disabled={wine.isOutOfStock}
+                                >
+                                    +
+                                </button>
                             </div>
                             <button
                                 className="btn btn-primary add-btn"
                                 onClick={handleAddToCart}
-                                disabled={adding}
+                                disabled={adding || wine.isOutOfStock}
                             >
-                                {adding ? 'ADDING...' : 'ADD TO CART'}
+                                {wine.isOutOfStock ? 'OUT OF STOCK' : (adding ? 'ADDING...' : 'ADD TO CART')}
                             </button>
                             {added && <span style={{ marginLeft: '10px', color: 'green', fontWeight: 'bold' }}>Added!</span>}
                         </div>
