@@ -4,8 +4,8 @@
 .events-hero {
     height: 60vh;
     min-height: 400px;
-    background-image: url('/events-hero.jpg');
-    /* Need to ensure this exists or use a fallback */
+    background-image: url('/events-hero.png');
+    /* hayride tour photo */
     background-size: cover;
     background-position: center;
     position: relative;
