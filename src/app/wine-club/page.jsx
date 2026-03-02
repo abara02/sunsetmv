@@ -66,12 +66,12 @@ export default function WineClub() {
                     </div>
                 </section>
 
-                {/* Tasting Perk Banner */}
                 <div className="tasting-perk-banner fade-in">
                     <div className="tasting-perk-content">
                         <h3>Quarterly Tastings</h3>
                         <p>Members receive free quarterly tastings for themselves and one guest!</p>
                     </div>
+                    <img src="/quarterly.png" alt="Quarterly Tastings" className="tasting-perk-image" />
                 </div>
 
                 {/* Terms and Conditions */}
