@@ -25,7 +25,6 @@ const Awards = () => {
                             <div key={index} className="recognition-row">
                                 <span className="rec-title">{award.title}</span>
                                 <span className="rec-org">{award.organization}</span>
-                                <span className="rec-year">{award.year}</span>
                             </div>
                         ))}
                     </div>
@@ -112,7 +111,6 @@ const WineAccordionItem = ({ wineName, awards }) => {
         <div className={`wine-accordion-item ${isOpen ? 'open' : ''}`}>
             <div className="accordion-header" onClick={() => setIsOpen(!isOpen)}>
                 <div className="col-name">{wineName}</div>
-                <div className="col-count">{count} {count === 1 ? 'AWARD' : 'AWARDS'}</div>
                 <div className="col-toggle">
                     VIEW AWARDS {isOpen ? '-' : '+'}
                 </div>
@@ -125,7 +123,6 @@ const WineAccordionItem = ({ wineName, awards }) => {
                                 <span className="award-title">{award.award}</span>
                                 <span className="award-comp">{award.competition}</span>
                             </div>
-                            <div className="award-year">{award.year}</div>
                         </div>
                     ))}
                 </div>
