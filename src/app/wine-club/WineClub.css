@@ -1,0 +1,295 @@
+/* Wine Club Page Styles */
+
+/* Hero Section */
+.wine-club-hero {
+    height: 50vh;
+    min-height: 400px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/visit-bg-2.jpg');
+    /* Reusing high quality winery image */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+
+.wine-club-hero .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(83, 22, 29, 0.3);
+    /* Burgundy tint */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.hero-content p {
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin: 0 auto;
+    font-weight: 300;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Intro Section */
+.club-intro {
+    padding: 2rem 0 4rem;
+}
+
+.pre-heading {
+    display: block;
+    font-family: var(--font-heading);
+    color: var(--color-accent, #c5a059);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.tasting-perk-banner {
+    background-color: var(--color-burgundy);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-top: 3rem;
+    box-shadow: 0 10px 30px rgba(83, 22, 29, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-image: linear-gradient(135deg, var(--color-burgundy) 0%, #3a0d12 100%);
+}
+
+.tasting-perk-content h3 {
+    color: var(--color-gold, #c5a059);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.tasting-perk-content p {
+    font-size: 1.2rem;
+    margin: 0;
+    font-weight: 300;
+}
+
+.tasting-perk-content strong {
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Memberships Grid */
+.memberships-section {
+    padding-bottom: 6rem;
+}
+
+.memberships-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: stretch;
+}
+
+.membership-card {
+    background: white;
+    border-radius: 16px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid #eaeaea;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.membership-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+}
+
+.membership-card.featured {
+    border: 2px solid var(--color-burgundy);
+    box-shadow: 0 15px 50px rgba(83, 22, 29, 0.1);
+    transform: scale(1.02);
+}
+
+.membership-card.featured:hover {
+    transform: scale(1.02) translateY(-8px);
+}
+
+.popular-tag {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-accent, #c5a059);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.card-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.card-header h3 {
+    font-size: 2rem;
+    color: var(--color-primary, #53161D);
+    margin-bottom: 0.5rem;
+}
+
+.gold-tier h3 {
+    color: #c5a059;
+    /* Gold */
+}
+
+.platinum-tier h3 {
+    color: #53161D;
+}
+
+.shipment-badge {
+    display: inline-block;
+    background: #f4f4f4;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
+.card-price {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.card-price .amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    line-height: 1;
+}
+
+.card-price .period {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin-left: 4px;
+}
+
+.benefits-list {
+    flex-grow: 1;
+    margin-bottom: 2.5rem;
+}
+
+.benefits-list li {
+    padding: 0.75rem 0;
+    position: relative;
+    padding-left: 1.8rem;
+    color: var(--color-text-main);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.benefits-list li:last-child {
+    border-bottom: none;
+}
+
+.benefits-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-accent, #c5a059);
+    font-size: 1.5rem;
+}
+
+.platinum-tier .benefits-list li::before {
+    color: var(--color-burgundy);
+}
+
+.card-action {
+    text-align: center;
+}
+
+.card-action .btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+}
+
+.btn-platinum {
+    background-color: var(--color-burgundy);
+    border: 1px solid var(--color-burgundy);
+}
+
+.btn-platinum:hover {
+    background-color: #3a0d12;
+}
+
+.gold-tier .btn-primary {
+    background-color: transparent;
+    border: 2px solid var(--color-accent, #c5a059);
+    color: var(--color-accent, #c5a059);
+}
+
+.gold-tier .btn-primary:hover {
+    background-color: var(--color-accent, #c5a059);
+    color: white;
+}
+
+.club-footer-info {
+    padding-bottom: 4rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .wine-club-hero {
+        height: 40vh;
+        min-height: 300px;
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+
+    .hero-content p {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+
+    .memberships-grid {
+        gap: 2rem;
+    }
+
+    .membership-card {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .membership-card.featured {
+        transform: none;
+    }
+
+    .membership-card.featured:hover {
+        transform: translateY(-5px);
+    }
+}

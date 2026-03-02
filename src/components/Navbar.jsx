@@ -81,6 +81,7 @@ const Navbar = React.memo(() => {
                             <Link href="/events#private-events">Private Events</Link>
                         </div>
                     </div>
+                    <Link href="/wine-club">Wine Club</Link>
                     <Link href="/about">Our Story</Link>
                     <Link href="/faq">FAQ</Link>
                 </div>
@@ -108,6 +109,7 @@ const Navbar = React.memo(() => {
                     <Link href="/shop" onClick={closeMenu}>Shop</Link>
                     <Link href="/visit" onClick={closeMenu}>Visit</Link>
                     <Link href="/events" onClick={closeMenu}>Events</Link>
+                    <Link href="/wine-club" onClick={closeMenu}>Wine Club</Link>
                     <Link href="/about" onClick={closeMenu}>Our Story</Link>
                     <Link href="/faq" onClick={closeMenu}>FAQ</Link>
                 </div>
