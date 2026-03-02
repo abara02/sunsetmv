@@ -218,10 +218,19 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Hidden Debug Helper (for local testing/debugging WordPress sync) */}
-            <div style={{ display: 'none' }} id="potm-debug-info">
-                {errorInfo}
-            </div>
+            {/* Debug Helper (Visible only if there's an error) */}
+            {errorInfo && (
+                <div style={{
+                    padding: '1rem',
+                    background: '#fff0f0',
+                    borderTop: '2px solid red',
+                    fontSize: '12px',
+                    color: '#d00',
+                    textAlign: 'center'
+                }}>
+                    <strong>POTM Sync Debug:</strong> {errorInfo}
+                </div>
+            )}
         </div>
     );
 }
