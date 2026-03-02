@@ -238,25 +238,24 @@ function EventsContent() {
         '/events.png',
     ];
     const [heroIndex, setHeroIndex] = useState(0);
-    const [fading, setFading] = useState(false);
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setFading(true);
-            setTimeout(() => {
-                setHeroIndex(prev => (prev + 1) % heroImages.length);
-                setFading(false);
-            }, 600);
+            setHeroIndex(prev => (prev + 1) % heroImages.length);
         }, 5000);
         return () => clearInterval(interval);
     }, []);
 
     return (
         <div className="page-container events-page">
-            <div
-                className={`events-hero${fading ? ' hero-fade-out' : ''}`}
-                style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('${heroImages[heroIndex]}')` }}
-            >
+            <div className="events-hero">
+                {heroImages.map((img, index) => (
+                    <div
+                        key={index}
+                        className={`events-hero-slide ${index === heroIndex ? 'active' : ''}`}
+                        style={{ backgroundImage: `url(${img})` }}
+                    />
+                ))}
                 <div className="overlay"></div>
                 <div className="container hero-content">
                     <h1>Events at SMV</h1>
