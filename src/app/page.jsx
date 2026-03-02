@@ -9,18 +9,17 @@ import './Home.css';
 
 const QUERY_POTM = `
   query GetPOTM {
-    updatePotm {
-      winename
-      winedescription
-    }
-    updatePotms {
+    potms(first: 1) {
       nodes {
         winename
         winedescription
-        title
+        potmFields {
+          winename
+          winedescription
+        }
       }
     }
-    potm {
+    updatePotm {
       winename
       winedescription
     }
