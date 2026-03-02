@@ -213,12 +213,10 @@
 /* Terms and Conditions */
 .club-terms-section {
     padding: 2rem 0;
-    max-width: 800px;
-    margin: 0 auto;
 }
 
 .terms-container {
-    padding: 0 1.5rem;
+    padding: 0;
 }
 
 .terms-container h3 {
