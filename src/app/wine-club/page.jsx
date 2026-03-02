@@ -22,7 +22,7 @@ export default function WineClub() {
                     <span className="pre-heading">Become a Member</span>
                     <h2>Exclusive Perks & Benefits</h2>
                     <div className="divider"></div>
-                    <p className="section-intro">
+                    <p className="section-intro" style={{ textAlign: 'left', margin: '0 auto 2rem auto' }}>
                         Elevate your wine experience with our Gold and Platinum memberships. As a member, you'll receive hand-selected shipments, exclusive discounts, and priority access to our finest creations.
                     </p>
 
@@ -42,15 +42,12 @@ export default function WineClub() {
                         <div className="membership-card gold-tier">
                             <div className="card-header">
                                 <h3>Gold Membership</h3>
-                                <div className="shipment-badge">6 bottles/shipment</div>
-                            </div>
-                            <div className="card-price">
-                                <span className="amount">$120–163</span>
-                                <span className="period">/shipment</span>
                             </div>
                             <ul className="benefits-list">
-                                <li><strong>$25 flat rate</strong> shipping</li>
-                                <li><strong>15% off</strong> all Sunset Meadows Vineyard wines</li>
+                                <li><strong>6 bottles</strong>/shipment</li>
+                                <li>$120–163/shipment</li>
+                                <li>$25 flat rate shipping</li>
+                                <li>15% off all Sunset Meadows Vineyard wines</li>
                                 <li>Fully customizable wine selections</li>
                                 <li>Access to new wine releases</li>
                             </ul>
@@ -64,15 +61,12 @@ export default function WineClub() {
                             {/* <div className="popular-tag">Most Popular</div> */}
                             <div className="card-header">
                                 <h3>Platinum Membership</h3>
-                                <div className="shipment-badge">12 bottles/shipment</div>
-                            </div>
-                            <div className="card-price">
-                                <span className="amount">$239–325</span>
-                                <span className="period">/shipment</span>
                             </div>
                             <ul className="benefits-list">
-                                <li><strong>$25 flat rate</strong> shipping</li>
-                                <li><strong>15% off</strong> all Sunset Meadows Vineyard wines</li>
+                                <li><strong>12 bottles</strong>/shipment</li>
+                                <li>$239–325/shipment</li>
+                                <li>$25 flat rate shipping</li>
+                                <li>15% off all Sunset Meadows Vineyard wines</li>
                                 <li>Fully customizable wine selections</li>
                                 <li>First access to new wine releases</li>
                                 <li>Exclusive access to reserve & limited release wines</li>
