@@ -11,7 +11,7 @@ const QUERY_PRODUCT_OF_THE_MONTH = `
     productOfTheMonths(first: 1) {
       nodes {
         title
-        productMonthDetails {
+        Productmonthdetails {
           wineName_
           description
           image {
@@ -46,7 +46,7 @@ export default function Home() {
 
                 if (data?.productOfTheMonths?.nodes?.length > 0) {
                     const node = data.productOfTheMonths.nodes[0];
-                    const details = node.productMonthDetails || {};
+                    const details = node.Productmonthdetails || {};
 
                     // Use the dedicated wineName_ field, fallback to post title if empty
                     const displayName = details.wineName_ || node.title;
