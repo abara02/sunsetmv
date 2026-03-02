@@ -65,7 +65,7 @@
     color: white;
     padding: 2rem;
     border-radius: 12px;
-    margin-top: 3rem;
+    margin: 3rem 0;
     box-shadow: 0 10px 30px rgba(83, 22, 29, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.1);
     background-image: linear-gradient(135deg, var(--color-burgundy) 0%, #3a0d12 100%);
@@ -90,7 +90,7 @@
 
 /* Memberships Grid */
 .memberships-section {
-    padding-bottom: 6rem;
+    padding-bottom: 3rem;
 }
 
 .memberships-grid {
