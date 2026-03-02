@@ -6,8 +6,8 @@
     min-height: 400px;
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/wine-club.png');
     /* Reusing high quality winery image */
-    background-size: cover;
-    background-position: center;
+    background-size: 110%;
+    background-position: center 40%;
     position: relative;
     display: flex;
     align-items: center;
