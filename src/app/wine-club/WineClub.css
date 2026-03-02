@@ -199,8 +199,6 @@
 
 .benefits-list li {
     padding: 0.75rem 0;
-    position: relative;
-    padding-left: 1.8rem;
     color: var(--color-text-main);
     font-size: 1.05rem;
     line-height: 1.5;
@@ -211,19 +209,6 @@
     border-bottom: none;
 }
 
-.benefits-list li::before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--color-accent, #c5a059);
-    font-size: 1.5rem;
-}
-
-.platinum-tier .benefits-list li::before {
-    color: var(--color-burgundy);
-}
 
 /* Terms and Conditions */
 .club-terms-section {
