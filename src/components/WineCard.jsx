@@ -26,25 +26,8 @@ const WineCard = ({ id, slug, name, type, price, regularPrice, salePrice, onSale
         setIsAdded(true);
     };
 
-    const handleCardClick = (e) => {
-        if (isOutOfStock) {
-            e.preventDefault();
-            onSoldOut && onSoldOut();
-        }
-    };
-
-    // Auto-reset the "Added" state after 4 seconds
-    useEffect(() => {
-        if (isAdded) {
-            const timer = setTimeout(() => {
-                setIsAdded(false);
-            }, 4000);
-            return () => clearTimeout(timer);
-        }
-    }, [isAdded]);
-
     return (
-        <div className={`wine-card ${isOutOfStock ? 'is-out-of-stock' : ''}`} onClick={handleCardClick}>
+        <div className={`wine-card ${isOutOfStock ? 'is-out-of-stock' : ''}`}>
             <div className="wine-image">
                 {image ? (
                     <img src={image} alt={name} />

@@ -16,6 +16,9 @@ const SoldOutModal = ({ isOpen, onClose }) => {
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
                         onClick={(e) => e.stopPropagation()}
                     >
+                        <button className="modal-close-x" onClick={onClose} aria-label="Close">
+                            <X size={24} />
+                        </button>
                         <h2>Sold Out</h2>
                         <p>Oh no! This vintage is currently sold out. We hope to share it with you again soon.</p>
                         <button className="close-btn" onClick={onClose}>CLOSE</button>

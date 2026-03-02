@@ -198,6 +198,26 @@
     transform: translateY(-2px);
 }
 
+.modal-close-x {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.modal-close-x:hover {
+    color: var(--color-burgundy);
+    transform: scale(1.1);
+}
+
 @media (max-width: 768px) {
     .add-to-cart-btn {
         opacity: 1;
