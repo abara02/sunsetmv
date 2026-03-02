@@ -33,10 +33,19 @@ export default function Home() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ query: QUERY_POTM })
                 });
-                const { data } = await response.json();
+                const result = await response.json();
+                console.log('DEBUG: POTM GraphQL Response:', JSON.stringify(result, null, 2));
 
-                if (data && data.updatePotm) {
-                    const { winename, winedescription } = data.updatePotm;
+                const { data } = result;
+                if (data && (data.updatePotm || data.updatePotms)) {
+                    const potm = data.updatePotm || (data.updatePotms?.nodes ? data.updatePotms.nodes[0] : null);
+                    if (!potm) {
+                        console.warn('DEBUG: No POTM data found in response matching keys.');
+                        return;
+                    }
+
+                    const { winename, winedescription } = potm;
+                    console.log('DEBUG: Found POTM fields:', { winename, winedescription });
 
                     // Match with local wine data for image and slug
                     const matchedWine = wines.find(w =>
