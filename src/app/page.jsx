@@ -64,36 +64,52 @@ export default function Home() {
                 const result = await response.json();
                 console.log('DEBUG: POTM Full Response:', result);
 
-                if (result.errors) {
-                    console.error('DEBUG: GraphQL Errors:', result.errors);
-                    setErrorInfo(`GraphQL Error: ${result.errors[0].message}`);
-                }
-
                 const data = result.data || {};
 
-                // Flexible data extraction
-                const findPOTM = (obj) => {
-                    if (!obj || typeof obj !== 'object') return null;
-                    if (obj.winename) return obj;
+                // ULTRA-RESILIENT extraction: Find ANY field that resembles wine name/description
+                const findField = (obj, targetKeys) => {
+                    const results = { name: null, desc: null };
+                    const search = (item) => {
+                        if (!item || typeof item !== 'object') return;
 
-                    for (const key in obj) {
-                        if (key === 'nodes' && Array.isArray(obj[key])) {
-                            const found = findPOTM(obj[key][0]);
-                            if (found) return found;
-                        } else {
-                            const found = findPOTM(obj[key]);
-                            if (found) return found;
+                        // If it's an array (like nodes), search each element
+                        if (Array.isArray(item)) {
+                            item.forEach(search);
+                            return;
                         }
-                    }
-                    return null;
+
+                        for (const key in item) {
+                            const lowKey = key.toLowerCase();
+                            const val = item[key];
+
+                            // Check for name match
+                            if (targetKeys.name.some(k => lowKey === k || lowKey.includes(k)) && !results.name) {
+                                if (typeof val === 'string' && val.length > 2) results.name = val;
+                            }
+                            // Check for desc match
+                            if (targetKeys.desc.some(k => lowKey === k || lowKey.includes(k)) && !results.desc) {
+                                if (typeof val === 'string' && val.length > 5) results.desc = val;
+                            }
+
+                            if (results.name && (results.desc || targetKeys.desc.length === 0)) return;
+                            if (typeof val === 'object') search(val);
+                        }
+                    };
+
+                    search(obj);
+                    return results.name ? results : null;
                 };
 
-                const potm = findPOTM(data);
+                const potm = findField(data, {
+                    name: ['winename', 'potm_name', 'product_name', 'wine_name', 'title'],
+                    desc: ['winedescription', 'potm_description', 'product_description', 'wine_description', 'description', 'desc']
+                });
 
                 if (potm) {
-                    const { winename, winedescription } = potm;
+                    const winename = potm.name;
+                    const winedescription = potm.desc;
+                    console.log('DEBUG: Match Found:', { winename, winedescription });
 
-                    // Match with local wine data
                     const matchedWine = wines.find(w =>
                         w.name.toLowerCase().trim() === winename.toLowerCase().trim()
                     );
@@ -105,15 +121,46 @@ export default function Home() {
                             image: matchedWine.image,
                             slug: matchedWine.slug
                         });
+                        setErrorInfo(null);
                     } else {
-                        setPotmData(prev => ({
-                            ...prev,
-                            name: winename,
-                            description: winedescription || prev.description
-                        }));
+                        // Try matching by slug if name doesn't match perfectly
+                        const wineBySlug = wines.find(w =>
+                            winename.toLowerCase().replace(/\s+/g, '-').includes(w.slug)
+                        );
+
+                        if (wineBySlug) {
+                            setPotmData({
+                                name: wineBySlug.name,
+                                description: winedescription || wineBySlug.description,
+                                image: wineBySlug.image,
+                                slug: wineBySlug.slug
+                            });
+                            setErrorInfo(null);
+                        } else {
+                            setPotmData(prev => ({
+                                ...prev,
+                                name: winename,
+                                description: winedescription || prev.description
+                            }));
+                            setErrorInfo(`Found "${winename}" but it doesn't match a local wine name.`);
+                        }
                     }
-                } else if (!result.errors) {
-                    setErrorInfo('No POTM data found in WordPress response.');
+                } else {
+                    const allKeys = [];
+                    const getKeys = (obj, prefix = '') => {
+                        if (!obj || typeof obj !== 'object' || allKeys.length > 20) return;
+                        Object.keys(obj).forEach(k => {
+                            allKeys.push(prefix + k);
+                            if (typeof obj[k] === 'object') getKeys(obj[k], prefix + k + '.');
+                        });
+                    };
+                    getKeys(data);
+
+                    if (result.errors) {
+                        setErrorInfo(`GraphQL Error: ${result.errors[0].message}`);
+                    } else {
+                        setErrorInfo(`No wine data found. Returned keys: ${allKeys.join(', ')}`);
+                    }
                 }
             } catch (err) {
                 console.error('DEBUG: Fetch failed:', err);
