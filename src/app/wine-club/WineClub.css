@@ -4,7 +4,7 @@
 .wine-club-hero {
     height: 50vh;
     min-height: 400px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/visit-bg-2.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/wine-club.png');
     /* Reusing high quality winery image */
     background-size: cover;
     background-position: center;
