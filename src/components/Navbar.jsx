@@ -106,10 +106,10 @@ const Navbar = React.memo(() => {
 
                 {/* Mobile Menu */}
                 <div className={`mobile-menu ${isOpen ? 'open' : ''}`}>
-                    <Link href="/shop" onClick={closeMenu}>Shop</Link>
                     <Link href="/visit" onClick={closeMenu}>Visit</Link>
-                    <Link href="/events" onClick={closeMenu}>Events</Link>
+                    <Link href="/shop" onClick={closeMenu}>Shop</Link>
                     <Link href="/wine-club" onClick={closeMenu}>Wine Club</Link>
+                    <Link href="/events" onClick={closeMenu}>Events</Link>
                     <Link href="/about" onClick={closeMenu}>Our Story</Link>
                     <Link href="/faq" onClick={closeMenu}>FAQ</Link>
                 </div>
