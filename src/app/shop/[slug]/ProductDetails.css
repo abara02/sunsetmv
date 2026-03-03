@@ -130,7 +130,7 @@
     margin-top: -1.5rem;
     /* Pull closer to the button */
     margin-bottom: 3rem;
-    text-transform: uppercase;
+    /* text-transform: uppercase; Removed to match exact user request */
     letter-spacing: 0.5px;
 }
 

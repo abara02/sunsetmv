@@ -113,7 +113,7 @@ export default function ProductDetails(props) {
 
                         {!wine.isOutOfStock && (
                             <div className="details-case-discount">
-                                Case Discount: 10% off when you buy 12 bottles
+                                Case Discount : 10% off when you buy 12 bottles
                             </div>
                         )}
 
