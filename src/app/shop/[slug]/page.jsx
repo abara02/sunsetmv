@@ -64,7 +64,9 @@ export default function ProductDetails(props) {
                 <div className="product-layout">
                     {/* Left Column: Info & Actions */}
                     <div className="product-info-col">
-                        {wine.type !== 'More' && <span className="product-type-label">{wine.type} Collection</span>}
+                        {(!Array.isArray(wine.type) && wine.type !== 'More') && (
+                            <span className="product-type-label">{wine.type} Collection</span>
+                        )}
                         <h1 className="product-title">{wine.name}</h1>
 
                         <div className="product-price">
