@@ -326,4 +326,31 @@
     .membership-card.featured:hover {
         transform: translateY(-5px);
     }
+
+    .tasting-perk-banner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.5rem 1rem;
+        gap: 1rem;
+        margin: 2rem 0;
+    }
+
+    .tasting-perk-content h3 {
+        font-size: 1.4rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .tasting-perk-content p {
+        font-size: 1rem;
+    }
+
+    .tasting-perk-image {
+        height: 90px;
+        order: 1;
+    }
+
+    .tasting-perk-content {
+        order: 0;
+    }
 }
