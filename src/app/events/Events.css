@@ -432,6 +432,14 @@
         margin-bottom: 2rem;
     }
 
+    .events-hero {
+        height: 40vh;
+        min-height: 300px;
+        background-size: 180%;
+        background-position: calc(50% + 25px) calc(15% + 10px);
+        margin-bottom: 3rem;
+    }
+
     .event-card {
         width: 280px;
         height: 280px;
@@ -554,6 +562,14 @@
 
     .section-header h2 {
         font-size: 2.2rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-content p {
+        font-size: 1.1rem;
     }
 
     .private-events-grid {
