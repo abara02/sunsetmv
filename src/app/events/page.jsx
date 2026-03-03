@@ -7,6 +7,7 @@ import './Events.css';
 import { Users, Music, Wine, List as ListIcon, Calendar as CalendarIcon } from 'lucide-react';
 import EventCalendar from '../../components/EventCalendar';
 import RentalCarousel from '../../components/RentalCarousel';
+import { parseLocalDate, getEasternToday } from '../../utils/dateUtils';
 
 const QUERY_EVENTS = `
   query GetEvents {
@@ -171,7 +172,7 @@ function EventsContent() {
                 const mappedEvents = data.events.nodes.map(node => {
                     const fields = node.eventDetails || node.event_details || {};
                     const eventTitle = fields.eventTitle || fields.event_title || (typeof node.title === 'string' ? node.title : node.title?.rendered) || 'Untitled Event';
-                    const dateObj = fields.eventDate || fields.event_date ? new Date(fields.eventDate || fields.event_date) : new Date();
+                    const dateObj = fields.eventDate || fields.event_date ? parseLocalDate(fields.eventDate || fields.event_date) : new Date();
                     const isWorkshop = eventTitle.toLowerCase().includes('galentine');
                     return {
                         id: node.databaseId?.toString() || node.slug || node.id,
@@ -283,9 +284,8 @@ function EventsContent() {
                                 <div className="events-list fade-in">
                                     {(() => {
                                         const filtered = events.filter(event => {
-                                            const today = new Date();
-                                            today.setHours(0, 0, 0, 0);
-                                            const eventDate = new Date(event.date);
+                                            const today = getEasternToday();
+                                            const eventDate = parseLocalDate(event.date);
                                             eventDate.setHours(0, 0, 0, 0);
                                             return eventDate >= today;
                                         });

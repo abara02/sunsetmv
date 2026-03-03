@@ -3,6 +3,7 @@
 import React, { useEffect, useState, use } from 'react';
 import Link from 'next/link';
 import { Calendar, Clock, ArrowLeft, ExternalLink } from 'lucide-react';
+import { parseLocalDate, formatLocalDate } from '../../../utils/dateUtils';
 import './EventDetails.css';
 
 const GET_EVENT_BY_ID = `
@@ -162,7 +163,7 @@ export default function EventDetails(props) {
                 const eventTitle = fields.eventTitle || fields.event_title || (typeof node.title === 'string' ? node.title : node.title?.rendered) || 'Untitled Event';
 
                 const rawDate = fields.eventDate || fields.event_date;
-                const dateObj = rawDate ? new Date(rawDate) : new Date();
+                const dateObj = rawDate ? parseLocalDate(rawDate) : new Date();
 
                 const getLink = (linkField) => {
                     if (!linkField) return null;
@@ -185,7 +186,7 @@ export default function EventDetails(props) {
                     id: node.id,
                     title: eventTitle,
                     description: fields.eventDescription || fields.event_description || '',
-                    date: dateObj.toLocaleDateString('default', {
+                    date: formatLocalDate(dateObj, {
                         weekday: 'long',
                         year: 'numeric',
                         month: 'long',

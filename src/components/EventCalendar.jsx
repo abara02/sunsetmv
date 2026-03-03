@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight, List, Calendar as CalendarIcon } from 'lucide-react';
+import { parseLocalDate } from '../utils/dateUtils';
 import './EventCalendar.css';
 
 const DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
@@ -55,7 +56,7 @@ const EventCalendar = ({ events }) => {
 
             // Find events for this day
             const dayEvents = events.filter(e => {
-                const eDate = new Date(e.date);
+                const eDate = parseLocalDate(e.date);
                 return eDate.getDate() === day &&
                     eDate.getMonth() === currentDate.getMonth() &&
                     eDate.getFullYear() === currentDate.getFullYear();
