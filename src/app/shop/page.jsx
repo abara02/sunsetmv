@@ -118,7 +118,11 @@ function ShopContent() {
                         <div className="wine-grid">
                             {filteredWines.length > 0 ? (
                                 filteredWines.map(wine => (
-                                    <Link href={`/shop/${wine.slug}`} key={wine.id} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <Link
+                                        href={`/shop/${wine.slug}`}
+                                        key={wine.id}
+                                        className="wine-card-link"
+                                    >
                                         <WineCard
                                             id={wine.id}
                                             slug={wine.slug}

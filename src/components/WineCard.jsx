@@ -58,7 +58,7 @@ const WineCard = ({ id, slug, name, type, price, regularPrice, salePrice, onSale
             </div>
             <div className="wine-info">
                 <h3>{name}</h3>
-                {type !== 'More' && <p className="wine-type">{type}</p>}
+                {(!Array.isArray(type) && type !== 'More') && <p className="wine-type">{type}</p>}
                 <div className="price-display">
                     {onSale && regularPrice && !isOutOfStock ? (
                         <>
