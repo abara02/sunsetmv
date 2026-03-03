@@ -9,11 +9,14 @@ import AgeGate from '../components/AgeGate';
 export const metadata = {
     title: 'Sunset Meadow Vineyards',
     description: 'Welcome to Sunset Meadow Vineyards - Award-winning Connecticut wines.',
+    icons: {
+        icon: '/favicon.png',
+    },
 };
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body>
                 <div className="site-wrapper" style={{ overflowX: 'hidden', position: 'relative', width: '100%', minHeight: '100vh' }}>
                     <ShopProvider>
