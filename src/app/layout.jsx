@@ -10,7 +10,7 @@ export const metadata = {
     title: 'Sunset Meadow Vineyards',
     description: 'Welcome to Sunset Meadow Vineyards - Award-winning Connecticut wines.',
     icons: {
-        icon: '/favicon.png',
+        icon: '/favicon_32x32.png',
     },
 };
 
