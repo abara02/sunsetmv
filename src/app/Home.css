@@ -122,6 +122,13 @@
     color: white;
 }
 
+@media (max-width: 768px) {
+    .split-content h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
 .wine-shop-panel h2 {
     font-family: var(--font-serif);
 }

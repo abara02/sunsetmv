@@ -99,7 +99,7 @@
 /* Card Styles */
 .carousel-card {
     position: absolute;
-    width: 85vw;
+    width: 90%;
     max-width: 350px;
     height: 480px;
     background: #fff;

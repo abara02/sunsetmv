@@ -43,13 +43,18 @@ const Navbar = React.memo(() => {
         setIsOpen(false);
     }, []);
 
+    // Close mobile menu on route change
+    useEffect(() => {
+        closeMenu();
+    }, [pathname, closeMenu]);
+
     return (
         <nav
             className={`navbar ${scrolled || isSolidNavbar ? 'scrolled' : ''}`}
             data-page={pathname.split('/')[1] || 'home'}
         >
             <div className="navbar-container container">
-                <Link href="/" className="logo">
+                <Link href="/" className="logo" onClick={closeMenu}>
                     <img src="/smv-logo-footer.png" alt="Sunset Meadow Vineyards" />
                 </Link>
 
