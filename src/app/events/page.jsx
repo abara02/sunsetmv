@@ -288,6 +288,10 @@ function EventsContent() {
                                             const eventDate = parseLocalDate(event.date);
                                             eventDate.setHours(0, 0, 0, 0);
                                             return eventDate >= today;
+                                        }).sort((a, b) => {
+                                            const dateA = parseLocalDate(a.date);
+                                            const dateB = parseLocalDate(b.date);
+                                            return dateA - dateB;
                                         });
 
                                         if (filtered.length === 0) {
