@@ -175,7 +175,7 @@ function EventsContent() {
                     const dateObj = fields.eventDate || fields.event_date ? parseLocalDate(fields.eventDate || fields.event_date) : new Date();
                     const isWorkshop = eventTitle.toLowerCase().includes('galentine');
                     return {
-                        id: node.databaseId?.toString() || node.slug || node.id,
+                        id: node.slug || node.databaseId?.toString() || node.id,
                         title: eventTitle,
                         desc: fields.eventDescription || fields.event_description || '',
                         time: fields.eventTime || fields.event_time || '',
