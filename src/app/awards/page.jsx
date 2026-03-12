@@ -37,20 +37,17 @@ const Awards = () => {
                         {(() => {
                             const wineOrder = [
                                 "Chardonnay",
-                                "Cayuga White",
-                                "Vidal Blanc",
-                                "Riesling",
+                                "Cayuga",
+                                "Vidal",
+                                "Root 63 White",
+                                "Country Porch Peach",
                                 "Rosé",
                                 "Sunset Blush",
-                                "St. Croix",
-                                "Merlot",
                                 "Twisted Red",
-                                "Root 63",
+                                "Merlot",
+                                "Root 63 Red",
                                 "Shades",
-                                "Midnight Ice",
-                                "New Dawn",
                                 "Pyrrha’s Passion",
-                                "Blustery Blend",
                                 "Enchanted Apple"
                             ];
 
@@ -86,26 +83,6 @@ const Awards = () => {
 
 const WineAccordionItem = ({ wineName, awards }) => {
     const [isOpen, setIsOpen] = React.useState(false);
-
-    // Manual overrides for specific award counts as requested
-    const manualCounts = {
-        "Cayuga White": 12,
-        "Chardonnay": 13,
-        "Riesling": 3,
-        "Vidal Blanc": 12,
-        "Rosé": 4,
-        "Blustery Blend": 16,
-        "Sunset Blush": 5,
-        "Enchanted Apple": 4,
-        "St. Croix": 5,
-        "New Dawn": 14,
-        "Merlot": 4,
-        "Twisted Red": 7,
-        "Pyrrha’s Passion": 4
-    };
-
-    // Use manual count if it exists, otherwise fallback to array length
-    const count = manualCounts[wineName] || awards.length;
 
     return (
         <div className={`wine-accordion-item ${isOpen ? 'open' : ''}`}>

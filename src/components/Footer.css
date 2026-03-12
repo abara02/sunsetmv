@@ -1,20 +1,20 @@
 .footer {
     background-color: #1a1a1a;
     color: #ccc;
-    padding: var(--spacing-lg) 0 var(--spacing-md);
+    padding: var(--spacing-md) 0 var(--spacing-sm);
     margin-top: auto;
 }
 
 .footer-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
 }
 
 .footer-logo-link {
     display: block;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     max-width: 250px;
 }
 
@@ -27,7 +27,7 @@
 .footer h4 {
     color: var(--color-white);
     font-size: 1.1rem;
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.8rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -35,7 +35,7 @@
 
 .footer-links li,
 .contact-info li {
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.4rem;
 }
 
 .footer-links a {
@@ -66,12 +66,13 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    transform: translateX(-10px);
 }
 
 .icon-wrap {
-    width: 50px;
-    height: 50px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -79,8 +80,8 @@
 }
 
 .icon-wrap img {
-    width: 50px;
-    height: 50px;
+    width: 32px;
+    height: 32px;
     display: block;
     object-fit: contain;
     /* CRITICAL */
@@ -92,11 +93,25 @@
     transition: transform 0.2s ease;
 }
 
+.icon-wrap.fb {
+    width: 48px;
+    height: 48px;
+}
+
 .icon-wrap.fb img {
-    transform: translateY(1px);
+    width: 48px;
+    height: 48px;
+    transform: translate(-10px, -2px); /* 2px down from previous -4px */
+}
+
+.icon-wrap.g {
+    width: 46px;
+    height: 46px;
 }
 
 .icon-wrap.g img {
+    width: 46px;
+    height: 46px;
     transform: translateY(-1px);
 }
 
@@ -125,7 +140,7 @@
 
 .footer-bottom {
     border-top: 1px solid #333;
-    padding-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
     text-align: center;
     font-size: 0.85rem;
     color: #666;

@@ -350,10 +350,10 @@ function EventsContent() {
                             <p>Follow us on social media for the latest events, announcements, promotions, and updates.</p>
                             <div className="banner-socials">
                                 <a href="https://www.facebook.com/SunsetMeadowVineyards" target="_blank" rel="noopener noreferrer" className="social-icon-link icon-wrap fb">
-                                    <img src="/icons8-facebook-50.png" alt="Facebook" />
+                                    <img src="/icon-facebook.png" alt="Facebook" />
                                 </a>
                                 <a href="https://www.instagram.com/sunsetmeadowvineyards/" target="_blank" rel="noopener noreferrer" className="social-icon-link icon-wrap ig">
-                                    <img src="/icons8-instagram-50.png" alt="Instagram" />
+                                    <img src="/icon-instagram.png" alt="Instagram" />
                                 </a>
                             </div>
                         </div>

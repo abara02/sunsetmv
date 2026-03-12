@@ -110,7 +110,6 @@ export default function ProductDetails(props) {
                             </button>
                             {added && <span style={{ marginLeft: '10px', color: 'green', fontWeight: 'bold' }}>Added!</span>}
                         </div>
-
                         {!wine.isOutOfStock && (
                             <div className="details-case-discount">
                                 Case Discount : 10% off when you buy 12 bottles

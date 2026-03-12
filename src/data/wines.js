@@ -8,8 +8,8 @@ export const wines = [
         price: 26.99,
         description: "Aged in steel tanks then in french oak barrels, this wine is light & crispy with mellow acidity & a touch of french oak.",
         awards: [
-            "International Eastern Wine Competition Gold Medal Winner",
-            "Finger Lakes International Wine Competition Bronze Medal Winner"
+            "1 Gold Medal – International Eastern Wine Competition",
+            "1 Bronze Medal – Finger Lakes International Wine Competition"
         ],
         specs: {
             alc: "11.5 % by vol",
@@ -27,13 +27,11 @@ export const wines = [
         price: 21.99,
         description: "A crisp, refreshing, fruit-forward white wine with hints of grapefruit, citrus and peach. Similar to a Sauvignon Blanc. Enjoy with chicken or fish!",
         awards: [
-            "Finger Lakes International Wine Competition Silver Medal Winner",
-            "International Eastern Wine Competition Bronze Medal Winner",
-            "Grand Harvest International Wine Competition Bronze Medal Winner",
-            "International Eastern Wine Competition Bronze Medal Winner",
-            "Grand Harvest International Wine Competition Silver Medal Winner",
-            "Finger Lakes International Competition Gold Medal Winner",
-            "International Eastern Wine Competition Bronze Medal Winner"
+            "4 Gold Medals – Finger Lakes & International Eastern Wine Competitions",
+            "6 Silver Medals – Big E Northeast Gold, Grand Harvest International & East Meets West",
+            "3 Bronze Medals – Best of New England & International Eastern",
+            "4 CSFA Awards – Connecticut Specialty Food Association",
+            "CT Magazine – “CT’s Best”"
         ],
         specs: {
             alc: "11.25 % by vol",
@@ -64,9 +62,8 @@ export const wines = [
         price: 25.99,
         description: "Elegant, clean and delicately balanced this wine is a medium bodied white with little to no acidity and a hint of melon and a soft buttery popcorn finish.",
         awards: [
-            "Finger Lakes International Wine Competition Bronze Medal Winner",
-            "Eastern States Wine Competition Silver Medal Winner",
-            "International Eastern Wine Competition Bronze Medal Winner"
+            "1 Silver Medal – Eastern States Wine Competition",
+            "2 Bronze Medals – Finger Lakes International Wine Competition & International Eastern Wine Competition"
         ],
         specs: {
             alc: "12 % by vol",
@@ -82,6 +79,12 @@ export const wines = [
         type: "White",
         price: 22.99,
         description: "Refreshing and tropical this semi-sweet blend has a bursting fruit aroma followed by an exciting taste of mixed fruit. Fruit salad in a glass!",
+        awards: [
+            "1 Gold Medal (Double Gold & Best in Class) – International Eastern Wine Competition",
+            "4 Silver Medals – Big E Northeast Gold, International Eastern & Finger Lakes Wine Competitions",
+            "4 Bronze Medals – Best of New England, Big E Northeast Gold & Finger Lakes Wine Competitions",
+            "4 CSFA Awards – including Wine Product of the Year from the Connecticut Specialty Food Association"
+        ],
         specs: {
             alc: "11.25 % by vol",
             weight: "2.5lbs",
@@ -126,6 +129,9 @@ export const wines = [
         type: "Fruit",
         price: 22.99,
         description: "Light peach aromas open up to soft, citrus and semi-sweet peach flavors. Just like biting into a fresh juicy peach! Perfect as a base of white sangria, bbq or grilled fish!",
+        awards: [
+            "2 Bronze Medals – Big E Northeast Gold & Amenti Del Vino Wine Competitions"
+        ],
         specs: {
             alc: "7.5 % by vol",
             weight: "2.5lbs",
@@ -171,10 +177,9 @@ export const wines = [
         price: 23.99,
         description: "A delicate, surprisingly elegant, crisp, dry wine, with hints of raspberry. Suitable to a wide range of cuisines.",
         awards: [
-            "CT Specialty Food Competition Gold Medal Winner",
-            "International Eastern Wine Competition Bronze Medal Winner",
-            "CT Specialty Food Competition Silver Medal Winner",
-            "Finger Lakes International Wine Competition Silver Medal Winner"
+            "1 Silver Medal – Amenti Del Vino Wine Competition",
+            "3 Bronze Medals – Big E Northeast Gold, International Eastern & Finger Lakes Wine Competitions",
+            "4 CSFA Awards – Connecticut Specialty Food Association"
         ],
         specs: {
             alc: "11.5 % by vol",
@@ -192,18 +197,9 @@ export const wines = [
         price: 23.99,
         description: "Fruity and refreshing with hints of strawberry and rhubarb. Perfect summer wine!",
         awards: [
-            "CT Specialty Foods Wine Competition Gold Medal Winner",
-            "International Eastern Wine Competition Bronze Medal Winner",
-            "Finger Lakes International Wine Competition Silver Medal Winner",
-            "CT Specialty Food Competition Silver Medal Winner",
-            "Grand Harvest International Wine Competition Bronze Medal Winner",
-            "Dallas Morning News Wine Competion Bronze Medal Winner",
-            "Grand Harvest International Wine Competition Bronze Medal Winner",
-            "International Eastern Wine Competition Bronze Medal Winner",
-            "Grand Harvest International Wine Competition Bronze Medal Winner",
-            "Amenti DelVino Wine Competition Silver Medal Winner",
-            "International Eastern States Competition Silver Medal Winner",
-            "International Eastern States Competition Silver Medal Winner"
+            "9 Silver Medals – Big E Northeast Gold, Amenti Del Vino, International Eastern, Grand Harvest & Eastern States Wine Competitions",
+            "8 Bronze Medals – Big E Northeast Gold, International Eastern, Finger Lakes, Grand Harvest & Dallas Morning News Wine Competitions",
+            "6 CSFA Awards – Connecticut Specialty Food Association"
         ],
         specs: {
             alc: "11.25 % by vol",
@@ -250,9 +246,8 @@ export const wines = [
         price: 30.99,
         description: "Aged on a combination of American and French Oaks. Well balanced, Medium Bodied Notice the deep color with tastes of dark cherry and hints of black pepper and butter. Great with red meat or Italian dishes.",
         awards: [
-            "Finger Lakes International Wine Competition Silver Medal Winner",
-            "Finger Lakes International Wine Competition Silver Medal Winner",
-            "Grand Harvest International Wine Competition Bronze Medal Winner"
+            "1 Silver Medal – Eastern States Wine Competition (Big E)",
+            "2 Bronze Medals – Amenti Del Vino Wine Competition & Grand Harvest International Wine Competition"
         ],
         specs: {
             alc: "13 % by vol",
@@ -270,9 +265,8 @@ export const wines = [
         price: 29.99,
         description: "An exquisitely balanced Bordeaux style wine. This Cabernet blend will tantalize your taste buds with hints of spice, blackberry, black cherry, plum and vanilla.",
         awards: [
-            "Finger Lakes International Wine Competition Bronze Medal Winner",
-            "Grand Harvest Competition Silver Medal Winner",
-            "International Eastern States Competition Bronze Medal Winner"
+            "4 Silver Medals – Big E Northeast Gold, Amenti Del Vino & Grand Harvest International Wine Competitions",
+            "3 Bronze Medals – Amenti Del Vino & Finger Lakes International Wine Competitions"
         ],
         specs: {
             alc: "14 % by vol",
@@ -316,6 +310,11 @@ export const wines = [
         type: "Red",
         price: 21.99,
         description: "A versatile semi-sweet wine with flavors of strawberry, pomegranate and raspberry. Similar to a red sangria! Pairs well with most everything from pizza and burgers to fruit & cheese.",
+        awards: [
+            "4 Silver Medals – International East Meets West, Best of New England, Big E Northeast Gold & Amenti Del Vino Wine Competitions",
+            "5 Bronze Medals – Big E Northeast Gold, Best of New England, Amenti Del Vino & Finger Lakes International Wine Competitions",
+            "2 CSFA Awards – Connecticut Specialty Food Association"
+        ],
         specs: {
             alc: "12 % by vol",
             weight: "2.5lbs",
@@ -390,6 +389,10 @@ export const wines = [
         type: "Sparkling",
         price: 23.99,
         description: "A fruity, pomegranate hued, sparkling wine. Bursting with flavors of bright raspberry and pomegranate with just a hint of effervescence.",
+        awards: [
+            "2 Double Gold Medals – International East Meets West & International Eastern Wine Competitions",
+            "2 Silver Medals – Big E Northeast Gold & Amenti Del Vino Wine Competitions"
+        ],
         specs: {
             alc: "8 % by vol",
             weight: "2.5lbs",

@@ -7,10 +7,10 @@
 }
 
 .faq-decor {
-    position: absolute;
-    width: 20%;
+    position: fixed;
+    width: 20vw;
     max-width: 300px;
-    height: 30%;
+    height: 30vh;
     background-repeat: no-repeat;
     background-size: contain;
     opacity: 0.25;
@@ -30,9 +30,9 @@
     right: -10px;
     background-image: url('/wine faq.png');
     background-position: right bottom;
-    width: 30%;
+    width: 30vw;
     max-width: 450px;
-    height: 40%;
+    height: 40vh;
 }
 
 @media (max-width: 1024px) {
